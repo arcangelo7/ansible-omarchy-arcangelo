@@ -1,0 +1,4 @@
+---
+applications_to_install:
+  - name: bitwarden
+    description: "Secure and open-source password manager"

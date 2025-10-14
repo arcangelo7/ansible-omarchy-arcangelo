@@ -1,0 +1,13 @@
+---
+- name: Omarchy system configuration
+  hosts: localhost
+
+  roles:
+    - role: bloatware_removal
+      tags: ['bloatware', 'cleanup']
+
+    - role: applications_install
+      tags: ['apps', 'install']
+
+    - role: hyprland_config
+      tags: ['hyprland', 'config']

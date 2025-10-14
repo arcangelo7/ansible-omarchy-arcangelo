@@ -1,0 +1,16 @@
+---
+- name: Remove bloatware packages
+  community.general.pacman:
+    name: "{{ item }}"
+    state: absent
+  loop: "{{ bloatware_packages }}"
+  when: bloatware_packages is defined and bloatware_packages | length > 0
+  become: yes
+  ignore_errors: yes
+  register: bloatware_removal_result
+
+- name: Show bloatware removal results
+  debug:
+    msg: "Package {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ bloatware_removal_result.results }}"
+  when: bloatware_removal_result is defined

@@ -1,0 +1,13 @@
+---
+- name: Update keybinding for password manager
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: '^bindd = SUPER, slash, Passwords, exec, uwsm app -- .*'
+    line: 'bindd = SUPER, slash, Passwords, exec, uwsm app -- {{ password_manager_app }}'
+    backup: yes
+  when: password_manager_app is defined
+
+- name: Reload Hyprland configuration
+  ansible.builtin.command: hyprctl reload
+  changed_when: true
+  when: password_manager_app is defined

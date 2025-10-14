@@ -1,0 +1,29 @@
+---
+- name: Install applications via pacman
+  community.general.pacman:
+    name: "{{ item.name }}"
+    state: present
+    update_cache: yes
+  loop: "{{ applications_to_install }}"
+  when: applications_to_install is defined and applications_to_install | length > 0
+  become: yes
+  register: apps_install_result
+
+- name: Show application installation results
+  debug:
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
+  loop: "{{ apps_install_result.results }}"
+  when: apps_install_result is defined
+
+- name: Verify applications are installed correctly
+  command: "pacman -Q {{ item.name }}"
+  loop: "{{ applications_to_install }}"
+  register: verify_install
+  changed_when: false
+  failed_when: false
+
+- name: Show installed versions
+  debug:
+    msg: "{{ item.stdout }}"
+  loop: "{{ verify_install.results }}"
+  when: item.rc == 0
