@@ -2,3 +2,16 @@
 bloatware_packages:
   - 1password-beta
   - 1password-cli
+
+onepassword_config_files:
+  - "{{ ansible_env.HOME }}/.config/1Password"
+  - "{{ ansible_env.HOME }}/.config/chromium/NativeMessagingHosts/com.1password.1password.json"
+  - "{{ ansible_env.HOME }}/.config/google-chrome/NativeMessagingHosts/com.1password.1password.json"
+  - "{{ ansible_env.HOME }}/.config/google-chrome-beta/NativeMessagingHosts/com.1password.1password.json"
+  - "{{ ansible_env.HOME }}/.config/google-chrome-unstable/NativeMessagingHosts/com.1password.1password.json"
+  - "{{ ansible_env.HOME }}/.config/microsoft-edge-dev/NativeMessagingHosts/com.1password.1password.json"
+  - "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/NativeMessagingHosts/com.1password.1password.json"
+  - "{{ ansible_env.HOME }}/.config/vivaldi/NativeMessagingHosts/com.1password.1password.json"
+  - "{{ ansible_env.HOME }}/.config/vivaldi-snapshot/NativeMessagingHosts/com.1password.1password.json"
+  - "{{ ansible_env.HOME }}/.mozilla/native-messaging-hosts/com.1password.1password.json"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps/1password.conf"

@@ -14,3 +14,42 @@
     msg: "Package {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
   loop: "{{ bloatware_removal_result.results }}"
   when: bloatware_removal_result is defined
+
+- name: Remove 1Password configuration files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ onepassword_config_files }}"
+  when: onepassword_config_files is defined and onepassword_config_files | length > 0
+  ignore_errors: yes
+  register: onepassword_files_removal_result
+
+- name: Show 1Password files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ onepassword_files_removal_result.results }}"
+  when: onepassword_files_removal_result is defined
+
+- name: Remove 1Password reference from Hyprland apps.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps.conf"
+    regexp: "^source.*1password\\.conf$"
+    state: absent
+  ignore_errors: yes
+  register: onepassword_apps_conf_removal
+
+- name: Show apps.conf update result
+  debug:
+    msg: "1Password reference in apps.conf - Status: {{ 'Removed' if onepassword_apps_conf_removal.changed else 'Not present' }}"
+  when: onepassword_apps_conf_removal is defined
+
+- name: Reload Hyprland configuration after 1Password removal
+  ansible.builtin.command: hyprctl reload
+  ignore_errors: yes
+  when: onepassword_apps_conf_removal.changed
+  register: hyprland_reload_result
+
+- name: Show Hyprland reload result
+  debug:
+    msg: "Hyprland reload - Status: {{ 'Success' if hyprland_reload_result.rc == 0 else 'Failed or not needed' }}"
+  when: hyprland_reload_result is defined
