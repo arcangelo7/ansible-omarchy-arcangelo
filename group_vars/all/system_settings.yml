@@ -1,0 +1,21 @@
+---
+# System settings configuration
+
+# Monitor configuration
+# Current setup: Ultrawide (3440x1440@100Hz, ~109 PPI)
+# For this type of display, use 1x scaling
+monitor_gdk_scale: 1
+monitor_scale: 1
+monitor_resolution: "3440x1440"
+monitor_position: "auto"
+monitor_refresh_rate: "@100"
+
+# Keyboard layout
+# US International with dead keys (press accent then letter for accented characters)
+keyboard_layout: "us"
+keyboard_variant: "intl"
+
+# Display type reference:
+# - Retina-class (218+ PPI): gdk_scale=2, monitor_scale=2
+# - 27"/32" 4K: gdk_scale=1.75, monitor_scale=1.666667
+# - 1080p/1440p/Ultrawide: gdk_scale=1, monitor_scale=1

@@ -11,3 +11,6 @@
 
     - role: hyprland_config
       tags: ['hyprland', 'config']
+
+    - role: system_settings
+      tags: ['system', 'settings', 'monitor', 'keyboard']

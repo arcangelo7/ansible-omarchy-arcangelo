@@ -1,0 +1,15 @@
+---
+# Monitor settings
+# For retina-class displays (218+ PPI): gdk_scale=2, monitor_scale=2
+# For 27"/32" 4K displays: gdk_scale=1.75, monitor_scale=1.666667
+# For 1080p/1440p or ultrawide displays: gdk_scale=1, monitor_scale=1
+monitor_gdk_scale: 1
+monitor_scale: 1
+monitor_resolution: "preferred"
+monitor_position: "auto"
+monitor_refresh_rate: ""  # Leave empty for default, or specify like "@60"
+
+# Keyboard layout
+# US International with dead keys (intl variant)
+keyboard_layout: "us"
+keyboard_variant: "intl"

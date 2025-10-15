@@ -1,0 +1,21 @@
+# See https://wiki.hyprland.org/Configuring/Monitors/
+# List current monitors and resolutions possible: hyprctl monitors
+# Format: monitor = [port], resolution, position, scale
+# You must relaunch Hyprland after changing any envs (use Super+Esc, then Relaunch)
+
+# Monitor configuration managed by Ansible
+env = GDK_SCALE,{{ monitor_gdk_scale }}
+monitor=,{{ monitor_resolution }}{{ monitor_refresh_rate }},{{ monitor_position }},{{ monitor_scale }}
+
+# Reference configurations:
+# Retina-class 2x displays (13" 2.8K, 27" 5K, 32" 6K):
+#   env = GDK_SCALE,2
+#   monitor=,preferred,auto,2
+
+# 27" or 32" 4K monitors (fractional scaling):
+#   env = GDK_SCALE,1.75
+#   monitor=,preferred,auto,1.666667
+
+# Low-resolution displays (1080p, 1440p, ultrawide 3440x1440):
+#   env = GDK_SCALE,1
+#   monitor=,preferred,auto,1

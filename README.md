@@ -10,6 +10,9 @@ ansible-omarchy-arcangelo/
 ├── inventory.yml            # Inventory (localhost)
 ├── playbook.yml            # Main playbook
 ├── CLAUDE.md               # Omarchy automation reference
+├── group_vars/
+│   └── all/
+│       └── system_settings.yml  # System settings variables
 └── roles/
     ├── bloatware_removal/   # Unwanted software removal
     │   ├── tasks/
@@ -21,10 +24,19 @@ ansible-omarchy-arcangelo/
     │   │   └── main.yml
     │   └── vars/
     │       └── main.yml
-    └── hyprland_config/     # Hyprland configuration management
+    ├── hyprland_config/     # Hyprland configuration management
+    │   ├── tasks/
+    │   │   └── main.yml
+    │   └── vars/
+    │       └── main.yml
+    └── system_settings/     # System settings (monitor, keyboard)
         ├── tasks/
         │   └── main.yml
-        └── vars/
+        ├── templates/
+        │   └── monitors.conf.j2
+        ├── handlers/
+        │   └── main.yml
+        └── defaults/
             └── main.yml
 ```
 
@@ -116,6 +128,26 @@ Manages Hyprland configuration files.
 - Updates password manager keybinding (SUPER + /) to use bitwarden
 - Creates backup of bindings.conf before modifications
 - Automatically reloads Hyprland configuration
+
+### 4. system_settings
+
+Configures system-level settings for Omarchy (monitor scaling, keyboard layout).
+
+**Features:**
+- Automatic monitor scaling configuration based on display type
+- US International keyboard layout with dead keys
+- Backup of configurations before changes
+- Automatic Hyprland reload after changes
+
+**Configuration:**
+Edit `group_vars/all/system_settings.yml` to customize:
+- Monitor scaling (GDK_SCALE and Hyprland scale)
+- Monitor resolution and refresh rate
+
+**Current setup:**
+- Monitor: Ultrawide (3440x1440@100Hz)
+- Scaling: 1x (optimized for ~109 PPI displays)
+- Keyboard: US International with dead keys
 
 ## Omarchy compliance
 
