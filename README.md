@@ -76,6 +76,7 @@ Removes unwanted software from the system.
 - 1password-beta (including config files)
 - 1password-cli (including config files)
 - signal-desktop (including config files)
+- typora (including config files)
 
 **Web apps removed:**
 - Basecamp (including desktop entry, icons, config and cache files)

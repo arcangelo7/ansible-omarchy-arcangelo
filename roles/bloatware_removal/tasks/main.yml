@@ -294,3 +294,18 @@
   debug:
     msg: "Hyprland reload - Status: {{ 'Success' if chatgpt_hyprland_reload.rc == 0 else 'Failed' }}"
   when: chatgpt_hyprland_reload is defined and not chatgpt_hyprland_reload.skipped | default(false)
+
+- name: Remove Typora configuration files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ typora_config_files }}"
+  when: typora_config_files is defined and typora_config_files | length > 0
+  ignore_errors: yes
+  register: typora_files_removal_result
+
+- name: Show Typora files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ typora_files_removal_result.results }}"
+  when: typora_files_removal_result is defined
