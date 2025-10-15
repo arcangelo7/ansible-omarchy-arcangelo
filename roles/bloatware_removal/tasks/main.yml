@@ -99,6 +99,30 @@
   loop: "{{ google_messages_files_removal_result.results }}"
   when: google_messages_files_removal_result is defined
 
+- name: Remove Google Messages keybinding from bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "^bindd.*SUPER ALT.*G.*Google Messages.*$"
+    state: absent
+  ignore_errors: yes
+  register: google_messages_keybinding_removal
+
+- name: Show Google Messages keybinding removal result
+  debug:
+    msg: "Google Messages keybinding - Status: {{ 'Removed' if google_messages_keybinding_removal.changed else 'Not present' }}"
+  when: google_messages_keybinding_removal is defined
+
+- name: Reload Hyprland configuration after Google Messages removal
+  ansible.builtin.command: hyprctl reload
+  ignore_errors: yes
+  when: google_messages_keybinding_removal.changed
+  register: google_messages_hyprland_reload
+
+- name: Show Hyprland reload result after Google Messages removal
+  debug:
+    msg: "Hyprland reload - Status: {{ 'Success' if google_messages_hyprland_reload.rc == 0 else 'Failed' }}"
+  when: google_messages_hyprland_reload is defined and not google_messages_hyprland_reload.skipped | default(false)
+
 - name: Remove Google Photos web app files
   ansible.builtin.file:
     path: "{{ item }}"
