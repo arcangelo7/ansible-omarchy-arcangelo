@@ -2,6 +2,7 @@
 bloatware_packages:
   - 1password-beta
   - 1password-cli
+  - signal-desktop
 
 onepassword_config_files:
   - "{{ ansible_env.HOME }}/.config/1Password"
@@ -60,3 +61,6 @@ hey_webapp_files:
   - "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps/HEY.conf"
   - "{{ ansible_env.HOME }}/.config/HEY"
   - "{{ ansible_env.HOME }}/.cache/HEY"
+
+signal_config_files:
+  - "{{ ansible_env.HOME }}/.config/Signal"

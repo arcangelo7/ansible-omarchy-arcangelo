@@ -73,8 +73,9 @@ ansible-playbook playbook.yml -vvv -K # very verbose
 Removes unwanted software from the system.
 
 **Packages removed:**
-- 1password-beta
-- 1password-cli
+- 1password-beta (including config files)
+- 1password-cli (including config files)
+- signal-desktop (including config files)
 
 **Web apps removed:**
 - Basecamp (including desktop entry, icons, config and cache files)
@@ -82,6 +83,10 @@ Removes unwanted software from the system.
 - Google Messages (including desktop entry, icons, config and cache files)
 - Google Photos (including desktop entry, icons, config and cache files)
 - HEY (including desktop entry, icons, config and cache files)
+
+**Keybinding updates:**
+- Super + G: Now opens WhatsApp (previously Signal)
+- Super + Shift + G: Removed (previously WhatsApp)
 
 ### 2. applications_install
 

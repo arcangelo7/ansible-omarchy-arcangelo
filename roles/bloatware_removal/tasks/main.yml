@@ -152,3 +152,56 @@
     msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
   loop: "{{ hey_files_removal_result.results }}"
   when: hey_files_removal_result is defined
+
+- name: Remove Signal configuration files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ signal_config_files }}"
+  when: signal_config_files is defined and signal_config_files | length > 0
+  ignore_errors: yes
+  register: signal_files_removal_result
+
+- name: Show Signal files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ signal_files_removal_result.results }}"
+  when: signal_files_removal_result is defined
+
+- name: Remove Signal keybinding from bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "^bindd.*SUPER.*G.*Signal.*$"
+    state: absent
+  ignore_errors: yes
+  register: signal_keybinding_removal
+
+- name: Show Signal keybinding removal result
+  debug:
+    msg: "Signal keybinding - Status: {{ 'Removed' if signal_keybinding_removal.changed else 'Not present' }}"
+  when: signal_keybinding_removal is defined
+
+- name: Update WhatsApp keybinding to Super+G
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "^bindd = SUPER SHIFT, G, WhatsApp,.*$"
+    line: "bindd = SUPER, G, WhatsApp, exec, omarchy-launch-or-focus-webapp WhatsApp \"https://web.whatsapp.com/\""
+    state: present
+  ignore_errors: yes
+  register: whatsapp_keybinding_update
+
+- name: Show WhatsApp keybinding update result
+  debug:
+    msg: "WhatsApp keybinding - Status: {{ 'Updated to Super+G' if whatsapp_keybinding_update.changed else 'Already correct or not present' }}"
+  when: whatsapp_keybinding_update is defined
+
+- name: Reload Hyprland configuration after Signal removal
+  ansible.builtin.command: hyprctl reload
+  ignore_errors: yes
+  when: signal_keybinding_removal.changed or whatsapp_keybinding_update.changed
+  register: signal_hyprland_reload
+
+- name: Show Hyprland reload result after Signal removal
+  debug:
+    msg: "Hyprland reload - Status: {{ 'Success' if signal_hyprland_reload.rc == 0 else 'Failed' }}"
+  when: signal_hyprland_reload is defined and not signal_hyprland_reload.skipped | default(false)
