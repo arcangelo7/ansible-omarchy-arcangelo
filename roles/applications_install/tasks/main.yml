@@ -76,31 +76,3 @@
     msg: "{{ item.item.name }} desktop file - Status: {{ 'Created' if item.changed else 'Already present or error' }}"
   loop: "{{ webapp_desktop_files.results }}"
   when: webapp_desktop_files is defined
-
-- name: Add web app keybindings to bindings.conf
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
-    regexp: "^bindd.*{{ item.keybinding }}.*{{ item.name }}.*$"
-    line: "bindd = {{ item.keybinding }}, {{ item.name }}, exec, omarchy-launch-webapp \"{{ item.url }}\""
-    state: present
-  loop: "{{ webapps_to_install }}"
-  when: webapps_to_install is defined and webapps_to_install | length > 0 and item.keybinding is defined
-  ignore_errors: yes
-  register: webapp_keybindings
-
-- name: Show web app keybinding addition results
-  debug:
-    msg: "{{ item.item.name }} keybinding - Status: {{ 'Added' if item.changed else 'Already present or error' }}"
-  loop: "{{ webapp_keybindings.results }}"
-  when: webapp_keybindings is defined
-
-- name: Reload Hyprland configuration after web app changes
-  ansible.builtin.command: hyprctl reload
-  ignore_errors: yes
-  when: (webapp_keybindings is defined and webapp_keybindings.changed) or (webapp_desktop_files is defined and webapp_desktop_files.changed)
-  register: webapp_hyprland_reload
-
-- name: Show Hyprland reload result after web app changes
-  debug:
-    msg: "Hyprland reload - Status: {{ 'Success' if webapp_hyprland_reload.rc == 0 else 'Failed' }}"
-  when: webapp_hyprland_reload is defined and not webapp_hyprland_reload.skipped | default(false)

@@ -82,35 +82,27 @@ ansible-playbook playbook.yml -vvv -K # very verbose
 
 ### 1. bloatware_removal
 
-Removes unwanted software from the system.
+Removes unwanted software from the system. Only handles package and file removal.
 
 **Packages removed:**
-- 1password-beta (including config files)
-- 1password-cli (including config files)
+- 1password-beta (including config files and native messaging hosts)
+- 1password-cli
 - signal-desktop (including config files)
 - typora (including config files)
 
 **Web apps removed:**
-- Basecamp (including desktop entry, icons, config and cache files)
-- Google Contacts (including desktop entry, icons, config and cache files)
-- Google Messages (including desktop entry, icons, config and cache files)
-- Google Photos (including desktop entry, icons, config and cache files)
-- HEY (including desktop entry, icons, config and cache files)
-- ChatGPT (including desktop entry, icons, config and cache files)
+- Basecamp (desktop entry, icons, config and cache files)
+- Google Contacts (desktop entry, icons, config and cache files)
+- Google Messages (desktop entry, icons, config and cache files)
+- Google Photos (desktop entry, icons, config and cache files)
+- HEY (desktop entry, icons, config and cache files)
+- ChatGPT (desktop entry, icons, config and cache files)
 
-**Keybindings removed:**
-- Super + A: ChatGPT
-- Super + Shift + A: Grok
-- Super + C: HEY Calendar
-- Super + E: HEY Email
-
-**Keybinding updates:**
-- Super + G: Now opens WhatsApp (previously Signal)
-- Super + Shift + G: Removed (previously WhatsApp)
+**Note:** Keybinding cleanup is handled by the `hyprland_config` role
 
 ### 2. applications_install
 
-Installs essential applications and web apps.
+Installs essential applications and web apps. Only handles package installation and desktop file creation.
 
 **Packages installed:**
 - bitwarden (desktop app)
@@ -118,16 +110,39 @@ Installs essential applications and web apps.
 **Web apps installed:**
 - Claude (AI assistant by Anthropic)
   - URL: https://claude.ai
-  - Keybinding: Super + A
+  - Icon: Downloaded from UXWing (512x512 PNG)
+  - Desktop file: Created in `~/.local/share/applications/`
+
+**Note:** Keybindings are configured by the `hyprland_config` role
 
 ### 3. hyprland_config
 
-Manages Hyprland configuration files.
+Centralized management of all Hyprland configuration changes. This role is responsible for all modifications to Hyprland config files and ensures proper reload.
+
+**Configuration managed:**
+- Password manager keybinding (Super + /) → bitwarden-desktop
+- Gnome-keyring daemon autostart configuration
+- D-Bus environment update for keyring
+
+**Keybindings removed (bloatware cleanup):**
+- Super + A: ChatGPT
+- Super + Shift + A: Grok
+- Super + C: HEY Calendar
+- Super + E: HEY Email
+- Super + G: Signal
+- Super + Alt + G: Google Messages
+
+**Keybindings updated:**
+- Super + G: Now opens WhatsApp (previously Super + Shift + G)
+
+**Keybindings added (new web apps):**
+- Super + A: Claude AI assistant
 
 **Features:**
-- Updates password manager keybinding (SUPER + /) to use bitwarden
-- Creates backup of bindings.conf before modifications
-- Automatically reloads Hyprland configuration
+- Creates backup of configuration files before modifications
+- Consolidates all Hyprland configuration changes in one place
+- Single `hyprctl reload` at the end of all modifications
+- Detailed status reporting for each keybinding operation
 
 ### 4. system_settings
 

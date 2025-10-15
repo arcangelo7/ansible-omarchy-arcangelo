@@ -22,6 +22,63 @@
     backup: yes
     create: yes
 
+- name: Remove bloatware keybindings from bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "{{ item.regexp }}"
+    state: absent
+  loop: "{{ keybindings_to_remove }}"
+  when: keybindings_to_remove is defined and keybindings_to_remove | length > 0
+  ignore_errors: yes
+  register: keybindings_removal_result
+
+- name: Show keybinding removal results
+  debug:
+    msg: "{{ item.item.description }} - Status: {{ 'Removed' if item.changed else 'Not present' }}"
+  loop: "{{ keybindings_removal_result.results }}"
+  when: keybindings_removal_result is defined
+
+- name: Update keybindings in bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "{{ item.old_regexp }}"
+    line: "{{ item.new_line }}"
+    state: present
+  loop: "{{ keybindings_to_update }}"
+  when: keybindings_to_update is defined and keybindings_to_update | length > 0
+  ignore_errors: yes
+  register: keybindings_update_result
+
+- name: Show keybinding update results
+  debug:
+    msg: "{{ item.item.description }} - Status: {{ 'Updated' if item.changed else 'Already correct or not present' }}"
+  loop: "{{ keybindings_update_result.results }}"
+  when: keybindings_update_result is defined
+
+- name: Add web app keybindings to bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "^bindd.*{{ item.keybinding }}.*{{ item.name }}.*$"
+    line: "bindd = {{ item.keybinding }}, {{ item.name }}, exec, omarchy-launch-webapp \"{{ item.url }}\""
+    state: present
+  loop: "{{ webapps_to_install }}"
+  when: webapps_to_install is defined and webapps_to_install | length > 0 and item.keybinding is defined
+  ignore_errors: yes
+  register: webapp_keybindings_result
+
+- name: Show web app keybinding addition results
+  debug:
+    msg: "{{ item.item.name }} keybinding ({{ item.item.keybinding }}) - Status: {{ 'Added' if item.changed else 'Already present or error' }}"
+  loop: "{{ webapp_keybindings_result.results }}"
+  when: webapp_keybindings_result is defined
+
 - name: Reload Hyprland configuration
   ansible.builtin.command: hyprctl reload
-  changed_when: true
+  ignore_errors: yes
+  register: hyprland_reload_result
+  changed_when: hyprland_reload_result.rc == 0
+
+- name: Show Hyprland reload result
+  debug:
+    msg: "Hyprland configuration reload - Status: {{ 'Success' if hyprland_reload_result.rc == 0 else 'Failed' }}"
+  when: hyprland_reload_result is defined

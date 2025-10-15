@@ -1,2 +1,23 @@
 ---
 password_manager_app: bitwarden-desktop
+
+# Keybindings to remove (bloatware cleanup)
+keybindings_to_remove:
+  - regexp: "^bindd.*SUPER ALT.*G.*Google Messages.*$"
+    description: "Google Messages keybinding"
+  - regexp: "^bindd.*SUPER.*C.*Calendar.*$"
+    description: "HEY Calendar keybinding"
+  - regexp: "^bindd.*SUPER.*E.*Email.*$"
+    description: "HEY Email keybinding"
+  - regexp: "^bindd.*SUPER SHIFT.*A.*Grok.*$"
+    description: "Grok keybinding"
+  - regexp: "^bindd.*SUPER.*G.*Signal.*$"
+    description: "Signal keybinding"
+  - regexp: "^bindd.*SUPER.*A.*ChatGPT.*$"
+    description: "ChatGPT keybinding"
+
+# Keybindings to update
+keybindings_to_update:
+  - old_regexp: "^bindd = SUPER SHIFT, G, WhatsApp,.*$"
+    new_line: "bindd = SUPER, G, WhatsApp, exec, omarchy-launch-or-focus-webapp WhatsApp \"https://web.whatsapp.com/\""
+    description: "Update WhatsApp keybinding to Super+G"
