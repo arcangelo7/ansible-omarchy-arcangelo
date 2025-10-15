@@ -31,3 +31,12 @@
     line: '  kb_options ='
     backup: yes
   notify: Reload Hyprland
+
+- name: Enable Mise shell integration in .bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'eval "$(mise activate bash)"'
+    create: yes
+    mode: '0644'
+    backup: yes
+  when: enable_mise_shell_integration

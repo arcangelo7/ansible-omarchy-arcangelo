@@ -13,3 +13,6 @@ monitor_refresh_rate: ""  # Leave empty for default, or specify like "@60"
 # US International with dead keys (intl variant)
 keyboard_layout: "us"
 keyboard_variant: "intl"
+
+# Shell configuration
+enable_mise_shell_integration: true

@@ -153,11 +153,12 @@ Centralized management of all Hyprland configuration changes. This role is respo
 
 ### 4. system_settings
 
-Configures system-level settings for Omarchy (monitor scaling, keyboard layout).
+Configures system-level settings for Omarchy (monitor scaling, keyboard layout, shell integration).
 
 **Features:**
 - Automatic monitor scaling configuration based on display type
 - US International keyboard layout with dead keys
+- Mise shell integration for version management (Node.js, Python, etc.)
 - Backup of configurations before changes
 - Automatic Hyprland reload after changes
 
@@ -165,11 +166,13 @@ Configures system-level settings for Omarchy (monitor scaling, keyboard layout).
 Edit `group_vars/all/system_settings.yml` to customize:
 - Monitor scaling (GDK_SCALE and Hyprland scale)
 - Monitor resolution and refresh rate
+- Enable/disable Mise shell integration
 
 **Current setup:**
 - Monitor: Ultrawide (3440x1440@100Hz)
 - Scaling: 1x (optimized for ~109 PPI displays)
 - Keyboard: US International with dead keys
+- Mise: Enabled (auto-activates in bash shell)
 
 ### 5. applications_config
 
