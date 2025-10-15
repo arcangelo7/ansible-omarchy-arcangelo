@@ -21,3 +21,10 @@ keybindings_to_update:
   - old_regexp: "^bindd = SUPER SHIFT, G, WhatsApp,.*$"
     new_line: "bindd = SUPER, G, WhatsApp, exec, omarchy-launch-or-focus-webapp WhatsApp \"https://web.whatsapp.com/\""
     description: "Update WhatsApp keybinding to Super+G"
+
+# Keybindings to add
+keybindings_to_add:
+  - keybinding: "SUPER, R"
+    name: "Voice recording"
+    command: "~/.local/bin/whispering-toggle"
+    description: "Whispering voice transcription"

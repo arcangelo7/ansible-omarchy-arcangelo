@@ -12,6 +12,8 @@ applications_to_install:
     description: "GStreamer bad plugins (required for Whispering)"
   - name: gst-plugin-pipewire
     description: "GStreamer PipeWire plugin"
+  - name: ydotool
+    description: "Generic command-line automation tool for Wayland"
 
 aur_applications_to_install:
   - name: whispering-bin

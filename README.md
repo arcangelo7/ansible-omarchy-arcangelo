@@ -118,6 +118,7 @@ Installs essential applications and web apps. Supports both official repository 
 - gst-plugins-good (dependency of Whispering)
 - gst-plugins-bad (dependency of Whispering)
 - gst-plugin-pipewire (dependency of Whispering)
+- ydotool (keyboard automation tool for Wayland)
 
 **AUR packages installed:**
 - whispering-bin (Speech-to-text transcription application with keyboard shortcuts)
@@ -150,14 +151,21 @@ Centralized management of all Hyprland configuration changes. This role is respo
 **Keybindings updated:**
 - Super + G: Now opens WhatsApp (previously Super + Shift + G)
 
-**Keybindings added (new web apps):**
+**Keybindings added:**
 - Super + A: Claude AI assistant
+- Super + R: Voice recording (Whispering toggle)
+
+**Whispering voice recording setup:**
+- Creates `~/.local/bin/whispering-toggle` script for Wayland compatibility
+- Script behavior: focuses Whispering window and sends spacebar to toggle recording
 
 **Features:**
 - Creates backup of configuration files before modifications
 - Consolidates all Hyprland configuration changes in one place
 - Single `hyprctl reload` at the end of all modifications
 - Detailed status reporting for each keybinding operation
+
+**Important:** After first run, logout/login is required for whispering-toggle to work
 
 ### 4. system_settings
 
