@@ -29,13 +29,20 @@ ansible-omarchy-arcangelo/
     │   │   └── main.yml
     │   └── vars/
     │       └── main.yml
-    └── system_settings/     # System settings (monitor, keyboard)
+    ├── system_settings/     # System settings (monitor, keyboard)
+    │   ├── tasks/
+    │   │   └── main.yml
+    │   ├── templates/
+    │   │   └── monitors.conf.j2
+    │   ├── handlers/
+    │   │   └── main.yml
+    │   └── defaults/
+    │       └── main.yml
+    └── applications_config/ # Applications configuration management
         ├── tasks/
         │   └── main.yml
         ├── templates/
-        │   └── monitors.conf.j2
-        ├── handlers/
-        │   └── main.yml
+        │   └── alacritty.toml.j2
         └── defaults/
             └── main.yml
 ```
@@ -163,6 +170,24 @@ Edit `group_vars/all/system_settings.yml` to customize:
 - Monitor: Ultrawide (3440x1440@100Hz)
 - Scaling: 1x (optimized for ~109 PPI displays)
 - Keyboard: US International with dead keys
+
+### 5. applications_config
+
+Manages configuration for various applications.
+
+**Current configurations:**
+
+#### Alacritty terminal
+- Configurable font size
+- Backup of configuration before changes
+- Preserves Omarchy theme integration
+
+**Configuration:**
+Edit `roles/applications_config/defaults/main.yml` to customize:
+
+```yaml
+alacritty_font_size: 12
+```
 
 ## Omarchy compliance
 

@@ -1,0 +1,5 @@
+---
+# Applications configuration
+
+# Alacritty terminal font size
+alacritty_font_size: 12

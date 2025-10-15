@@ -1,0 +1,8 @@
+---
+# Alacritty terminal configuration
+- name: Configure Alacritty terminal
+  ansible.builtin.template:
+    src: alacritty.toml.j2
+    dest: "{{ ansible_env.HOME }}/.config/alacritty/alacritty.toml"
+    mode: '0644'
+    backup: yes

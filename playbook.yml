@@ -14,3 +14,6 @@
 
     - role: system_settings
       tags: ['system', 'settings', 'monitor', 'keyboard']
+
+    - role: applications_config
+      tags: ['apps-config', 'config']
