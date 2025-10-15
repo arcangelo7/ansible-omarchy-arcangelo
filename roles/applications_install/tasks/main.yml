@@ -27,3 +27,80 @@
     msg: "{{ item.stdout }}"
   loop: "{{ verify_install.results }}"
   when: item.rc == 0
+
+- name: Create icons directory for web apps
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/share/applications/icons"
+    state: directory
+    mode: '0755'
+  when: webapps_to_install is defined and webapps_to_install | length > 0
+  ignore_errors: yes
+
+- name: Download web app icons
+  ansible.builtin.get_url:
+    url: "{{ item.icon_url }}"
+    dest: "{{ ansible_env.HOME }}/.local/share/applications/icons/{{ item.name }}.png"
+    mode: '0644'
+  loop: "{{ webapps_to_install }}"
+  when: webapps_to_install is defined and webapps_to_install | length > 0
+  ignore_errors: yes
+  register: webapp_icons_download
+
+- name: Show web app icon download results
+  debug:
+    msg: "{{ item.item.name }} icon - Status: {{ 'Downloaded' if item.changed else 'Already present or error' }}"
+  loop: "{{ webapp_icons_download.results }}"
+  when: webapp_icons_download is defined
+
+- name: Create web app desktop files
+  ansible.builtin.copy:
+    dest: "{{ ansible_env.HOME }}/.local/share/applications/{{ item.name }}.desktop"
+    content: |
+      [Desktop Entry]
+      Version=1.0
+      Name={{ item.name }}
+      Comment={{ item.description }}
+      Exec=omarchy-launch-webapp {{ item.url }}
+      Terminal=false
+      Type=Application
+      Icon={{ ansible_env.HOME }}/.local/share/applications/icons/{{ item.name }}.png
+      StartupNotify=true
+    mode: '0644'
+  loop: "{{ webapps_to_install }}"
+  when: webapps_to_install is defined and webapps_to_install | length > 0
+  ignore_errors: yes
+  register: webapp_desktop_files
+
+- name: Show web app desktop file creation results
+  debug:
+    msg: "{{ item.item.name }} desktop file - Status: {{ 'Created' if item.changed else 'Already present or error' }}"
+  loop: "{{ webapp_desktop_files.results }}"
+  when: webapp_desktop_files is defined
+
+- name: Add web app keybindings to bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "^bindd.*{{ item.keybinding }}.*{{ item.name }}.*$"
+    line: "bindd = {{ item.keybinding }}, {{ item.name }}, exec, omarchy-launch-webapp \"{{ item.url }}\""
+    state: present
+  loop: "{{ webapps_to_install }}"
+  when: webapps_to_install is defined and webapps_to_install | length > 0 and item.keybinding is defined
+  ignore_errors: yes
+  register: webapp_keybindings
+
+- name: Show web app keybinding addition results
+  debug:
+    msg: "{{ item.item.name }} keybinding - Status: {{ 'Added' if item.changed else 'Already present or error' }}"
+  loop: "{{ webapp_keybindings.results }}"
+  when: webapp_keybindings is defined
+
+- name: Reload Hyprland configuration after web app changes
+  ansible.builtin.command: hyprctl reload
+  ignore_errors: yes
+  when: (webapp_keybindings is defined and webapp_keybindings.changed) or (webapp_desktop_files is defined and webapp_desktop_files.changed)
+  register: webapp_hyprland_reload
+
+- name: Show Hyprland reload result after web app changes
+  debug:
+    msg: "Hyprland reload - Status: {{ 'Success' if webapp_hyprland_reload.rc == 0 else 'Failed' }}"
+  when: webapp_hyprland_reload is defined and not webapp_hyprland_reload.skipped | default(false)

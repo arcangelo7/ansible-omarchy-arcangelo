@@ -83,6 +83,13 @@ Removes unwanted software from the system.
 - Google Messages (including desktop entry, icons, config and cache files)
 - Google Photos (including desktop entry, icons, config and cache files)
 - HEY (including desktop entry, icons, config and cache files)
+- ChatGPT (including desktop entry, icons, config and cache files)
+
+**Keybindings removed:**
+- Super + A: ChatGPT
+- Super + Shift + A: Grok
+- Super + C: HEY Calendar
+- Super + E: HEY Email
 
 **Keybinding updates:**
 - Super + G: Now opens WhatsApp (previously Signal)
@@ -90,10 +97,15 @@ Removes unwanted software from the system.
 
 ### 2. applications_install
 
-Installs essential applications.
+Installs essential applications and web apps.
 
 **Packages installed:**
 - bitwarden (desktop app)
+
+**Web apps installed:**
+- Claude (AI assistant by Anthropic)
+  - URL: https://claude.ai
+  - Keybinding: Super + A
 
 ### 3. hyprland_config
 

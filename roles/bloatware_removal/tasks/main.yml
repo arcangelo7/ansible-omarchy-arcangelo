@@ -153,6 +153,56 @@
   loop: "{{ hey_files_removal_result.results }}"
   when: hey_files_removal_result is defined
 
+- name: Remove HEY Calendar keybinding from bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "^bindd.*SUPER.*C.*Calendar.*$"
+    state: absent
+  ignore_errors: yes
+  register: hey_calendar_keybinding_removal
+
+- name: Show HEY Calendar keybinding removal result
+  debug:
+    msg: "HEY Calendar keybinding - Status: {{ 'Removed' if hey_calendar_keybinding_removal.changed else 'Not present' }}"
+  when: hey_calendar_keybinding_removal is defined
+
+- name: Remove HEY Email keybinding from bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "^bindd.*SUPER.*E.*Email.*$"
+    state: absent
+  ignore_errors: yes
+  register: hey_email_keybinding_removal
+
+- name: Show HEY Email keybinding removal result
+  debug:
+    msg: "HEY Email keybinding - Status: {{ 'Removed' if hey_email_keybinding_removal.changed else 'Not present' }}"
+  when: hey_email_keybinding_removal is defined
+
+- name: Remove Grok keybinding from bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "^bindd.*SUPER SHIFT.*A.*Grok.*$"
+    state: absent
+  ignore_errors: yes
+  register: grok_keybinding_removal
+
+- name: Show Grok keybinding removal result
+  debug:
+    msg: "Grok keybinding - Status: {{ 'Removed' if grok_keybinding_removal.changed else 'Not present' }}"
+  when: grok_keybinding_removal is defined
+
+- name: Reload Hyprland configuration after HEY and Grok keybindings removal
+  ansible.builtin.command: hyprctl reload
+  ignore_errors: yes
+  when: hey_calendar_keybinding_removal.changed or hey_email_keybinding_removal.changed or grok_keybinding_removal.changed
+  register: hey_grok_hyprland_reload
+
+- name: Show Hyprland reload result after HEY and Grok keybindings removal
+  debug:
+    msg: "Hyprland reload - Status: {{ 'Success' if hey_grok_hyprland_reload.rc == 0 else 'Failed' }}"
+  when: hey_grok_hyprland_reload is defined and not hey_grok_hyprland_reload.skipped | default(false)
+
 - name: Remove Signal configuration files
   ansible.builtin.file:
     path: "{{ item }}"
@@ -205,3 +255,42 @@
   debug:
     msg: "Hyprland reload - Status: {{ 'Success' if signal_hyprland_reload.rc == 0 else 'Failed' }}"
   when: signal_hyprland_reload is defined and not signal_hyprland_reload.skipped | default(false)
+
+- name: Remove ChatGPT web app files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ chatgpt_webapp_files }}"
+  when: chatgpt_webapp_files is defined and chatgpt_webapp_files | length > 0
+  ignore_errors: yes
+  register: chatgpt_files_removal_result
+
+- name: Show ChatGPT files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ chatgpt_files_removal_result.results }}"
+  when: chatgpt_files_removal_result is defined
+
+- name: Remove ChatGPT keybinding from bindings.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    regexp: "^bindd.*SUPER.*A.*ChatGPT.*$"
+    state: absent
+  ignore_errors: yes
+  register: chatgpt_keybinding_removal
+
+- name: Show ChatGPT keybinding removal result
+  debug:
+    msg: "ChatGPT keybinding - Status: {{ 'Removed' if chatgpt_keybinding_removal.changed else 'Not present' }}"
+  when: chatgpt_keybinding_removal is defined
+
+- name: Reload Hyprland configuration after ChatGPT removal
+  ansible.builtin.command: hyprctl reload
+  ignore_errors: yes
+  when: chatgpt_keybinding_removal.changed
+  register: chatgpt_hyprland_reload
+
+- name: Show Hyprland reload result after ChatGPT removal
+  debug:
+    msg: "Hyprland reload - Status: {{ 'Success' if chatgpt_hyprland_reload.rc == 0 else 'Failed' }}"
+  when: chatgpt_hyprland_reload is defined and not chatgpt_hyprland_reload.skipped | default(false)

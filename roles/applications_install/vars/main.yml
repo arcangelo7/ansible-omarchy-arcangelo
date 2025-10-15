@@ -2,3 +2,10 @@
 applications_to_install:
   - name: bitwarden
     description: "Secure and open-source password manager"
+
+webapps_to_install:
+  - name: "Claude"
+    url: "https://claude.ai"
+    icon_url: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/claude-ai-icon.png"
+    keybinding: "SUPER, A"
+    description: "AI assistant by Anthropic"

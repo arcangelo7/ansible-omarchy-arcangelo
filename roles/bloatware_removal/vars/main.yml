@@ -64,3 +64,12 @@ hey_webapp_files:
 
 signal_config_files:
   - "{{ ansible_env.HOME }}/.config/Signal"
+
+chatgpt_webapp_files:
+  - "{{ ansible_env.HOME }}/.local/share/applications/ChatGPT.desktop"
+  - "{{ ansible_env.HOME }}/.local/share/applications/icons/ChatGPT.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/applications/icons/ChatGPT.png"
+  - "{{ ansible_env.HOME }}/.local/share/icons/hicolor/48x48/apps/ChatGPT.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps/ChatGPT.conf"
+  - "{{ ansible_env.HOME }}/.config/ChatGPT"
+  - "{{ ansible_env.HOME }}/.cache/ChatGPT"
