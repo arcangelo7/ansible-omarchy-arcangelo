@@ -15,3 +15,48 @@ onepassword_config_files:
   - "{{ ansible_env.HOME }}/.config/vivaldi-snapshot/NativeMessagingHosts/com.1password.1password.json"
   - "{{ ansible_env.HOME }}/.mozilla/native-messaging-hosts/com.1password.1password.json"
   - "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps/1password.conf"
+
+basecamp_webapp_files:
+  - "{{ ansible_env.HOME }}/.local/share/applications/Basecamp.desktop"
+  - "{{ ansible_env.HOME }}/.local/share/applications/icons/Basecamp.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/applications/icons/Basecamp.png"
+  - "{{ ansible_env.HOME }}/.local/share/icons/hicolor/48x48/apps/Basecamp.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps/Basecamp.conf"
+  - "{{ ansible_env.HOME }}/.config/Basecamp"
+  - "{{ ansible_env.HOME }}/.cache/Basecamp"
+
+google_contacts_webapp_files:
+  - "{{ ansible_env.HOME }}/.local/share/applications/Google Contacts.desktop"
+  - "{{ ansible_env.HOME }}/.local/share/applications/icons/Google Contacts.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/applications/icons/Google Contacts.png"
+  - "{{ ansible_env.HOME }}/.local/share/icons/hicolor/48x48/apps/Google Contacts.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps/Google Contacts.conf"
+  - "{{ ansible_env.HOME }}/.config/Google Contacts"
+  - "{{ ansible_env.HOME }}/.cache/Google Contacts"
+
+google_messages_webapp_files:
+  - "{{ ansible_env.HOME }}/.local/share/applications/Google Messages.desktop"
+  - "{{ ansible_env.HOME }}/.local/share/applications/icons/Google Messages.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/applications/icons/Google Messages.png"
+  - "{{ ansible_env.HOME }}/.local/share/icons/hicolor/48x48/apps/Google Messages.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps/Google Messages.conf"
+  - "{{ ansible_env.HOME }}/.config/Google Messages"
+  - "{{ ansible_env.HOME }}/.cache/Google Messages"
+
+google_photos_webapp_files:
+  - "{{ ansible_env.HOME }}/.local/share/applications/Google Photos.desktop"
+  - "{{ ansible_env.HOME }}/.local/share/applications/icons/Google Photos.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/applications/icons/Google Photos.png"
+  - "{{ ansible_env.HOME }}/.local/share/icons/hicolor/48x48/apps/Google Photos.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps/Google Photos.conf"
+  - "{{ ansible_env.HOME }}/.config/Google Photos"
+  - "{{ ansible_env.HOME }}/.cache/Google Photos"
+
+hey_webapp_files:
+  - "{{ ansible_env.HOME }}/.local/share/applications/HEY.desktop"
+  - "{{ ansible_env.HOME }}/.local/share/applications/icons/HEY.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/applications/icons/HEY.png"
+  - "{{ ansible_env.HOME }}/.local/share/icons/hicolor/48x48/apps/HEY.png"
+  - "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps/HEY.conf"
+  - "{{ ansible_env.HOME }}/.config/HEY"
+  - "{{ ansible_env.HOME }}/.cache/HEY"

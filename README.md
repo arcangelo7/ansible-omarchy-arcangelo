@@ -76,6 +76,13 @@ Removes unwanted software from the system.
 - 1password-beta
 - 1password-cli
 
+**Web apps removed:**
+- Basecamp (including desktop entry, icons, config and cache files)
+- Google Contacts (including desktop entry, icons, config and cache files)
+- Google Messages (including desktop entry, icons, config and cache files)
+- Google Photos (including desktop entry, icons, config and cache files)
+- HEY (including desktop entry, icons, config and cache files)
+
 ### 2. applications_install
 
 Installs essential applications.

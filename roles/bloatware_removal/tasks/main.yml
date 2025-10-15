@@ -53,3 +53,78 @@
   debug:
     msg: "Hyprland reload - Status: {{ 'Success' if hyprland_reload_result.rc == 0 else 'Failed' }}"
   when: hyprland_reload_result is defined and not hyprland_reload_result.skipped | default(false)
+
+- name: Remove Basecamp web app files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ basecamp_webapp_files }}"
+  when: basecamp_webapp_files is defined and basecamp_webapp_files | length > 0
+  ignore_errors: yes
+  register: basecamp_files_removal_result
+
+- name: Show Basecamp files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ basecamp_files_removal_result.results }}"
+  when: basecamp_files_removal_result is defined
+
+- name: Remove Google Contacts web app files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ google_contacts_webapp_files }}"
+  when: google_contacts_webapp_files is defined and google_contacts_webapp_files | length > 0
+  ignore_errors: yes
+  register: google_contacts_files_removal_result
+
+- name: Show Google Contacts files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ google_contacts_files_removal_result.results }}"
+  when: google_contacts_files_removal_result is defined
+
+- name: Remove Google Messages web app files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ google_messages_webapp_files }}"
+  when: google_messages_webapp_files is defined and google_messages_webapp_files | length > 0
+  ignore_errors: yes
+  register: google_messages_files_removal_result
+
+- name: Show Google Messages files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ google_messages_files_removal_result.results }}"
+  when: google_messages_files_removal_result is defined
+
+- name: Remove Google Photos web app files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ google_photos_webapp_files }}"
+  when: google_photos_webapp_files is defined and google_photos_webapp_files | length > 0
+  ignore_errors: yes
+  register: google_photos_files_removal_result
+
+- name: Show Google Photos files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ google_photos_files_removal_result.results }}"
+  when: google_photos_files_removal_result is defined
+
+- name: Remove HEY web app files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ hey_webapp_files }}"
+  when: hey_webapp_files is defined and hey_webapp_files | length > 0
+  ignore_errors: yes
+  register: hey_files_removal_result
+
+- name: Show HEY files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ hey_files_removal_result.results }}"
+  when: hey_files_removal_result is defined
