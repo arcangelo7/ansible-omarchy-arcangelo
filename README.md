@@ -109,10 +109,18 @@ Removes unwanted software from the system. Only handles package and file removal
 
 ### 2. applications_install
 
-Installs essential applications and web apps. Only handles package installation and desktop file creation.
+Installs essential applications and web apps. Supports both official repository packages and AUR packages. Only handles package installation and desktop file creation.
 
 **Packages installed:**
 - bitwarden (desktop app)
+- gst-plugin-gtk (dependency of Whispering)
+- gst-plugins-base (dependency of Whispering)
+- gst-plugins-good (dependency of Whispering)
+- gst-plugins-bad (dependency of Whispering)
+- gst-plugin-pipewire (dependency of Whispering)
+
+**AUR packages installed:**
+- whispering-bin (Speech-to-text transcription application with keyboard shortcuts)
 
 **Web apps installed:**
 - Claude (AI assistant by Anthropic)

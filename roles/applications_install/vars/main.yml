@@ -2,6 +2,20 @@
 applications_to_install:
   - name: bitwarden
     description: "Secure and open-source password manager"
+  - name: gst-plugin-gtk
+    description: "GStreamer GTK plugin"
+  - name: gst-plugins-base
+    description: "GStreamer base plugins"
+  - name: gst-plugins-good
+    description: "GStreamer good plugins (required for Whispering audio support)"
+  - name: gst-plugins-bad
+    description: "GStreamer bad plugins (required for Whispering)"
+  - name: gst-plugin-pipewire
+    description: "GStreamer PipeWire plugin"
+
+aur_applications_to_install:
+  - name: whispering-bin
+    description: "Speech-to-text transcription application with keyboard shortcuts"
 
 webapps_to_install:
   - name: "Claude"
