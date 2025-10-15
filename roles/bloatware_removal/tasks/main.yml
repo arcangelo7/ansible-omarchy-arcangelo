@@ -51,5 +51,5 @@
 
 - name: Show Hyprland reload result
   debug:
-    msg: "Hyprland reload - Status: {{ 'Success' if hyprland_reload_result.rc == 0 else 'Failed or not needed' }}"
-  when: hyprland_reload_result is defined
+    msg: "Hyprland reload - Status: {{ 'Success' if hyprland_reload_result.rc == 0 else 'Failed' }}"
+  when: hyprland_reload_result is defined and not hyprland_reload_result.skipped | default(false)
