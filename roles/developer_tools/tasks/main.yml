@@ -15,22 +15,6 @@
   loop: "{{ python_tools_install_result.results }}"
   when: python_tools_install_result is defined
 
-- name: Verify Python tools are installed correctly
-  command: "pacman -Q {{ item.name }}"
-  loop: "{{ python_tools_to_install }}"
-  register: verify_python_tools
-  changed_when: false
-  failed_when: false
-  when: python_tools_to_install is defined and python_tools_to_install | length > 0
-
-- name: Show installed Python tools versions
-  debug:
-    msg: "{{ item.stdout }}"
-  loop: "{{ verify_python_tools.results }}"
-  when:
-    - verify_python_tools is defined
-    - item.rc == 0
-
 - name: Configure pipx PATH for current user
   ansible.builtin.command: pipx ensurepath
   register: pipx_ensurepath
@@ -71,24 +55,6 @@
   loop: "{{ npm_install_result.results }}"
   when: npm_install_result is defined
 
-- name: Verify npm packages are installed correctly
-  ansible.builtin.command:
-    cmd: "mise exec -- npm list -g --depth=0 {{ item.name }}"
-  loop: "{{ npm_packages_to_install }}"
-  register: verify_npm_install
-  changed_when: false
-  failed_when: false
-  when: npm_packages_to_install is defined and npm_packages_to_install | length > 0
-
-- name: Show installed npm package versions
-  debug:
-    msg: "{{ item.stdout_lines | select('search', item.item.name) | first }}"
-  loop: "{{ verify_npm_install.results }}"
-  when:
-    - verify_npm_install is defined
-    - item.rc == 0
-    - item.stdout_lines | select('search', item.item.name) | list | length > 0
-
 - name: Install Flutter Linux development dependencies
   community.general.pacman:
     name: "{{ item.name }}"
@@ -104,22 +70,6 @@
     msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
   loop: "{{ flutter_deps_install_result.results }}"
   when: flutter_deps_install_result is defined
-
-- name: Verify Flutter Linux dependencies are installed correctly
-  command: "pacman -Q {{ item.name }}"
-  loop: "{{ flutter_linux_dev_packages }}"
-  register: verify_flutter_deps
-  changed_when: false
-  failed_when: false
-  when: flutter_linux_dev_packages is defined and flutter_linux_dev_packages | length > 0
-
-- name: Show installed Flutter Linux dependencies versions
-  debug:
-    msg: "{{ item.stdout }}"
-  loop: "{{ verify_flutter_deps.results }}"
-  when:
-    - verify_flutter_deps is defined
-    - item.rc == 0
 
 - name: Install Flutter Android dependencies via pacman
   community.general.pacman:
