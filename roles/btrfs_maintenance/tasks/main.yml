@@ -1,0 +1,76 @@
+---
+- name: Enable monthly BTRFS scrubbing for root filesystem
+  ansible.builtin.systemd:
+    name: "btrfs-scrub@-.timer"
+    enabled: true
+    state: started
+  become: true
+  register: scrub_timer_result
+
+- name: Show BTRFS scrub timer status
+  debug:
+    msg: "BTRFS monthly scrub - Status: {{ 'Enabled and started' if scrub_timer_result.changed else 'Already enabled' }}"
+
+- name: Create BTRFS balance service
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/btrfs-balance@.service
+    content: |
+      [Unit]
+      Description=Balance BTRFS filesystem on %f
+      ConditionPathIsMountPoint=%f
+      RequiresMountsFor=%f
+
+      [Service]
+      Type=oneshot
+      Nice=19
+      IOSchedulingClass=idle
+      KillSignal=SIGINT
+      ExecStart=/usr/bin/btrfs balance start -dusage=50 -musage=50 %f
+    mode: '0644'
+  become: true
+  register: balance_service_result
+
+- name: Show BTRFS balance service creation status
+  debug:
+    msg: "BTRFS balance service - Status: {{ 'Created' if balance_service_result.changed else 'Already present' }}"
+
+- name: Create BTRFS balance timer
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/btrfs-balance@.timer
+    content: |
+      [Unit]
+      Description=Monthly BTRFS balance on %f
+
+      [Timer]
+      OnCalendar=monthly
+      AccuracySec=1d
+      RandomizedDelaySec=1w
+      Persistent=true
+
+      [Install]
+      WantedBy=timers.target
+    mode: '0644'
+  become: true
+  register: balance_timer_file_result
+
+- name: Show BTRFS balance timer creation status
+  debug:
+    msg: "BTRFS balance timer - Status: {{ 'Created' if balance_timer_file_result.changed else 'Already present' }}"
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: true
+  become: true
+  when: balance_service_result.changed or balance_timer_file_result.changed
+
+- name: Enable monthly BTRFS balancing for root filesystem
+  ansible.builtin.systemd:
+    name: "btrfs-balance@-.timer"
+    enabled: true
+    state: started
+  become: true
+  register: balance_timer_result
+
+- name: Show BTRFS balance timer activation status
+  debug:
+    msg: "BTRFS monthly balance - Status: {{ 'Enabled and started' if balance_timer_result.changed else 'Already enabled' }}"

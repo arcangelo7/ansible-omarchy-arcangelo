@@ -15,6 +15,9 @@
     - role: system_settings
       tags: ['system']
 
+    - role: btrfs_maintenance
+      tags: ['btrfs', 'system']
+
     - role: applications_config
       tags: ['apps-config']
 

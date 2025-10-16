@@ -45,6 +45,11 @@ ansible-playbook playbook.yml --tags apps -K
 ansible-playbook playbook.yml --tags dev -K
 ```
 
+**BTRFS maintenance configuration only:**
+```bash
+ansible-playbook playbook.yml --tags btrfs -K
+```
+
 **Multiple roles (apps + Hyprland config):**
 ```bash
 ansible-playbook playbook.yml --tags apps,hyprland -K
@@ -167,7 +172,18 @@ Centralized management of all Hyprland configuration changes. This role is respo
 
 **Important:** After first run, logout/login is required for whispering-toggle to work
 
-### 4. system_settings
+### 4. btrfs_maintenance
+
+Configures automatic BTRFS filesystem maintenance tasks.
+
+**Features:**
+- Monthly scrubbing (integrity verification and automatic error correction)
+- Monthly balancing (space optimization, only for blocks with <50% usage)
+- Uses systemd timers for reliable scheduling
+- Low priority execution (nice 19, idle I/O scheduling)
+- Random delay to avoid resource spikes
+
+### 5. system_settings
 
 Configures system-level settings for Omarchy (monitor scaling, keyboard layout, shell integration).
 
@@ -190,7 +206,7 @@ Edit `group_vars/all/system_settings.yml` to customize:
 - Keyboard: US International with dead keys
 - Mise: Enabled (auto-activates in bash shell)
 
-### 5. applications_config
+### 6. applications_config
 
 Manages configuration for various applications.
 
@@ -214,7 +230,7 @@ alacritty_font_size: 12
 default_browser: "firefox.desktop"  # Options: firefox.desktop, chromium.desktop, etc.
 ```
 
-### 6. developer_tools
+### 7. developer_tools
 
 Installs developer tools for Python, Node.js, and Flutter development. Automatically installs Node.js LTS via Mise if not already present.
 
