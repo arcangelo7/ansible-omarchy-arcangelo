@@ -13,3 +13,27 @@ npm_packages_to_install:
 
 flutter_install_dir: "/home/{{ ansible_user_id }}/development"
 flutter_releases_url: "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json"
+flutter_linux_dev_packages:
+  - name: cmake
+    description: "Build system required for Flutter Linux development"
+  - name: ninja
+    description: "Build tool required for Flutter Linux development"
+
+flutter_android_packages:
+  - name: jdk17-openjdk
+    description: "Java Development Kit required for Android development"
+
+flutter_android_aur_packages:
+  - name: android-sdk
+    description: "Android Software Development Kit"
+  - name: android-sdk-build-tools
+    description: "Android SDK build tools"
+  - name: android-sdk-cmdline-tools-latest
+    description: "Android SDK command-line tools"
+  - name: android-platform
+    description: "Android platform packages"
+  - name: android-sdk-platform-tools
+    description: "Android SDK platform tools (adb, fastboot, etc.)"
+
+android_system_images:
+  - "system-images;android-34;google_apis_playstore;x86_64"

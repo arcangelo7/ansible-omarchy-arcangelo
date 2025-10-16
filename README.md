@@ -194,7 +194,15 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 - Disables Flutter analytics by default
 - Supports manual version updates via `flutter upgrade` command
 - Prerequisites (curl, git, unzip, xz, zip, mesa) already included in Arch Linux base
-- Note: Requires approximately 1.5GB of disk space
+- Installs Linux development dependencies (cmake, ninja) for building Flutter desktop apps
+- Installs Android development dependencies:
+  - JDK 17 (OpenJDK) via pacman
+  - Android SDK, build tools, platform tools, and command-line tools via AUR
+  - Automatically copies Android SDK to `~/android-sdk` with proper ownership
+  - Configures ANDROID_HOME, ANDROID_AVD_HOME, and JAVA_HOME environment variables
+  - Accepts Android licenses automatically
+  - Installs Android system images for emulators (Android 34 with Google Play)
+- Note: Full installation requires approximately 3-4GB of disk space (including Android SDK)
 
 ## Complete keybindings reference
 

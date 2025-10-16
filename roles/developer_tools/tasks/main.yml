@@ -89,6 +89,160 @@
     - item.rc == 0
     - item.stdout_lines | select('search', item.item.name) | list | length > 0
 
+- name: Install Flutter Linux development dependencies
+  community.general.pacman:
+    name: "{{ item.name }}"
+    state: present
+    update_cache: yes
+  loop: "{{ flutter_linux_dev_packages }}"
+  when: flutter_linux_dev_packages is defined and flutter_linux_dev_packages | length > 0
+  become: yes
+  register: flutter_deps_install_result
+
+- name: Show Flutter Linux dependencies installation results
+  debug:
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
+  loop: "{{ flutter_deps_install_result.results }}"
+  when: flutter_deps_install_result is defined
+
+- name: Verify Flutter Linux dependencies are installed correctly
+  command: "pacman -Q {{ item.name }}"
+  loop: "{{ flutter_linux_dev_packages }}"
+  register: verify_flutter_deps
+  changed_when: false
+  failed_when: false
+  when: flutter_linux_dev_packages is defined and flutter_linux_dev_packages | length > 0
+
+- name: Show installed Flutter Linux dependencies versions
+  debug:
+    msg: "{{ item.stdout }}"
+  loop: "{{ verify_flutter_deps.results }}"
+  when:
+    - verify_flutter_deps is defined
+    - item.rc == 0
+
+- name: Install Flutter Android dependencies via pacman
+  community.general.pacman:
+    name: "{{ item.name }}"
+    state: present
+    update_cache: yes
+  loop: "{{ flutter_android_packages }}"
+  when: flutter_android_packages is defined and flutter_android_packages | length > 0
+  become: yes
+  register: flutter_android_install_result
+
+- name: Show Flutter Android dependencies installation results
+  debug:
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
+  loop: "{{ flutter_android_install_result.results }}"
+  when: flutter_android_install_result is defined
+
+- name: Install Flutter Android SDK packages from AUR
+  kewlfft.aur.aur:
+    name: "{{ item.name }}"
+    use: yay
+    state: present
+    extra_args: "--noconfirm"
+  loop: "{{ flutter_android_aur_packages }}"
+  when: flutter_android_aur_packages is defined and flutter_android_aur_packages | length > 0
+  become: yes
+  become_user: aur_builder
+  register: flutter_android_aur_result
+
+- name: Show Flutter Android AUR packages installation results
+  debug:
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
+  loop: "{{ flutter_android_aur_result.results }}"
+  when: flutter_android_aur_result is defined
+
+- name: Check if Android SDK exists in /opt
+  ansible.builtin.stat:
+    path: /opt/android-sdk
+  register: android_sdk_opt
+  when: flutter_android_aur_packages is defined
+
+- name: Check if Android SDK already exists in home directory
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/android-sdk"
+  register: android_sdk_home
+  when: flutter_android_aur_packages is defined
+
+- name: Copy Android SDK to home directory
+  ansible.builtin.command:
+    cmd: cp -R /opt/android-sdk {{ ansible_env.HOME }}/
+  when:
+    - flutter_android_aur_packages is defined
+    - android_sdk_opt.stat.exists
+    - not android_sdk_home.stat.exists
+  become: yes
+  register: android_sdk_copied
+
+- name: Set ownership of Android SDK in home directory
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/android-sdk"
+    owner: "{{ ansible_user_id }}"
+    group: "{{ ansible_user_id }}"
+    recurse: yes
+  when:
+    - flutter_android_aur_packages is defined
+    - android_sdk_home.stat.exists or (android_sdk_copied is defined and android_sdk_copied.changed)
+  become: yes
+
+- name: Configure Android environment variables in .bashrc
+  ansible.builtin.blockinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    marker: "# {mark} ANSIBLE MANAGED BLOCK - Flutter Android SDK"
+    block: |
+      export ANDROID_HOME=$HOME/android-sdk
+      export PATH=$PATH:$ANDROID_HOME/platform-tools
+      export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
+      export ANDROID_AVD_HOME=$HOME/.config/.android/avd
+  when: flutter_android_aur_packages is defined
+
+- name: Create .android directory for AVD symlink
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.android"
+    state: directory
+    mode: '0755'
+  when: flutter_android_aur_packages is defined
+
+- name: Accept Android licenses
+  ansible.builtin.shell: |
+    yes | {{ flutter_install_dir }}/flutter/bin/flutter doctor --android-licenses
+  register: android_licenses
+  changed_when: "'All SDK package licenses accepted' in android_licenses.stdout"
+  failed_when: false
+  when:
+    - flutter_install_dir is defined
+    - flutter_android_aur_packages is defined
+    - android_sdk_home.stat.exists or (android_sdk_copied is defined and android_sdk_copied.changed)
+
+- name: Show Android licenses acceptance status
+  debug:
+    msg: "Android licenses - Status: {{ 'Accepted' if android_licenses.changed else 'Already accepted or Flutter not yet installed' }}"
+  when:
+    - flutter_android_aur_packages is defined
+    - android_licenses is defined
+
+- name: Install Android system images for emulators
+  ansible.builtin.shell: |
+    yes | {{ ansible_env.HOME }}/android-sdk/cmdline-tools/latest/bin/sdkmanager "{{ item }}"
+  loop: "{{ android_system_images }}"
+  when:
+    - android_system_images is defined
+    - android_sdk_home.stat.exists or (android_sdk_copied is defined and android_sdk_copied.changed)
+  register: android_system_images_install
+  changed_when: "'Installing' in android_system_images_install.stdout"
+  failed_when: false
+
+- name: Show Android system images installation status
+  debug:
+    msg: "Android system image {{ item.item }} - Status: {{ 'Installed' if item.changed else 'Already present' }}"
+  loop: "{{ android_system_images_install.results }}"
+  when:
+    - android_system_images is defined
+    - android_system_images_install is defined
+
 - name: Create development directory
   ansible.builtin.file:
     path: "{{ flutter_install_dir }}"
