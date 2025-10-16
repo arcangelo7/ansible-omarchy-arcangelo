@@ -200,11 +200,17 @@ Manages configuration for various applications.
 - Backup of configuration before changes
 - Preserves Omarchy theme integration
 
+#### Default browser
+- Sets the default browser for HTTP/HTTPS links
+- Modifies `~/.config/mimeapps.list` for MIME type associations
+- Creates backup before changes
+
 **Configuration:**
 Edit `roles/applications_config/defaults/main.yml` to customize:
 
 ```yaml
 alacritty_font_size: 12
+default_browser: "firefox.desktop"  # Options: firefox.desktop, chromium.desktop, etc.
 ```
 
 ### 6. developer_tools

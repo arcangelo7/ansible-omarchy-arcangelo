@@ -3,3 +3,6 @@
 
 # Alacritty terminal font size
 alacritty_font_size: 12
+
+# Default browser
+default_browser: "firefox.desktop"

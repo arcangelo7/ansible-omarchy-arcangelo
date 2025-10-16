@@ -6,3 +6,32 @@
     dest: "{{ ansible_env.HOME }}/.config/alacritty/alacritty.toml"
     mode: '0644'
     backup: yes
+
+# Set Firefox as default browser
+- name: Ensure .config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.config"
+    state: directory
+    mode: '0755'
+
+- name: Set default browser for HTTP/HTTPS
+  community.general.ini_file:
+    path: "{{ ansible_env.HOME }}/.config/mimeapps.list"
+    section: "Default Applications"
+    option: "{{ item }}"
+    value: "{{ default_browser }}"
+    mode: '0644'
+    backup: yes
+  loop:
+    - "text/html"
+    - "x-scheme-handler/http"
+    - "x-scheme-handler/https"
+    - "x-scheme-handler/about"
+    - "x-scheme-handler/unknown"
+
+- name: Set default browser via xdg-settings
+  ansible.builtin.command:
+    cmd: "xdg-settings set default-web-browser {{ default_browser }}"
+  changed_when: true
+  environment:
+    DISPLAY: ":0"
