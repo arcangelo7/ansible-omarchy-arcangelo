@@ -34,6 +34,8 @@ aur_applications_to_install:
     description: "Speech-to-text transcription application with keyboard shortcuts"
   - name: visual-studio-code-bin
     description: "Code editor for building and debugging modern web and cloud applications"
+  - name: zotero-bin
+    description: "Reference manager to collect, organize, cite, and share research sources"
   - name: ddcui
     description: "Graphical user interface for ddcutil to control monitor settings"
 

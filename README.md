@@ -125,6 +125,7 @@ Installs essential applications and web apps. Supports both official repository 
 **AUR packages installed:**
 - whispering-bin (speech-to-text transcription application with keyboard shortcuts)
 - visual-studio-code-bin (no presentations needed)
+- zotero-bin (reference manager to collect, organize, cite, and share research sources)
 - ddcui (graphical user interface for ddcutil to control monitor settings)
 
 **Web apps installed:**
