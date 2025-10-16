@@ -111,6 +111,7 @@ Installs essential applications and web apps. Supports both official repository 
 - gst-plugin-pipewire (dependency of Whispering)
 - ydotool (keyboard automation tool for Wayland)
 - wireguard-tools (WireGuard VPN userspace tools for secure network tunneling)
+- openresolv (resolv.conf management framework required by WireGuard for DNS configuration)
 - ddcutil (monitor control via DDC/CI and USB for brightness adjustment)
 - firefox (no presentations needed)
 - thunderbird (no presentations needed)

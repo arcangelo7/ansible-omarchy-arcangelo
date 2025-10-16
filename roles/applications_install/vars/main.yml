@@ -18,6 +18,8 @@ applications_to_install:
     description: "Generic command-line automation tool for Wayland"
   - name: wireguard-tools
     description: "WireGuard VPN userspace tools for secure network tunneling"
+  - name: openresolv
+    description: "Resolv.conf management framework (required by WireGuard for DNS configuration)"
   - name: ddcutil
     description: "Monitor control via DDC/CI and USB for brightness adjustment"
   - name: firefox
