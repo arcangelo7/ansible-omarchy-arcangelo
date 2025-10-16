@@ -26,6 +26,8 @@ applications_to_install:
     description: "Free and open-source web browser developed by Mozilla"
   - name: thunderbird
     description: "Free and open-source email client developed by Mozilla"
+  - name: btrfs-assistant
+    description: "GUI application for managing BTRFS filesystems and Snapper snapshots"
 
 aur_applications_to_install:
   - name: whispering-bin
