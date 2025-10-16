@@ -22,6 +22,8 @@ applications_to_install:
     description: "Monitor control via DDC/CI and USB for brightness adjustment"
   - name: firefox
     description: "Free and open-source web browser developed by Mozilla"
+  - name: thunderbird
+    description: "Free and open-source email client developed by Mozilla"
 
 aur_applications_to_install:
   - name: whispering-bin
