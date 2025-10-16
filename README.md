@@ -118,6 +118,7 @@ Centralized management of all Hyprland configuration changes. This role is respo
 
 **Keybindings added:**
 - Super + A: Claude AI assistant
+- Super + C: Visual Studio Code
 - Super + R: Voice recording (Whispering toggle)
 
 **Whispering voice recording setup:**
@@ -179,6 +180,79 @@ Installs developer tools via npm using Mise. Automatically installs Node.js LTS 
 
 **NPM packages installed:**
 - @anthropic-ai/claude-code (Official CLI for Claude AI by Anthropic)
+
+## Complete keybindings reference
+
+### Applications (SUPER + letter)
+- **A**: Claude AI assistant
+- **B**: Browser (Chromium)
+- **C**: Visual Studio Code
+- **D**: Docker (lazydocker in terminal)
+- **F**: File manager (Nautilus)
+- **G**: WhatsApp
+- **M**: Music (Spotify)
+- **N**: Editor (Neovim)
+- **O**: Obsidian
+- **R**: Voice recording (Whispering toggle)
+- **T**: Activity monitor (btop in terminal)
+- **X**: X (Twitter)
+- **Y**: YouTube
+- **/**: Passwords (Bitwarden)
+
+### Application variants (SUPER + SHIFT + letter)
+- **SHIFT + B**: Browser (private mode)
+- **SHIFT + X**: X Post (Twitter compose)
+
+### Menus and utilities (SUPER + special keys)
+- **Space**: Application launcher (walker)
+- **ALT + Space**: Omarchy menu
+- **K**: Show key bindings
+- **Escape**: Power menu
+- **CTRL + E**: Emoji picker
+
+### Window management (SUPER + keys)
+- **Return**: Terminal (Alacritty)
+- **W**: Close active window
+- **V**: Toggle floating window
+- **J**: Toggle split direction
+- **P**: Pseudo window (dwindle)
+- **Arrow keys**: Move focus
+- **SHIFT + Arrow keys**: Swap windows
+- **1-0**: Switch to workspace 1-10
+- **SHIFT + 1-0**: Move window to workspace 1-10
+- **TAB**: Next workspace
+- **SHIFT + TAB**: Previous workspace
+- **CTRL + TAB**: Former workspace
+- **-/=**: Resize window horizontally
+- **SHIFT + -/=**: Resize window vertically
+
+### Aesthetics (SUPER + modifiers + Space)
+- **SHIFT + Space**: Toggle top bar
+- **CTRL + Space**: Next background in theme
+- **SHIFT + CTRL + Space**: Pick new theme
+- **Backspace**: Toggle window transparency
+
+### Notifications (SUPER + comma)
+- **,**: Dismiss last notification
+- **SHIFT + ,**: Dismiss all notifications
+- **CTRL + ,**: Toggle do-not-disturb mode
+
+### Screenshots and recordings
+- **Print**: Screenshot of region
+- **SHIFT + Print**: Screenshot of window
+- **CTRL + Print**: Screenshot of display
+- **ALT + Print**: Screen record region
+- **ALT + SHIFT + Print**: Screen record region with audio
+- **CTRL + ALT + Print**: Screen record display
+- **CTRL + ALT + SHIFT + Print**: Screen record display with audio
+- **SUPER + Print**: Color picker
+
+### System
+- **CTRL + I**: Toggle locking on idle
+- **CTRL + N**: Toggle nightlight
+- **CTRL + SUPER + S**: Share menu
+- **ALT + Tab**: Cycle windows
+- **ALT + SHIFT + Tab**: Cycle windows (reverse)
 
 ## Omarchy compliance
 

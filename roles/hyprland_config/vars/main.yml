@@ -24,6 +24,10 @@ keybindings_to_update:
 
 # Keybindings to add
 keybindings_to_add:
+  - keybinding: "SUPER, C"
+    name: "VS Code"
+    command: "uwsm app -- code"
+    description: "Visual Studio Code"
   - keybinding: "SUPER, R"
     name: "Voice recording"
     command: "~/.local/bin/whispering-toggle"
