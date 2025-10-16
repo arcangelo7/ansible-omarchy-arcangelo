@@ -1,0 +1,44 @@
+---
+- name: Install Node.js globally via mise
+  ansible.builtin.command:
+    cmd: "mise use -g node@lts"
+  register: mise_node_install
+  changed_when: "'installed' in mise_node_install.stderr or 'installed' in mise_node_install.stdout"
+  failed_when: mise_node_install.rc != 0
+
+- name: Show Node.js installation status
+  debug:
+    msg: "Node.js installation status: {{ 'Installed' if mise_node_install.changed else 'Already present' }}"
+
+- name: Install npm packages globally via mise
+  ansible.builtin.command:
+    cmd: "mise exec -- npm install -g {{ item.name }}"
+  loop: "{{ npm_packages_to_install }}"
+  when: npm_packages_to_install is defined and npm_packages_to_install | length > 0
+  register: npm_install_result
+  changed_when: "'added' in npm_install_result.stdout or 'updated' in npm_install_result.stdout"
+  failed_when: npm_install_result.rc != 0
+
+- name: Show npm package installation results
+  debug:
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed/Updated' if item.changed else 'Already present' }}"
+  loop: "{{ npm_install_result.results }}"
+  when: npm_install_result is defined
+
+- name: Verify npm packages are installed correctly
+  ansible.builtin.command:
+    cmd: "mise exec -- npm list -g --depth=0 {{ item.name }}"
+  loop: "{{ npm_packages_to_install }}"
+  register: verify_npm_install
+  changed_when: false
+  failed_when: false
+  when: npm_packages_to_install is defined and npm_packages_to_install | length > 0
+
+- name: Show installed npm package versions
+  debug:
+    msg: "{{ item.stdout_lines | select('search', item.item.name) | first }}"
+  loop: "{{ verify_npm_install.results }}"
+  when:
+    - verify_npm_install is defined
+    - item.rc == 0
+    - item.stdout_lines | select('search', item.item.name) | list | length > 0

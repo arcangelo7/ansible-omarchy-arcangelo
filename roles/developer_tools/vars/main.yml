@@ -1,0 +1,4 @@
+---
+npm_packages_to_install:
+  - name: "@anthropic-ai/claude-code"
+    description: "Official CLI for Claude AI by Anthropic"

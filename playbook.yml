@@ -17,3 +17,6 @@
 
     - role: applications_config
       tags: ['apps-config', 'config']
+
+    - role: developer_tools
+      tags: ['dev', 'developer', 'tools']

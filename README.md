@@ -2,51 +2,6 @@
 
 Modular Ansible configuration to manage Omarchy installation and configuration on Arch Linux with my personal preferences.
 
-## Structure
-
-```
-ansible-omarchy-arcangelo/
-├── ansible.cfg              # Ansible configuration
-├── inventory.yml            # Inventory (localhost)
-├── playbook.yml            # Main playbook
-├── CLAUDE.md               # Omarchy automation reference
-├── group_vars/
-│   └── all/
-│       └── system_settings.yml  # System settings variables
-└── roles/
-    ├── bloatware_removal/   # Unwanted software removal
-    │   ├── tasks/
-    │   │   └── main.yml
-    │   └── vars/
-    │       └── main.yml
-    ├── applications_install/ # Applications installation
-    │   ├── tasks/
-    │   │   └── main.yml
-    │   └── vars/
-    │       └── main.yml
-    ├── hyprland_config/     # Hyprland configuration management
-    │   ├── tasks/
-    │   │   └── main.yml
-    │   └── vars/
-    │       └── main.yml
-    ├── system_settings/     # System settings (monitor, keyboard)
-    │   ├── tasks/
-    │   │   └── main.yml
-    │   ├── templates/
-    │   │   └── monitors.conf.j2
-    │   ├── handlers/
-    │   │   └── main.yml
-    │   └── defaults/
-    │       └── main.yml
-    └── applications_config/ # Applications configuration management
-        ├── tasks/
-        │   └── main.yml
-        ├── templates/
-        │   └── alacritty.toml.j2
-        └── defaults/
-            └── main.yml
-```
-
 ## Prerequisites
 
 Install Ansible if not already present:
@@ -217,6 +172,13 @@ Edit `roles/applications_config/defaults/main.yml` to customize:
 ```yaml
 alacritty_font_size: 12
 ```
+
+### 6. developer_tools
+
+Installs developer tools via npm using Mise. Automatically installs Node.js LTS via Mise if not already present.
+
+**NPM packages installed:**
+- @anthropic-ai/claude-code (Official CLI for Claude AI by Anthropic)
 
 ## Omarchy compliance
 
