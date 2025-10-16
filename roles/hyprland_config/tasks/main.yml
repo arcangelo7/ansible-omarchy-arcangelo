@@ -7,21 +7,6 @@
     backup: yes
   when: password_manager_app is defined
 
-- name: Configure gnome-keyring daemon in autostart
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/autostart.conf"
-    regexp: '^exec-once = .*gnome-keyring-daemon.*'
-    line: 'exec-once = gnome-keyring-daemon --start --components=pkcs11,secrets,ssh'
-    backup: yes
-    create: yes
-
-- name: Configure dbus environment update for keyring
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/autostart.conf"
-    line: 'exec-once = dbus-update-activation-environment --all'
-    backup: yes
-    create: yes
-
 - name: Remove bloatware keybindings from bindings.conf
   ansible.builtin.lineinfile:
     path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"

@@ -137,8 +137,6 @@ Centralized management of all Hyprland configuration changes. This role is respo
 
 **Configuration managed:**
 - Password manager keybinding (Super + /) → bitwarden-desktop
-- Gnome-keyring daemon autostart configuration
-- D-Bus environment update for keyring
 
 **Keybindings removed (bloatware cleanup):**
 - Super + A: ChatGPT
