@@ -20,6 +20,8 @@ applications_to_install:
     description: "WireGuard VPN userspace tools for secure network tunneling"
   - name: ddcutil
     description: "Monitor control via DDC/CI and USB for brightness adjustment"
+  - name: firefox
+    description: "Free and open-source web browser developed by Mozilla"
 
 aur_applications_to_install:
   - name: whispering-bin

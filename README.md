@@ -112,6 +112,7 @@ Installs essential applications and web apps. Supports both official repository 
 - ydotool (keyboard automation tool for Wayland)
 - wireguard-tools (WireGuard VPN userspace tools for secure network tunneling)
 - ddcutil (monitor control via DDC/CI and USB for brightness adjustment)
+- firefox (no presentations needed)
 
 **AUR packages installed:**
 - whispering-bin (speech-to-text transcription application with keyboard shortcuts)
