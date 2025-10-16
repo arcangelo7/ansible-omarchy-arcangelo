@@ -78,6 +78,7 @@ Installs essential applications and web apps. Supports both official repository 
 - The `aur_builder` user is created automatically on first run
 
 **Packages installed:**
+- p7zip (command-line file archiver with high compression ratio for 7z format)
 - bitwarden (desktop app)
 - gst-plugin-gtk (dependency of Whispering)
 - gst-plugins-base (dependency of Whispering)

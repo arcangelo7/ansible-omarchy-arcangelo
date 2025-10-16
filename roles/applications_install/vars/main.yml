@@ -1,5 +1,7 @@
 ---
 applications_to_install:
+  - name: p7zip
+    description: "Command-line file archiver with high compression ratio (7z format)"
   - name: bitwarden
     description: "Secure and open-source password manager"
   - name: gst-plugin-gtk
