@@ -1,4 +1,20 @@
 ---
+- name: Create aur_builder user for AUR package management
+  ansible.builtin.user:
+    name: aur_builder
+    create_home: yes
+    group: wheel
+  become: yes
+
+- name: Allow aur_builder to run pacman without password
+  ansible.builtin.lineinfile:
+    path: /etc/sudoers.d/11-install-aur_builder
+    line: 'aur_builder ALL=(ALL) NOPASSWD: /usr/bin/pacman'
+    create: yes
+    mode: 0644
+    validate: 'visudo -cf %s'
+  become: yes
+
 - name: Install applications via pacman
   community.general.pacman:
     name: "{{ item.name }}"
@@ -28,77 +44,22 @@
   loop: "{{ verify_install.results }}"
   when: item.rc == 0
 
-- name: Check if AUR applications are already installed
-  command: "pacman -Q {{ item.name }}"
-  loop: "{{ aur_applications_to_install }}"
-  register: aur_check
-  changed_when: false
-  failed_when: false
-  when: aur_applications_to_install is defined and aur_applications_to_install | length > 0
-
-- name: Build AUR packages with yay (without installing)
-  shell: "yay -G {{ item.item.name }} && cd {{ item.item.name }} && makepkg -sf --noconfirm"
-  args:
-    chdir: "/tmp"
-  loop: "{{ aur_check.results }}"
-  when:
-    - aur_applications_to_install is defined
-    - aur_applications_to_install | length > 0
-    - item.rc != 0
-  register: aur_build_result
-  ignore_errors: yes
-
-- name: Find built AUR package files
-  find:
-    paths: "/tmp/{{ item.item.name }}"
-    patterns: "{{ item.item.name }}-*.pkg.tar.zst"
-    excludes: "*-debug-*.pkg.tar.zst"
-  loop: "{{ aur_check.results }}"
-  when:
-    - aur_applications_to_install is defined
-    - aur_applications_to_install | length > 0
-    - item.rc != 0
-  register: aur_package_files
-
-- name: Install AUR packages with pacman
-  community.general.pacman:
-    name: "{{ item.files[0].path }}"
+- name: Install AUR applications with kewlfft.aur module
+  kewlfft.aur.aur:
+    name: "{{ item.name }}"
+    use: yay
     state: present
-  loop: "{{ aur_package_files.results }}"
-  when:
-    - aur_package_files is defined
-    - item.files is defined
-    - item.files | length > 0
+  loop: "{{ aur_applications_to_install }}"
+  when: aur_applications_to_install is defined and aur_applications_to_install | length > 0
   become: yes
+  become_user: aur_builder
   register: aur_install_result
 
 - name: Show AUR application installation results
   debug:
-    msg: "{{ item.item.item.item.name }} ({{ item.item.item.item.description }}) - Status: Installed from AUR"
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
   loop: "{{ aur_install_result.results }}"
-  when:
-    - aur_install_result is defined
-    - item.changed is defined
-    - item.changed
-
-- name: Clean up AUR build directories
-  file:
-    path: "/tmp/{{ item.item.name }}"
-    state: absent
-  loop: "{{ aur_check.results }}"
-  when:
-    - aur_applications_to_install is defined
-    - aur_applications_to_install | length > 0
-    - item.rc != 0
-  ignore_errors: yes
-
-- name: Show already installed AUR applications
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: Already present"
-  loop: "{{ aur_check.results }}"
-  when:
-    - aur_check is defined
-    - item.rc == 0
+  when: aur_install_result is defined
 
 - name: Verify AUR applications are installed correctly
   command: "pacman -Q {{ item.name }}"

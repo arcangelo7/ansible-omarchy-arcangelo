@@ -18,6 +18,8 @@ applications_to_install:
 aur_applications_to_install:
   - name: whispering-bin
     description: "Speech-to-text transcription application with keyboard shortcuts"
+  - name: visual-studio-code-bin
+    description: "Code editor for building and debugging modern web and cloud applications"
 
 webapps_to_install:
   - name: "Claude"

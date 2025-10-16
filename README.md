@@ -47,11 +47,16 @@ ansible-omarchy-arcangelo/
             └── main.yml
 ```
 
-## Prerequisite
+## Prerequisites
 
 Install Ansible if not already present:
    ```bash
    sudo pacman -S ansible
+   ```
+
+Install the required Ansible collection for AUR package management:
+   ```bash
+   ansible-galaxy collection install kewlfft.aur
    ```
 
 ## Usage
@@ -111,6 +116,12 @@ Removes unwanted software from the system. Only handles package and file removal
 
 Installs essential applications and web apps. Supports both official repository packages and AUR packages. Only handles package installation and desktop file creation.
 
+**AUR package management:**
+- Creates a dedicated `aur_builder` user for secure AUR package installation
+- Configures passwordless sudo access for pacman (required by AUR helpers)
+- Uses the `kewlfft.aur` Ansible collection with `yay` as the AUR helper
+- The `aur_builder` user is created automatically on first run
+
 **Packages installed:**
 - bitwarden (desktop app)
 - gst-plugin-gtk (dependency of Whispering)
@@ -121,7 +132,8 @@ Installs essential applications and web apps. Supports both official repository 
 - ydotool (keyboard automation tool for Wayland)
 
 **AUR packages installed:**
-- whispering-bin (Speech-to-text transcription application with keyboard shortcuts)
+- whispering-bin (speech-to-text transcription application with keyboard shortcuts)
+- visual-studio-code-bin (no presentations needed)
 
 **Web apps installed:**
 - Claude (AI assistant by Anthropic)
