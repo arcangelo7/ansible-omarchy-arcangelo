@@ -44,20 +44,6 @@
   loop: "{{ verify_install.results }}"
   when: item.rc == 0
 
-- name: Configure pipx PATH for current user
-  ansible.builtin.command: pipx ensurepath
-  register: pipx_ensurepath
-  changed_when: "'already' not in pipx_ensurepath.stdout"
-  failed_when: false
-  when: "'python-pipx' in applications_to_install | map(attribute='name') | list"
-
-- name: Show pipx ensurepath result
-  debug:
-    msg: "pipx PATH configuration - Status: {{ 'Configured' if pipx_ensurepath.changed else 'Already configured' }}"
-  when:
-    - pipx_ensurepath is defined
-    - "'python-pipx' in applications_to_install | map(attribute='name') | list"
-
 - name: Install AUR applications with kewlfft.aur module
   kewlfft.aur.aur:
     name: "{{ item.name }}"

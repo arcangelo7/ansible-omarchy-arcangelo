@@ -84,7 +84,6 @@ Installs essential applications and web apps. Supports both official repository 
 - gst-plugins-good (dependency of Whispering)
 - gst-plugins-bad (dependency of Whispering)
 - gst-plugin-pipewire (dependency of Whispering)
-- python-pipx (install and run Python applications in isolated environments)
 - ydotool (keyboard automation tool for Wayland)
 
 **AUR packages installed:**
@@ -177,7 +176,12 @@ alacritty_font_size: 12
 
 ### 6. developer_tools
 
-Installs developer tools via npm using Mise. Automatically installs Node.js LTS via Mise if not already present.
+Installs developer tools for Python and Node.js development. Automatically installs Node.js LTS via Mise if not already present.
+
+**Python tools installed:**
+- python-pipx (install and run Python applications in isolated environments)
+- python-poetry (Python dependency management and packaging made easy)
+- uv (extremely fast Python package installer and resolver written in Rust)
 
 **NPM packages installed:**
 - @anthropic-ai/claude-code (Official CLI for Claude AI by Anthropic)

@@ -14,8 +14,6 @@ applications_to_install:
     description: "GStreamer PipeWire plugin"
   - name: ydotool
     description: "Generic command-line automation tool for Wayland"
-  - name: python-pipx
-    description: "Install and run Python applications in isolated environments"
 
 aur_applications_to_install:
   - name: whispering-bin

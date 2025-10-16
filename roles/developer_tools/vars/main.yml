@@ -1,4 +1,12 @@
 ---
+python_tools_to_install:
+  - name: python-pipx
+    description: "Install and run Python applications in isolated environments"
+  - name: python-poetry
+    description: "Python dependency management and packaging made easy"
+  - name: uv
+    description: "Extremely fast Python package installer and resolver written in Rust"
+
 npm_packages_to_install:
   - name: "@anthropic-ai/claude-code"
     description: "Official CLI for Claude AI by Anthropic"

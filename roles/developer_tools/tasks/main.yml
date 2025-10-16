@@ -1,4 +1,50 @@
 ---
+- name: Install Python developer tools via pacman
+  community.general.pacman:
+    name: "{{ item.name }}"
+    state: present
+    update_cache: yes
+  loop: "{{ python_tools_to_install }}"
+  when: python_tools_to_install is defined and python_tools_to_install | length > 0
+  become: yes
+  register: python_tools_install_result
+
+- name: Show Python tools installation results
+  debug:
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
+  loop: "{{ python_tools_install_result.results }}"
+  when: python_tools_install_result is defined
+
+- name: Verify Python tools are installed correctly
+  command: "pacman -Q {{ item.name }}"
+  loop: "{{ python_tools_to_install }}"
+  register: verify_python_tools
+  changed_when: false
+  failed_when: false
+  when: python_tools_to_install is defined and python_tools_to_install | length > 0
+
+- name: Show installed Python tools versions
+  debug:
+    msg: "{{ item.stdout }}"
+  loop: "{{ verify_python_tools.results }}"
+  when:
+    - verify_python_tools is defined
+    - item.rc == 0
+
+- name: Configure pipx PATH for current user
+  ansible.builtin.command: pipx ensurepath
+  register: pipx_ensurepath
+  changed_when: "'already' not in pipx_ensurepath.stdout"
+  failed_when: false
+  when: "'python-pipx' in python_tools_to_install | map(attribute='name') | list"
+
+- name: Show pipx ensurepath result
+  debug:
+    msg: "pipx PATH configuration - Status: {{ 'Configured' if pipx_ensurepath.changed else 'Already configured' }}"
+  when:
+    - pipx_ensurepath is defined
+    - "'python-pipx' in python_tools_to_install | map(attribute='name') | list"
+
 - name: Install Node.js globally via mise
   ansible.builtin.command:
     cmd: "mise use -g node@lts"
