@@ -84,6 +84,7 @@ Installs essential applications and web apps. Supports both official repository 
 - gst-plugins-good (dependency of Whispering)
 - gst-plugins-bad (dependency of Whispering)
 - gst-plugin-pipewire (dependency of Whispering)
+- python-pipx (install and run Python applications in isolated environments)
 - ydotool (keyboard automation tool for Wayland)
 
 **AUR packages installed:**
