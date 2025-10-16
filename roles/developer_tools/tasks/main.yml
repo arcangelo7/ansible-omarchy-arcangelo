@@ -88,3 +88,120 @@
     - verify_npm_install is defined
     - item.rc == 0
     - item.stdout_lines | select('search', item.item.name) | list | length > 0
+
+- name: Create development directory
+  ansible.builtin.file:
+    path: "{{ flutter_install_dir }}"
+    state: directory
+    mode: '0755'
+  when: flutter_install_dir is defined
+
+- name: Check if Flutter is already installed
+  ansible.builtin.stat:
+    path: "{{ flutter_install_dir }}/flutter"
+  register: flutter_installed
+  when: flutter_install_dir is defined
+
+- name: Fetch Flutter releases metadata
+  ansible.builtin.uri:
+    url: "{{ flutter_releases_url }}"
+    return_content: yes
+  register: flutter_releases_data
+  when:
+    - flutter_install_dir is defined
+    - not flutter_installed.stat.exists
+
+- name: Extract latest stable release info
+  ansible.builtin.set_fact:
+    flutter_latest_stable: "{{ flutter_releases_data.json.releases | selectattr('channel', 'equalto', 'stable') | first }}"
+  when:
+    - flutter_install_dir is defined
+    - not flutter_installed.stat.exists
+    - flutter_releases_data is defined
+
+- name: Show Flutter version to be installed
+  debug:
+    msg: "Installing Flutter {{ flutter_latest_stable.version }} (latest stable)"
+  when:
+    - flutter_install_dir is defined
+    - flutter_latest_stable is defined
+
+- name: Download Flutter SDK tarball
+  ansible.builtin.get_url:
+    url: "https://storage.googleapis.com/flutter_infra_release/releases/{{ flutter_latest_stable.archive }}"
+    dest: "/tmp/flutter_linux_stable.tar.xz"
+    mode: '0644'
+  when:
+    - flutter_install_dir is defined
+    - not flutter_installed.stat.exists
+    - flutter_latest_stable is defined
+  register: flutter_download
+
+- name: Show Flutter download status
+  debug:
+    msg: "Flutter SDK tarball - Status: {{ 'Downloaded' if flutter_download.changed else 'Already present' }}"
+  when:
+    - flutter_install_dir is defined
+    - flutter_download is defined
+
+- name: Extract Flutter SDK
+  ansible.builtin.unarchive:
+    src: "/tmp/flutter_linux_stable.tar.xz"
+    dest: "{{ flutter_install_dir }}/"
+    remote_src: yes
+  when:
+    - flutter_install_dir is defined
+    - not flutter_installed.stat.exists
+    - flutter_latest_stable is defined
+  register: flutter_extract
+
+- name: Show Flutter extraction status
+  debug:
+    msg: "Flutter SDK - Status: {{ 'Extracted' if flutter_extract.changed else 'Already present' }}"
+  when:
+    - flutter_install_dir is defined
+    - flutter_extract is defined
+
+- name: Clean up Flutter tarball
+  ansible.builtin.file:
+    path: "/tmp/flutter_linux_stable.tar.xz"
+    state: absent
+  when:
+    - flutter_install_dir is defined
+    - flutter_download is defined
+    - flutter_download.changed
+
+- name: Add Flutter to PATH in .bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'export PATH="$PATH:{{ flutter_install_dir }}/flutter/bin"'
+    state: present
+    regexp: 'export PATH="\$PATH:.*/flutter/bin"'
+  when: flutter_install_dir is defined
+
+- name: Check Flutter analytics status
+  ansible.builtin.shell: |
+    {{ flutter_install_dir }}/flutter/bin/flutter config
+  register: flutter_config
+  changed_when: false
+  failed_when: false
+  when:
+    - flutter_install_dir is defined
+    - flutter_installed.stat.exists or (flutter_extract is defined and flutter_extract.changed)
+
+- name: Disable Flutter analytics
+  ansible.builtin.shell: |
+    {{ flutter_install_dir }}/flutter/bin/flutter config --no-analytics
+  when:
+    - flutter_install_dir is defined
+    - flutter_config is defined
+    - flutter_config.stdout is defined
+    - '"Analytics reporting is currently disabled" not in flutter_config.stdout'
+  register: flutter_analytics_disabled
+
+- name: Show Flutter analytics status
+  debug:
+    msg: "Flutter analytics - Status: {{ 'Disabled' if flutter_analytics_disabled.changed else 'Already disabled' }}"
+  when:
+    - flutter_install_dir is defined
+    - flutter_config is defined

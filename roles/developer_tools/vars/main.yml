@@ -10,3 +10,6 @@ python_tools_to_install:
 npm_packages_to_install:
   - name: "@anthropic-ai/claude-code"
     description: "Official CLI for Claude AI by Anthropic"
+
+flutter_install_dir: "/home/{{ ansible_user_id }}/development"
+flutter_releases_url: "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json"

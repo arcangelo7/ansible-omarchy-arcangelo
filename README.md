@@ -176,7 +176,7 @@ alacritty_font_size: 12
 
 ### 6. developer_tools
 
-Installs developer tools for Python and Node.js development. Automatically installs Node.js LTS via Mise if not already present.
+Installs developer tools for Python, Node.js, and Flutter development. Automatically installs Node.js LTS via Mise if not already present.
 
 **Python tools installed:**
 - python-pipx (install and run Python applications in isolated environments)
@@ -185,6 +185,16 @@ Installs developer tools for Python and Node.js development. Automatically insta
 
 **NPM packages installed:**
 - @anthropic-ai/claude-code (Official CLI for Claude AI by Anthropic)
+
+**Flutter SDK:**
+- Installs Flutter SDK following official manual installation guide
+- Automatically detects and downloads latest stable release via Flutter releases API
+- Installation directory: `~/development/flutter`
+- Automatically adds Flutter to PATH in `.bashrc`
+- Disables Flutter analytics by default
+- Supports manual version updates via `flutter upgrade` command
+- Prerequisites (curl, git, unzip, xz, zip, mesa) already included in Arch Linux base
+- Note: Requires approximately 1.5GB of disk space
 
 ## Complete keybindings reference
 
