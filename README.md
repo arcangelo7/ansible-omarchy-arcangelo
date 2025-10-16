@@ -124,8 +124,9 @@ Installs essential applications and web apps. Supports both official repository 
 **Web apps installed:**
 - Claude (AI assistant by Anthropic)
   - URL: https://claude.ai
-  - Icon: Downloaded from UXWing (512x512 PNG)
-  - Desktop file: Created in `~/.local/share/applications/`
+- Homelab (homelab services dashboard)
+  - URL: http://192.168.2.103:3000
+  - **Note:** This web app is configured with a local IP address and will only work on my machine when connected via VPN
 
 **Note:** Keybindings are configured by the `hyprland_config` role
 
@@ -150,6 +151,7 @@ Centralized management of all Hyprland configuration changes. This role is respo
 **Keybindings added:**
 - Super + A: Claude AI assistant
 - Super + C: Visual Studio Code
+- Super + H: Homelab services dashboard
 - Super + R: Voice recording (Whispering toggle)
 
 **Whispering voice recording setup:**
@@ -249,6 +251,7 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 - **D**: Docker (lazydocker in terminal)
 - **F**: File manager (Nautilus)
 - **G**: WhatsApp
+- **H**: Homelab services dashboard
 - **M**: Music (Spotify)
 - **N**: Editor (Neovim)
 - **O**: Obsidian

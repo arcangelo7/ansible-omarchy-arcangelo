@@ -32,3 +32,7 @@ keybindings_to_add:
     name: "Voice recording"
     command: "~/.local/bin/whispering-toggle"
     description: "Whispering voice transcription"
+  - keybinding: "SUPER, H"
+    name: "Homelab"
+    command: "omarchy-launch-or-focus-webapp Homelab \"http://192.168.2.103:3000\""
+    description: "Homelab services dashboard"

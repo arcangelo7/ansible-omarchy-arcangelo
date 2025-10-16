@@ -41,3 +41,8 @@ webapps_to_install:
     icon_url: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/claude-ai-icon.png"
     keybinding: "SUPER, A"
     description: "AI assistant by Anthropic"
+  - name: "Homelab"
+    url: "http://192.168.2.103:3000"
+    icon_url: "https://uxwing.com/wp-content/themes/uxwing/download/banking-finance/dashboard-monitoring-icon.png"
+    keybinding: "SUPER, H"
+    description: "Homelab services dashboard (VPN required)"
