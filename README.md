@@ -71,6 +71,12 @@ Removes unwanted software from the system. Only handles package and file removal
 
 Installs essential applications and web apps. Supports both official repository packages and AUR packages. Only handles package installation and desktop file creation.
 
+**System upgrade:**
+- Performs a full system upgrade (`pacman -Syu`) before installing any new packages
+- Upgrades all AUR packages (`yay -Syu`) after system upgrade
+- Ensures all existing packages are up-to-date before installation
+- Update cache is refreshed automatically
+
 **AUR package management:**
 - Creates a dedicated `aur_builder` user for secure AUR package installation
 - Configures passwordless sudo access for pacman (required by AUR helpers)
@@ -187,6 +193,11 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 
 **NPM packages installed:**
 - @anthropic-ai/claude-code (Official CLI for Claude AI by Anthropic)
+
+**Automatic updates:**
+- Android SDK components are automatically updated via `sdkmanager --update`
+- Updates all build tools, platform tools, system images, and other Android SDK components
+- Runs after initial installation to ensure latest versions
 
 **Flutter SDK:**
 - Installs Flutter SDK following official manual installation guide
