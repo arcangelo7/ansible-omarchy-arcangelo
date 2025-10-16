@@ -26,9 +26,36 @@ ansible-playbook playbook.yml -K
 
 ### Run only specific roles using tags
 
+**Important:** Tags work at role level only. Each tag runs the entire role (all tasks within that role). There are no task-level tags for granular execution.
+
 **Bloatware removal only:**
 ```bash
 ansible-playbook playbook.yml --tags bloatware -K
+```
+
+**Applications installation only:**
+```bash
+ansible-playbook playbook.yml --tags apps -K
+```
+
+**Developer tools installation only:**
+```bash
+ansible-playbook playbook.yml --tags dev -K
+```
+
+**Multiple roles (apps + Hyprland config):**
+```bash
+ansible-playbook playbook.yml --tags apps,hyprland -K
+```
+
+**Skip bloatware removal:**
+```bash
+ansible-playbook playbook.yml --skip-tags bloatware -K
+```
+
+**Skip heavy developer tools:**
+```bash
+ansible-playbook playbook.yml --skip-tags dev -K
 ```
 
 ### Dry-run mode (check without changes)

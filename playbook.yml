@@ -4,19 +4,19 @@
 
   roles:
     - role: bloatware_removal
-      tags: ['bloatware', 'cleanup']
+      tags: ['bloatware']
 
     - role: applications_install
-      tags: ['apps', 'install']
+      tags: ['apps']
 
     - role: hyprland_config
-      tags: ['hyprland', 'config']
+      tags: ['hyprland']
 
     - role: system_settings
-      tags: ['system', 'settings', 'monitor', 'keyboard']
+      tags: ['system']
 
     - role: applications_config
-      tags: ['apps-config', 'config']
+      tags: ['apps-config']
 
     - role: developer_tools
-      tags: ['dev', 'developer', 'tools']
+      tags: ['dev']
