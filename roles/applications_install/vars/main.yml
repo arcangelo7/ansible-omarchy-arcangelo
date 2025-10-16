@@ -16,6 +16,8 @@ applications_to_install:
     description: "GStreamer PipeWire plugin"
   - name: ydotool
     description: "Generic command-line automation tool for Wayland"
+  - name: wireguard-tools
+    description: "WireGuard VPN userspace tools for secure network tunneling"
 
 aur_applications_to_install:
   - name: whispering-bin

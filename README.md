@@ -86,6 +86,7 @@ Installs essential applications and web apps. Supports both official repository 
 - gst-plugins-bad (dependency of Whispering)
 - gst-plugin-pipewire (dependency of Whispering)
 - ydotool (keyboard automation tool for Wayland)
+- wireguard-tools (WireGuard VPN userspace tools for secure network tunneling)
 
 **AUR packages installed:**
 - whispering-bin (speech-to-text transcription application with keyboard shortcuts)
