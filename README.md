@@ -24,6 +24,8 @@ Install the required Ansible collection for AUR package management:
 ansible-playbook playbook.yml -K
 ```
 
+**System reboot required:** After running the playbook for the first time, a reboot is required to ensure all kernel modules and system settings are properly loaded.
+
 ### Run only specific roles using tags
 
 **Important:** Tags work at role level only. Each tag runs the entire role (all tasks within that role). There are no task-level tags for granular execution.
@@ -58,19 +60,8 @@ ansible-playbook playbook.yml --skip-tags bloatware -K
 ansible-playbook playbook.yml --skip-tags dev -K
 ```
 
-### Dry-run mode (check without changes)
 
-```bash
-ansible-playbook playbook.yml --check -K
-```
 
-### Verbose mode (for debugging)
-
-```bash
-ansible-playbook playbook.yml -v -K   # verbose
-ansible-playbook playbook.yml -vv -K  # more verbose
-ansible-playbook playbook.yml -vvv -K # very verbose
-```
 
 ## Available modules
 
@@ -120,10 +111,12 @@ Installs essential applications and web apps. Supports both official repository 
 - gst-plugin-pipewire (dependency of Whispering)
 - ydotool (keyboard automation tool for Wayland)
 - wireguard-tools (WireGuard VPN userspace tools for secure network tunneling)
+- ddcutil (monitor control via DDC/CI and USB for brightness adjustment)
 
 **AUR packages installed:**
 - whispering-bin (speech-to-text transcription application with keyboard shortcuts)
 - visual-studio-code-bin (no presentations needed)
+- ddcui (graphical user interface for ddcutil to control monitor settings)
 
 **Web apps installed:**
 - Claude (AI assistant by Anthropic)

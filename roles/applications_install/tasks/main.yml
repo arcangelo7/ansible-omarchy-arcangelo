@@ -109,3 +109,17 @@
     msg: "{{ item.item.name }} desktop file - Status: {{ 'Created' if item.changed else 'Already present or error' }}"
   loop: "{{ webapp_desktop_files.results }}"
   when: webapp_desktop_files is defined
+
+- name: Configure i2c-dev kernel module for ddcutil
+  ansible.builtin.copy:
+    dest: /etc/modules-load.d/i2c.conf
+    content: |
+      # Load i2c-dev module for ddcutil monitor control
+      i2c-dev
+    mode: '0644'
+  become: true
+  register: i2c_module_config
+
+- name: Show i2c-dev module configuration result
+  debug:
+    msg: "i2c-dev module - Status: {{ 'Configured (reboot required)' if i2c_module_config.changed else 'Already configured' }}"

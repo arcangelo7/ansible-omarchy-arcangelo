@@ -18,12 +18,16 @@ applications_to_install:
     description: "Generic command-line automation tool for Wayland"
   - name: wireguard-tools
     description: "WireGuard VPN userspace tools for secure network tunneling"
+  - name: ddcutil
+    description: "Monitor control via DDC/CI and USB for brightness adjustment"
 
 aur_applications_to_install:
   - name: whispering-bin
     description: "Speech-to-text transcription application with keyboard shortcuts"
   - name: visual-studio-code-bin
     description: "Code editor for building and debugging modern web and cloud applications"
+  - name: ddcui
+    description: "Graphical user interface for ddcutil to control monitor settings"
 
 webapps_to_install:
   - name: "Claude"
