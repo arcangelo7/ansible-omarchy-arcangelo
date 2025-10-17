@@ -30,6 +30,8 @@ applications_to_install:
     description: "GUI application for managing BTRFS filesystems and Snapper snapshots"
 
 aur_applications_to_install:
+  - name: brave-bin
+    description: "Privacy-focused web browser for web apps (Chromium-based with ad blocking)"
   - name: whispering-bin
     description: "Speech-to-text transcription application with keyboard shortcuts"
   - name: visual-studio-code-bin

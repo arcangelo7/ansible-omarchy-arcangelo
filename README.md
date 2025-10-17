@@ -123,6 +123,7 @@ Installs essential applications and web apps. Supports both official repository 
 - btrfs-assistant (GUI for managing BTRFS filesystems, Snapper snapshots, scrubbing, and balancing)
 
 **AUR packages installed:**
+- brave-bin (privacy-focused Chromium-based web browser used for web apps)
 - whispering-bin (speech-to-text transcription application with keyboard shortcuts)
 - visual-studio-code-bin (no presentations needed)
 - zotero-bin (reference manager to collect, organize, cite, and share research sources)
@@ -223,12 +224,19 @@ Manages configuration for various applications.
 - Modifies `~/.config/mimeapps.list` for MIME type associations
 - Creates backup before changes
 
+**Dual-browser setup:**
+- **Firefox**: Default browser for links from native apps (Thunderbird, terminal, PDF viewer, etc.)
+- **Brave**: Used automatically for web apps (Claude, Homelab, etc.)
+- Modified `omarchy-launch-webapp` script to always use Brave instead of Chromium
+- Original script backed up at `~/.local/share/omarchy/bin/omarchy-launch-webapp.bak`
+- Links clicked inside web apps open in Brave (by design, not configurable)
+
 **Configuration:**
 Edit `roles/applications_config/defaults/main.yml` to customize:
 
 ```yaml
 alacritty_font_size: 12
-default_browser: "firefox.desktop"  # Options: firefox.desktop, chromium.desktop, etc.
+default_browser: "firefox.desktop"  # Options: firefox.desktop, brave-browser.desktop, etc.
 ```
 
 ### 7. developer_tools
