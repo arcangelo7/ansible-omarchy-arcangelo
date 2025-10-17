@@ -29,6 +29,22 @@
     - pipx_ensurepath is defined
     - "'python-pipx' in python_tools_to_install | map(attribute='name') | list"
 
+- name: Install LaTeX packages via pacman
+  community.general.pacman:
+    name: "{{ item.name }}"
+    state: present
+    update_cache: true
+  loop: "{{ latex_packages_to_install }}"
+  when: latex_packages_to_install is defined and latex_packages_to_install | length > 0
+  become: true
+  register: latex_install_result
+
+- name: Show LaTeX packages installation results
+  debug:
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
+  loop: "{{ latex_install_result.results }}"
+  when: latex_install_result is defined
+
 - name: Install Node.js globally via mise
   ansible.builtin.command:
     cmd: "mise use -g node@lts"

@@ -37,3 +37,15 @@ flutter_android_aur_packages:
 
 android_system_images:
   - "system-images;android-34;google_apis_playstore;x86_64"
+
+latex_packages_to_install:
+  - name: texlive-basic
+    description: "Core TeX Live distribution with pdflatex compiler"
+  - name: texlive-latex
+    description: "LaTeX format and base packages (required for \\documentclass)"
+  - name: texlive-latexrecommended
+    description: "LaTeX recommended packages (setspace, caption, booktabs, etc.)"
+  - name: texlive-latexextra
+    description: "LaTeX additional packages (multirow, minted, glossaries, etc.)"
+  - name: texlive-binextra
+    description: "TeX auxiliary programs including latexmk (required by LaTeX Workshop)"

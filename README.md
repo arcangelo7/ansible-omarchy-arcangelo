@@ -251,6 +251,14 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 **NPM packages installed:**
 - @anthropic-ai/claude-code (Official CLI for Claude AI by Anthropic)
 
+**LaTeX distribution installed:**
+- texlive-basic (core TeX Live distribution with pdflatex compiler)
+- texlive-latex (LaTeX format and base packages)
+- texlive-latexrecommended (LaTeX recommended packages like setspace, caption, booktabs)
+- texlive-latexextra (LaTeX additional packages like multirow, minted, glossaries)
+- texlive-binextra (TeX auxiliary programs including latexmk)
+  - Required for LaTeX Workshop VS Code extension
+
 **Automatic updates:**
 - Android SDK components are automatically updated via `sdkmanager --update`
 - Updates all build tools, platform tools, system images, and other Android SDK components
