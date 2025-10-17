@@ -280,6 +280,10 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
   - Configures ANDROID_HOME, ANDROID_AVD_HOME, and JAVA_HOME environment variables
   - Accepts Android licenses automatically
   - Installs Android system images for emulators (Android 34 with Google Play)
+- Configures Flutter web development:
+  - Sets CHROME_EXECUTABLE to `/usr/bin/brave` for web development
+  - Brave browser is used instead of Chrome for `flutter run -d chrome`
+  - Fully compatible as Brave is Chromium-based
 - Note: Full installation requires approximately 3-4GB of disk space (including Android SDK)
 
 ## Complete keybindings reference

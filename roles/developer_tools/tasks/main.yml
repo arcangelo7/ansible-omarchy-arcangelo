@@ -316,6 +316,14 @@
     regexp: 'export PATH="\$PATH:.*/flutter/bin"'
   when: flutter_install_dir is defined
 
+- name: Configure CHROME_EXECUTABLE for Flutter web development
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_env.HOME }}/.bashrc"
+    line: 'export CHROME_EXECUTABLE=/usr/bin/brave'
+    state: present
+    regexp: 'export CHROME_EXECUTABLE=.*'
+  when: flutter_install_dir is defined
+
 - name: Check Flutter analytics status
   ansible.builtin.shell: |
     {{ flutter_install_dir }}/flutter/bin/flutter config
