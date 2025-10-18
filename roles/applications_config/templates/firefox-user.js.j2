@@ -1,0 +1,59 @@
+// Firefox user preferences
+// This file contains custom preferences that override Firefox defaults
+// Documentation: https://kb.mozillazine.org/User.js_file
+//
+// To find preference names: about:config in Firefox
+// To add more preferences: edit this file and re-run Ansible
+
+// =============================================================================
+// PRIVACY & SECURITY
+// =============================================================================
+
+// Enable strict content blocking (tracking protection)
+user_pref("browser.contentblocking.category", "{{ firefox_content_blocking | default('strict') }}");
+
+// Disable form autofill
+user_pref("browser.formfill.enable", {{ firefox_formfill_enable | default('false') | lower }});
+
+// Disable password manager (if using external password manager)
+user_pref("signon.rememberSignons", {{ firefox_remember_signons | default('false') | lower }});
+
+// Enable DNS over HTTPS (DoH)
+user_pref("network.trr.mode", {{ firefox_doh_mode | default('2') }});  // 0=off, 2=TRR first, 3=TRR only
+
+// Disable telemetry
+user_pref("toolkit.telemetry.enabled", {{ firefox_telemetry_enabled | default('false') | lower }});
+user_pref("datareporting.healthreport.uploadEnabled", {{ firefox_healthreport_enabled | default('false') | lower }});
+
+// =============================================================================
+// UI & BEHAVIOR
+// =============================================================================
+
+// Sort tabs by recently used when using Ctrl+Tab
+user_pref("browser.ctrlTab.sortByRecentlyUsed", {{ firefox_ctrl_tab_recently_used | default('true') | lower }});
+
+// Disable top sites on new tab page
+user_pref("browser.newtabpage.activity-stream.feeds.topsites", {{ firefox_show_topsites | default('false') | lower }});
+
+// Disable pocket recommendations
+user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", {{ firefox_show_pocket | default('false') | lower }});
+
+// Enable userChrome.css support (for UI customization)
+user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", {{ firefox_userchrome_enabled | default('true') | lower }});
+
+// =============================================================================
+// PERFORMANCE
+// =============================================================================
+
+// Enable hardware acceleration (default: true)
+user_pref("layers.acceleration.force-enabled", {{ firefox_hw_acceleration | default('true') | lower }});
+
+// Increase content process limit (more RAM, better performance)
+user_pref("dom.ipc.processCount", {{ firefox_process_count | default('8') }});
+
+// =============================================================================
+// DOWNLOADS
+// =============================================================================
+
+// Always ask where to save files
+user_pref("browser.download.useDownloadDir", {{ firefox_auto_download_dir | default('false') | lower }});

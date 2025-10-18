@@ -77,3 +77,34 @@
     dest: "{{ ansible_env.HOME }}/.local/share/omarchy/bin/omarchy-launch-webapp"
     mode: '0755'
     backup: no
+
+# Configure Firefox custom preferences
+- name: Find Firefox profile directory
+  ansible.builtin.shell: |
+    find {{ ansible_env.HOME }}/.mozilla/firefox -maxdepth 1 -name "*.default*" -type d | head -1
+  register: firefox_profile
+  changed_when: false
+  failed_when: firefox_profile.stdout == ""
+
+- name: Deploy Firefox custom preferences (user.js)
+  ansible.builtin.template:
+    src: firefox-user.js.j2
+    dest: "{{ firefox_profile.stdout }}/user.js"
+    mode: '0644'
+    backup: yes
+  when: firefox_profile.stdout != ""
+
+- name: Ensure Firefox distribution directory exists
+  ansible.builtin.file:
+    path: /usr/lib/firefox/distribution
+    state: directory
+    mode: '0755'
+  become: yes
+
+- name: Deploy Firefox enterprise policies (extensions auto-install)
+  ansible.builtin.template:
+    src: firefox-policies.json.j2
+    dest: /usr/lib/firefox/distribution/policies.json
+    mode: '0644'
+    backup: yes
+  become: yes

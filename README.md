@@ -195,12 +195,36 @@ Manages configuration for various applications.
 - Sets Visual Studio Code as default for text files
 - Configured MIME types: plain text, markdown, Python, YAML, JSON, shell scripts, C/C++, Java, CSS, JavaScript, XML, log files
 
+**Firefox custom preferences:**
+- Automatically deploys `user.js` with your custom preferences to Firefox profile
+- Preserves preferences across Firefox reinstalls and profile migrations
+
+**Firefox extensions:**
+- Automatically installs extensions via Enterprise Policies (force-installed)
+- Extensions persist across Firefox updates and reinstalls
+- Uses official Mozilla addons repository
+
 **Configuration:**
 Edit `roles/applications_config/defaults/main.yml`:
 ```yaml
+# Basic settings
 alacritty_font_size: 12
 default_browser: "firefox.desktop"
 default_text_editor: "code.desktop"
+
+# Firefox preferences (see file for complete list)
+firefox_content_blocking: "strict"
+firefox_formfill_enable: false
+firefox_ctrl_tab_recently_used: true
+
+# Firefox extensions (auto-installed)
+firefox_extensions:
+  - id: "uBlock0@raymondhill.net"
+    slug: "ublock-origin"
+  - id: "{446900e4-71c2-419f-a6a7-df9c091e268b}"
+    slug: "bitwarden-password-manager"
+  - id: "jid1-MnnxcxisBPnSXQ@jetpack"
+    slug: "privacy-badger17"
 ```
 
 ### 7. developer_tools

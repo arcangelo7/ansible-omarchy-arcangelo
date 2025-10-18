@@ -9,3 +9,39 @@ default_browser: "firefox.desktop"
 
 # Default text editor
 default_text_editor: "code.desktop"
+
+# Firefox custom preferences
+# Privacy & security settings
+firefox_content_blocking: "strict"  # Options: standard, strict, custom
+firefox_formfill_enable: false
+firefox_remember_signons: false  # Set true if not using external password manager
+firefox_doh_mode: 2  # DNS over HTTPS: 0=off, 2=TRR first, 3=TRR only
+firefox_telemetry_enabled: false
+firefox_healthreport_enabled: false
+
+# UI & behavior
+firefox_ctrl_tab_recently_used: true  # Sort tabs by recently used
+firefox_show_topsites: false  # Show top sites on new tab
+firefox_show_pocket: false  # Show Pocket recommendations
+firefox_userchrome_enabled: true  # Enable userChrome.css support
+
+# Performance
+firefox_hw_acceleration: true  # Hardware acceleration
+firefox_process_count: 8  # Content process limit (more = better performance, more RAM)
+
+# Downloads
+firefox_auto_download_dir: false  # Always ask where to save files
+
+# Firefox extensions
+# List of extensions to install automatically
+# To find extension ID and slug:
+# 1. Go to the extension page on addons.mozilla.org
+# 2. The slug is in the URL: https://addons.mozilla.org/firefox/addon/SLUG/
+# 3. The ID is in the extension's manifest or in about:debugging
+firefox_extensions:
+  - id: "uBlock0@raymondhill.net"
+    slug: "ublock-origin"
+  - id: "{446900e4-71c2-419f-a6a7-df9c091e268b}"
+    slug: "bitwarden-password-manager"
+  - id: "jid1-MnnxcxisBPnSXQ@jetpack"
+    slug: "privacy-badger17"

@@ -1,0 +1,26 @@
+{
+  "policies": {
+    "ExtensionSettings": {
+{% for extension in firefox_extensions %}
+      "{{ extension.id }}": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/{{ extension.slug }}/latest.xpi"
+      }{{ "," if not loop.last else "" }}
+{% endfor %}
+    },
+    "DisableTelemetry": {{ firefox_telemetry_enabled | default('false') | lower }},
+    "DisableFirefoxStudies": true,
+    "DisablePocket": true,
+    "FirefoxHome": {
+      "Pocket": false,
+      "Snippets": false
+    },
+    "UserMessaging": {
+      "WhatsNew": false,
+      "ExtensionRecommendations": false,
+      "FeatureRecommendations": false,
+      "UrlbarInterventions": false,
+      "SkipOnboarding": true
+    }
+  }
+}
