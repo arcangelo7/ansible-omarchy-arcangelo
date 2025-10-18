@@ -65,9 +65,6 @@ ansible-playbook playbook.yml --skip-tags bloatware -K
 ansible-playbook playbook.yml --skip-tags dev -K
 ```
 
-
-
-
 ## Available modules
 
 ### 1. bloatware_removal
@@ -75,18 +72,15 @@ ansible-playbook playbook.yml --skip-tags dev -K
 Removes unwanted software from the system. Only handles package and file removal.
 
 **Packages removed:**
-- 1password-beta (including config files and native messaging hosts)
-- 1password-cli
-- signal-desktop (including config files)
-- typora (including config files)
+| Package | Additional cleanup |
+|---------|-------------------|
+| 1password-beta | Config files, native messaging hosts |
+| 1password-cli | - |
+| signal-desktop | Config files |
+| typora | Config files |
 
 **Web apps removed:**
-- Basecamp (desktop entry, icons, config and cache files)
-- Google Contacts (desktop entry, icons, config and cache files)
-- Google Messages (desktop entry, icons, config and cache files)
-- Google Photos (desktop entry, icons, config and cache files)
-- HEY (desktop entry, icons, config and cache files)
-- ChatGPT (desktop entry, icons, config and cache files)
+Basecamp, Google Contacts, Google Messages, Google Photos, HEY, ChatGPT (includes desktop entries, icons, config and cache files)
 
 **Note:** Keybinding cleanup is handled by the `hyprland_config` role
 
@@ -95,84 +89,62 @@ Removes unwanted software from the system. Only handles package and file removal
 Installs essential applications and web apps. Supports both official repository packages and AUR packages. Only handles package installation and desktop file creation.
 
 **System upgrade:**
-- Performs a full system upgrade (`pacman -Syu`) before installing any new packages
-- Upgrades all AUR packages (`yay -Syu`) after system upgrade
-- Ensures all existing packages are up-to-date before installation
-- Update cache is refreshed automatically
+- Full system upgrade (`pacman -Syu`) before installing packages
+- AUR packages upgrade (`yay -Syu`) after system upgrade
+- Update cache refreshed automatically
 
 **AUR package management:**
-- Creates a dedicated `aur_builder` user for secure AUR package installation
-- Configures passwordless sudo access for pacman (required by AUR helpers)
-- Uses the `kewlfft.aur` Ansible collection with `yay` as the AUR helper
-- The `aur_builder` user is created automatically on first run
+- Dedicated `aur_builder` user for secure AUR package installation
+- Passwordless sudo access for pacman (required by AUR helpers)
+- Uses `kewlfft.aur` Ansible collection with `yay` as AUR helper
 
 **Packages installed:**
-- p7zip (command-line file archiver with high compression ratio for 7z format)
-- bitwarden (desktop app)
-- gst-plugin-gtk (dependency of Whispering)
-- gst-plugins-base (dependency of Whispering)
-- gst-plugins-good (dependency of Whispering)
-- gst-plugins-bad (dependency of Whispering)
-- gst-plugin-pipewire (dependency of Whispering)
-- ydotool (keyboard automation tool for Wayland)
-- wireguard-tools (WireGuard VPN userspace tools for secure network tunneling)
-- openresolv (resolv.conf management framework required by WireGuard for DNS configuration)
-- ddcutil (monitor control via DDC/CI and USB for brightness adjustment)
-- firefox (no presentations needed)
-- thunderbird (no presentations needed)
-- btrfs-assistant (GUI for managing BTRFS filesystems, Snapper snapshots, scrubbing, and balancing)
+| Package | Description |
+|---------|-------------|
+| p7zip | 7z format archiver |
+| bitwarden | Password manager |
+| gst-plugin-gtk, gst-plugins-base/good/bad, gst-plugin-pipewire | Whispering dependencies |
+| ydotool | Keyboard automation for Wayland |
+| wireguard-tools | VPN userspace tools |
+| openresolv | WireGuard DNS configuration |
+| ddcutil | Monitor control via DDC/CI |
+| firefox | Web browser |
+| thunderbird | Email client |
+| btrfs-assistant | BTRFS management GUI |
 
 **AUR packages installed:**
-- brave-bin (privacy-focused Chromium-based web browser used for web apps)
-- whispering-bin (speech-to-text transcription application with keyboard shortcuts)
-- visual-studio-code-bin (no presentations needed)
-- zotero-bin (reference manager to collect, organize, cite, and share research sources)
-- ddcui (graphical user interface for ddcutil to control monitor settings)
+| Package | Description |
+|---------|-------------|
+| brave-bin | Privacy-focused browser for web apps |
+| whispering-bin | Speech-to-text with keyboard shortcuts |
+| visual-studio-code-bin | Code editor |
+| zotero-bin | Reference manager |
+| ddcui | GUI for ddcutil |
 
 **Web apps installed:**
-- Claude (AI assistant by Anthropic)
-  - URL: https://claude.ai
-- Homelab (homelab services dashboard)
-  - URL: http://192.168.2.103:3000
-  - **Note:** This web app is configured with a local IP address and will only work on my machine when connected via VPN
+| App | URL | Notes |
+|-----|-----|-------|
+| Claude | https://claude.ai | AI assistant by Anthropic |
+| Homelab | http://192.168.2.103:3000 | Local IP, requires VPN |
 
 **Note:** Keybindings are configured by the `hyprland_config` role
 
 ### 3. hyprland_config
 
-Centralized management of all Hyprland configuration changes. This role is responsible for all modifications to Hyprland config files and ensures proper reload.
-
-**Configuration managed:**
-- Password manager keybinding (Super + /) → bitwarden-desktop
-
-**Keybindings removed (bloatware cleanup):**
-- Super + A: ChatGPT
-- Super + Shift + A: Grok
-- Super + C: HEY Calendar
-- Super + E: HEY Email
-- Super + G: Signal
-- Super + Alt + G: Google Messages
-
-**Keybindings updated:**
-- Super + G: Now opens WhatsApp (previously Super + Shift + G)
-
-**Keybindings added:**
-- Super + A: Claude AI assistant
-- Super + C: Visual Studio Code
-- Super + H: Homelab services dashboard
-- Super + R: Voice recording (Whispering toggle)
-
-**Whispering voice recording setup:**
-- Creates `~/.local/bin/whispering-toggle` script for Wayland compatibility
-- Script behavior: focuses Whispering window and sends spacebar to toggle recording
+Centralized management of all Hyprland configuration changes. Handles all modifications to Hyprland config files and ensures proper reload.
 
 **Features:**
-- Creates backup of configuration files before modifications
-- Consolidates all Hyprland configuration changes in one place
+- Manages password manager keybinding (Super + / → bitwarden-desktop)
+- Removes bloatware keybindings (ChatGPT, Grok, HEY, Signal, Google Messages)
+- Updates existing keybindings (Super + G: WhatsApp)
+- Adds new keybindings (Claude, VSCode, Homelab, Whispering voice recording)
+- Creates `~/.local/bin/whispering-toggle` script for Wayland compatibility
+- Backs up configuration files before modifications
 - Single `hyprctl reload` at the end of all modifications
-- Detailed status reporting for each keybinding operation
 
 **Important:** After first run, logout/login is required for whispering-toggle to work
+
+**See:** Complete keybindings reference at the end of this document
 
 ### 4. btrfs_maintenance
 
@@ -197,10 +169,7 @@ Configures system-level settings for Omarchy (monitor scaling, keyboard layout, 
 - Automatic Hyprland reload after changes
 
 **Configuration:**
-Edit `group_vars/all/system_settings.yml` to customize:
-- Monitor scaling (GDK_SCALE and Hyprland scale)
-- Monitor resolution and refresh rate
-- Enable/disable Mise shell integration
+Edit `group_vars/all/system_settings.yml` to customize monitor scaling, resolution, refresh rate, and Mise integration.
 
 **Current setup:**
 - Monitor: Ultrawide (3440x1440@100Hz)
@@ -212,96 +181,66 @@ Edit `group_vars/all/system_settings.yml` to customize:
 
 Manages configuration for various applications.
 
-**Current configurations:**
-
-#### Alacritty terminal
+**Alacritty terminal:**
 - Configurable font size
-- Backup of configuration before changes
 - Preserves Omarchy theme integration
 
-#### Default browser
-- Sets the default browser for HTTP/HTTPS links
-- Modifies `~/.config/mimeapps.list` for MIME type associations
-- Creates backup before changes
-
-**Dual-browser setup:**
-- **Firefox**: Default browser for links from native apps (Thunderbird, terminal, PDF viewer, etc.)
+**Default browser:**
+- Sets default browser for HTTP/HTTPS links via MIME type associations
+- **Firefox**: Default for links from native apps (Thunderbird, terminal, PDF viewer)
 - **Brave**: Used automatically for web apps (Claude, Homelab, etc.)
-- Modified `omarchy-launch-webapp` script to always use Brave instead of Chromium
-- Original script backed up at `~/.local/share/omarchy/bin/omarchy-launch-webapp.bak`
-- Links clicked inside web apps open in Brave (by design, not configurable)
+- Modified `omarchy-launch-webapp` script to use Brave instead of Chromium
 
-#### Default text editor
-- Sets Visual Studio Code as default editor for text files
-
-**MIME types configured:**
-- `text/plain` (TXT files)
-- `text/markdown` (Markdown files)
-- `text/x-python` (Python files)
-- `text/x-yaml`, `application/x-yaml` (YAML files)
-- `application/json` (JSON files)
-- `text/x-shellscript`, `application/x-shellscript` (Shell scripts)
-- `text/x-csrc`, `text/x-c++src` (C/C++ files)
-- `text/x-java` (Java files)
-- `text/css`, `text/javascript` (Web development files)
-- `application/xml` (XML files)
-- `text/x-log` (Log files)
+**Default text editor:**
+- Sets Visual Studio Code as default for text files
+- Configured MIME types: plain text, markdown, Python, YAML, JSON, shell scripts, C/C++, Java, CSS, JavaScript, XML, log files
 
 **Configuration:**
-Edit `roles/applications_config/defaults/main.yml` to customize:
-
+Edit `roles/applications_config/defaults/main.yml`:
 ```yaml
 alacritty_font_size: 12
-default_browser: "firefox.desktop"  # Options: firefox.desktop, brave-browser.desktop, etc.
-default_text_editor: "code.desktop"  # Options: code.desktop, neovim.desktop, etc.
+default_browser: "firefox.desktop"
+default_text_editor: "code.desktop"
 ```
 
 ### 7. developer_tools
 
 Installs developer tools for Python, Node.js, and Flutter development. Automatically installs Node.js LTS via Mise if not already present.
 
-**Python tools installed:**
-- python-pipx (install and run Python applications in isolated environments)
-- python-poetry (Python dependency management and packaging made easy)
-- uv (extremely fast Python package installer and resolver written in Rust)
+**Python tools:**
+| Package | Description |
+|---------|-------------|
+| python-pipx | Install Python apps in isolated environments |
+| python-poetry | Dependency management and packaging |
+| uv | Fast Python package installer (Rust) |
 
-**NPM packages installed:**
-- @anthropic-ai/claude-code (Official CLI for Claude AI by Anthropic)
+**NPM packages:**
+- @anthropic-ai/claude-code (Official CLI for Claude AI)
 
-**LaTeX distribution installed:**
-- texlive-basic (core TeX Live distribution with pdflatex compiler)
-- texlive-latex (LaTeX format and base packages)
-- texlive-latexrecommended (LaTeX recommended packages like setspace, caption, booktabs)
-- texlive-latexextra (LaTeX additional packages like multirow, minted, glossaries)
-- texlive-binextra (TeX auxiliary programs including latexmk)
-  - Required for LaTeX Workshop VS Code extension
-
-**Automatic updates:**
-- Android SDK components are automatically updated via `sdkmanager --update`
-- Updates all build tools, platform tools, system images, and other Android SDK components
-- Runs after initial installation to ensure latest versions
+**LaTeX distribution:**
+| Package | Description |
+|---------|-------------|
+| texlive-basic | Core TeX Live with pdflatex |
+| texlive-latex | LaTeX format and base packages |
+| texlive-latexrecommended | Recommended packages (setspace, caption, booktabs) |
+| texlive-latexextra | Additional packages (multirow, minted, glossaries) |
+| texlive-binextra | Auxiliary programs (latexmk for VS Code) |
 
 **Flutter SDK:**
-- Installs Flutter SDK following official manual installation guide
-- Automatically detects and downloads latest stable release via Flutter releases API
+- Automatic detection and download of latest stable release via Flutter API
 - Installation directory: `~/development/flutter`
-- Automatically adds Flutter to PATH in `.bashrc`
-- Disables Flutter analytics by default
-- Supports manual version updates via `flutter upgrade` command
-- Prerequisites (curl, git, unzip, xz, zip, mesa) already included in Arch Linux base
-- Installs Linux development dependencies (cmake, ninja) for building Flutter desktop apps
-- Installs Android development dependencies:
+- Auto-adds to PATH in `.bashrc`
+- Disables analytics by default
+- Linux development dependencies (cmake, ninja)
+- Android development setup:
   - JDK 17 (OpenJDK) via pacman
-  - Android SDK, build tools, platform tools, and command-line tools via AUR
-  - Automatically copies Android SDK to `~/android-sdk` with proper ownership
-  - Configures ANDROID_HOME, ANDROID_AVD_HOME, and JAVA_HOME environment variables
-  - Accepts Android licenses automatically
-  - Installs Android system images for emulators (Android 34 with Google Play)
-- Configures Flutter web development:
-  - Sets CHROME_EXECUTABLE to `/usr/bin/brave` for web development
-  - Brave browser is used instead of Chrome for `flutter run -d chrome`
-  - Fully compatible as Brave is Chromium-based
-- Note: Full installation requires approximately 3-4GB of disk space (including Android SDK)
+  - Android SDK, build tools, platform tools via AUR
+  - Auto-copies SDK to `~/android-sdk` with proper ownership
+  - Configures ANDROID_HOME, ANDROID_AVD_HOME, JAVA_HOME
+  - Auto-accepts licenses and installs system images (Android 34 with Google Play)
+  - Auto-updates all SDK components via `sdkmanager --update`
+- Web development: CHROME_EXECUTABLE set to `/usr/bin/brave`
+- **Note:** Full installation requires ~3-4GB disk space (including Android SDK)
 
 ## Complete keybindings reference
 
