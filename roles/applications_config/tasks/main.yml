@@ -29,13 +29,6 @@
     - "x-scheme-handler/about"
     - "x-scheme-handler/unknown"
 
-- name: Set default browser via xdg-settings
-  ansible.builtin.command:
-    cmd: "xdg-settings set default-web-browser {{ default_browser }}"
-  changed_when: true
-  environment:
-    DISPLAY: ":0"
-
 # Set Visual Studio Code as default text editor
 - name: Set VSCode as default editor for text files
   community.general.ini_file:
