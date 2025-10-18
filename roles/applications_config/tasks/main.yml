@@ -36,6 +36,32 @@
   environment:
     DISPLAY: ":0"
 
+# Set Visual Studio Code as default text editor
+- name: Set VSCode as default editor for text files
+  community.general.ini_file:
+    path: "{{ ansible_env.HOME }}/.config/mimeapps.list"
+    section: "Default Applications"
+    option: "{{ item }}"
+    value: "{{ default_text_editor }}"
+    mode: '0644'
+    backup: yes
+  loop:
+    - "text/plain"
+    - "text/markdown"
+    - "text/x-python"
+    - "text/x-yaml"
+    - "application/json"
+    - "text/x-shellscript"
+    - "text/x-csrc"
+    - "text/x-c++src"
+    - "text/x-java"
+    - "text/css"
+    - "text/javascript"
+    - "application/xml"
+    - "text/x-log"
+    - "application/x-yaml"
+    - "application/x-shellscript"
+
 # Configure web apps to use Brave browser
 - name: Backup original omarchy-launch-webapp script
   ansible.builtin.copy:

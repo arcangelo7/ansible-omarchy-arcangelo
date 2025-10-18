@@ -6,3 +6,6 @@ alacritty_font_size: 12
 
 # Default browser
 default_browser: "firefox.desktop"
+
+# Default text editor
+default_text_editor: "code.desktop"

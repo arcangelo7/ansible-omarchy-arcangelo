@@ -231,12 +231,29 @@ Manages configuration for various applications.
 - Original script backed up at `~/.local/share/omarchy/bin/omarchy-launch-webapp.bak`
 - Links clicked inside web apps open in Brave (by design, not configurable)
 
+#### Default text editor
+- Sets Visual Studio Code as default editor for text files
+
+**MIME types configured:**
+- `text/plain` (TXT files)
+- `text/markdown` (Markdown files)
+- `text/x-python` (Python files)
+- `text/x-yaml`, `application/x-yaml` (YAML files)
+- `application/json` (JSON files)
+- `text/x-shellscript`, `application/x-shellscript` (Shell scripts)
+- `text/x-csrc`, `text/x-c++src` (C/C++ files)
+- `text/x-java` (Java files)
+- `text/css`, `text/javascript` (Web development files)
+- `application/xml` (XML files)
+- `text/x-log` (Log files)
+
 **Configuration:**
 Edit `roles/applications_config/defaults/main.yml` to customize:
 
 ```yaml
 alacritty_font_size: 12
 default_browser: "firefox.desktop"  # Options: firefox.desktop, brave-browser.desktop, etc.
+default_text_editor: "code.desktop"  # Options: code.desktop, neovim.desktop, etc.
 ```
 
 ### 7. developer_tools
