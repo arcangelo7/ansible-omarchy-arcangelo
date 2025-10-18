@@ -204,6 +204,10 @@ Manages configuration for various applications.
 - Extensions persist across Firefox updates and reinstalls
 - Uses official Mozilla addons repository
 
+**Application launcher cleanup:**
+- Hides developer/utility tools from application launcher (Super + Space)
+- Default hidden apps: XDVI, Qt Assistant, Qt Designer, Qt Linguist, Qt DBus Viewer, Electron 36/37, OpenJDK Java Console/Shell
+
 **Configuration:**
 Edit `roles/applications_config/defaults/main.yml`:
 ```yaml
@@ -225,7 +229,6 @@ firefox_extensions:
     slug: "bitwarden-password-manager"
   - id: "jid1-MnnxcxisBPnSXQ@jetpack"
     slug: "privacy-badger17"
-```
 
 ### 7. developer_tools
 

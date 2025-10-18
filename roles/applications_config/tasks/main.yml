@@ -99,7 +99,7 @@
     path: /usr/lib/firefox/distribution
     state: directory
     mode: '0755'
-  become: yes
+  become: true
 
 - name: Deploy Firefox enterprise policies (extensions auto-install)
   ansible.builtin.template:
@@ -107,4 +107,21 @@
     dest: /usr/lib/firefox/distribution/policies.json
     mode: '0644'
     backup: yes
-  become: yes
+  become: true
+
+# Hide developer/utility tools from application launcher
+- name: Ensure local applications directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/share/applications"
+    state: directory
+    mode: '0755'
+
+- name: Hide developer tools from application launcher
+  ansible.builtin.copy:
+    content: |
+      [Desktop Entry]
+      NoDisplay=true
+    dest: "{{ ansible_env.HOME }}/.local/share/applications/{{ item.name }}"
+    mode: '0644'
+  loop: "{{ hidden_from_launcher }}"
+  when: hidden_from_launcher is defined and hidden_from_launcher | length > 0
