@@ -29,6 +29,24 @@
     - pipx_ensurepath is defined
     - "'python-pipx' in python_tools_to_install | map(attribute='name') | list"
 
+- name: Install packages via pipx
+  ansible.builtin.command:
+    cmd: "pipx install {{ item.name }}"
+  loop: "{{ pipx_packages_to_install }}"
+  when:
+    - pipx_packages_to_install is defined
+    - pipx_packages_to_install | length > 0
+    - "'python-pipx' in python_tools_to_install | map(attribute='name') | list"
+  register: pipx_install_result
+  changed_when: "'installed package' in pipx_install_result.stdout"
+  failed_when: pipx_install_result.rc != 0 and 'already seems to be installed' not in pipx_install_result.stderr
+
+- name: Show pipx packages installation results
+  debug:
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
+  loop: "{{ pipx_install_result.results }}"
+  when: pipx_install_result is defined
+
 - name: Install LaTeX packages via pacman
   community.general.pacman:
     name: "{{ item.name }}"

@@ -258,6 +258,11 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 | python-poetry | Dependency management and packaging |
 | uv | Fast Python package installer (Rust) |
 
+**Pipx packages:**
+| Package | Description |
+|---------|-------------|
+| mistral-pdf-to-markdown | Convert PDF to Markdown using Mistral AI (command: pdf2md) |
+
 **NPM packages:**
 - @anthropic-ai/claude-code (Official CLI for Claude AI)
 
