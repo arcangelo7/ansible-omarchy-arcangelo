@@ -135,12 +135,39 @@
   become: true
   when: thunderbird_profile.stdout != ""
 
-# Hide developer/utility tools from application launcher
 - name: Ensure local applications directory exists
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.local/share/applications"
     state: directory
     mode: '0755'
+
+- name: Override Thunderbird desktop file to use XWayland
+  ansible.builtin.copy:
+    content: |
+      [Desktop Entry]
+      Name=Thunderbird
+      Comment=Send and receive mail with Thunderbird
+      GenericName=Mail Client
+      Exec=env GDK_BACKEND=x11 thunderbird %u
+      Terminal=false
+      Type=Application
+      Icon=org.mozilla.Thunderbird
+      Categories=Network;Email;
+      MimeType=message/rfc822;x-scheme-handler/mailto;text/calendar;text/vcard;text/x-vcard;x-scheme-handler/webcal;x-scheme-handler/webcals;x-scheme-handler/mid;
+      StartupNotify=true
+      StartupWMClass=thunderbird
+      Actions=ComposeMessage;OpenAddressBook;
+
+      [Desktop Action ComposeMessage]
+      Name=Write new message
+      Exec=env GDK_BACKEND=x11 thunderbird -compose
+
+      [Desktop Action OpenAddressBook]
+      Name=Open address book
+      Exec=env GDK_BACKEND=x11 thunderbird -addressbook
+    dest: "{{ ansible_env.HOME }}/.local/share/applications/org.mozilla.Thunderbird.desktop"
+    mode: '0644'
+  when: thunderbird_profile.stdout != ""
 
 - name: Hide developer tools from application launcher
   ansible.builtin.copy:

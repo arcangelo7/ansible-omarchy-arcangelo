@@ -208,6 +208,7 @@ Manages configuration for various applications.
 - Automatically deploys `user.js` with your custom preferences to Thunderbird profile
 - Preserves preferences across Thunderbird reinstalls and profile migrations
 - Configurable privacy, composition, interface, calendar, and security settings
+- **XWayland mode for OAuth fix**: Forces Thunderbird to run in XWayland mode (`GDK_BACKEND=x11`) to fix OAuth/Exchange authentication popup crashes on Hyprland
 
 **Application launcher cleanup:**
 - Hides developer/utility tools from application launcher (Super + Space)
