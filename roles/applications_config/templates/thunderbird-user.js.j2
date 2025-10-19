@@ -75,3 +75,17 @@ user_pref("layers.acceleration.force-enabled", {{ thunderbird_hw_acceleration | 
 
 // Compact folders automatically
 user_pref("mail.purge_threshhold_mb", {{ thunderbird_compact_threshold | default('20') }});  // MB
+
+// =============================================================================
+// OAUTH & WEB RENDERING
+// =============================================================================
+
+// Increase JavaScript execution timeout for OAuth pages
+user_pref("dom.max_script_run_time", {{ thunderbird_script_timeout | default('30') }});  // seconds
+user_pref("dom.max_chrome_script_run_time", {{ thunderbird_chrome_script_timeout | default('30') }});  // seconds
+
+// Enable WebRender for better rendering
+user_pref("gfx.webrender.all", {{ thunderbird_webrender_enabled | default('true') | lower }});
+
+// Sandbox level for OAuth windows
+user_pref("security.sandbox.content.level", {{ thunderbird_sandbox_level | default('4') }});  // 0=disabled, 4=maximum

@@ -77,6 +77,12 @@ thunderbird_block_remote_content: true  # Block remote content (anti-tracking)
 thunderbird_hw_acceleration: true  # Enable hardware acceleration
 thunderbird_compact_threshold: 20  # Auto-compact when folder exceeds MB
 
+# OAuth & web rendering
+thunderbird_script_timeout: 30  # JavaScript execution timeout in seconds
+thunderbird_chrome_script_timeout: 30  # Chrome JavaScript execution timeout in seconds
+thunderbird_webrender_enabled: true  # Enable WebRender for better rendering
+thunderbird_sandbox_level: 4  # Sandbox level: 0=disabled, 4=maximum security
+
 # Thunderbird extensions
 # List of extensions to install automatically
 # To find extension ID and slug:
