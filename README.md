@@ -276,6 +276,7 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 - **B**: Browser (Chromium)
 - **C**: Visual Studio Code
 - **D**: Docker (lazydocker in terminal)
+- **E**: Thunderbird email client
 - **F**: File manager (Nautilus)
 - **G**: WhatsApp
 - **H**: Homelab services dashboard
