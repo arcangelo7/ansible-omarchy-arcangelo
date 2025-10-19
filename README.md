@@ -204,6 +204,11 @@ Manages configuration for various applications.
 - Extensions persist across Firefox updates and reinstalls
 - Uses official Mozilla addons repository
 
+**Thunderbird custom preferences:**
+- Automatically deploys `user.js` with your custom preferences to Thunderbird profile
+- Preserves preferences across Thunderbird reinstalls and profile migrations
+- Configurable privacy, composition, interface, calendar, and security settings
+
 **Application launcher cleanup:**
 - Hides developer/utility tools from application launcher (Super + Space)
 - Default hidden apps: XDVI, Qt Assistant, Qt Designer, Qt Linguist, Qt DBus Viewer, Electron 36/37, OpenJDK Java Console/Shell
@@ -229,6 +234,17 @@ firefox_extensions:
     slug: "bitwarden-password-manager"
   - id: "jid1-MnnxcxisBPnSXQ@jetpack"
     slug: "privacy-badger17"
+
+# Thunderbird preferences (see file for complete list)
+thunderbird_telemetry_enabled: false
+thunderbird_compose_html: true
+thunderbird_auto_mark_read: true
+
+# Thunderbird extensions (auto-installed)
+thunderbird_extensions:
+  - id: "it-IT@dictionaries.addons.mozilla.org"
+    slug: "italian-dictionary-spelling"
+```
 
 ### 7. developer_tools
 

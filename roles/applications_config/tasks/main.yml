@@ -102,6 +102,39 @@
     backup: yes
   become: true
 
+# Configure Thunderbird custom preferences
+- name: Find Thunderbird profile directory
+  ansible.builtin.shell: |
+    find {{ ansible_env.HOME }}/.thunderbird -maxdepth 1 -name "*.default*" -type d | head -1
+  register: thunderbird_profile
+  changed_when: false
+  failed_when: false
+
+- name: Deploy Thunderbird custom preferences (user.js)
+  ansible.builtin.template:
+    src: thunderbird-user.js.j2
+    dest: "{{ thunderbird_profile.stdout }}/user.js"
+    mode: '0644'
+    backup: yes
+  when: thunderbird_profile.stdout != ""
+
+- name: Ensure Thunderbird distribution directory exists
+  ansible.builtin.file:
+    path: /usr/lib/thunderbird/distribution
+    state: directory
+    mode: '0755'
+  become: true
+  when: thunderbird_profile.stdout != ""
+
+- name: Deploy Thunderbird enterprise policies (extensions auto-install)
+  ansible.builtin.template:
+    src: thunderbird-policies.json.j2
+    dest: /usr/lib/thunderbird/distribution/policies.json
+    mode: '0644'
+    backup: yes
+  become: true
+  when: thunderbird_profile.stdout != ""
+
 # Hide developer/utility tools from application launcher
 - name: Ensure local applications directory exists
   ansible.builtin.file:

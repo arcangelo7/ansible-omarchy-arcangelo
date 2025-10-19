@@ -1,0 +1,23 @@
+{
+  "policies": {
+{% if thunderbird_extensions is defined and thunderbird_extensions | length > 0 %}
+    "ExtensionSettings": {
+{% for extension in thunderbird_extensions %}
+      "{{ extension.id }}": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.thunderbird.net/thunderbird/downloads/latest/{{ extension.slug }}/latest.xpi"
+      }{{ "," if not loop.last else "" }}
+{% endfor %}
+    },
+{% endif %}
+    "DisableTelemetry": true,
+    "DisableFirefoxStudies": true,
+    "DisablePocket": true,
+    "UserMessaging": {
+      "WhatsNew": false,
+      "ExtensionRecommendations": false,
+      "FeatureRecommendations": false,
+      "SkipOnboarding": true
+    }
+  }
+}

@@ -1,0 +1,77 @@
+// Thunderbird user preferences
+// This file contains custom preferences that override Thunderbird defaults
+// Documentation: https://kb.mozillazine.org/About:config_entries
+//
+// To find preference names: Tools > Settings > Config Editor (about:config)
+// To add more preferences: edit this file and re-run Ansible
+
+// =============================================================================
+// PRIVACY & TELEMETRY
+// =============================================================================
+
+// Disable telemetry and crash reports
+user_pref("datareporting.healthreport.uploadEnabled", {{ thunderbird_healthreport_enabled | default('false') | lower }});
+user_pref("datareporting.policy.dataSubmissionEnabled", {{ thunderbird_telemetry_enabled | default('false') | lower }});
+user_pref("toolkit.telemetry.enabled", {{ thunderbird_telemetry_enabled | default('false') | lower }});
+user_pref("toolkit.crashreporter.enabled", {{ thunderbird_crashreporter_enabled | default('false') | lower }});
+
+// =============================================================================
+// EMAIL COMPOSITION
+// =============================================================================
+
+// Use paragraph format instead of body text
+user_pref("mail.compose.default_to_paragraph", {{ thunderbird_compose_paragraph | default('false') | lower }});
+
+// Autosave interval (minutes)
+user_pref("mail.compose.autosaveinterval", {{ thunderbird_compose_autosave | default('1') }});
+
+// Default to plain text for new messages
+user_pref("mail.identity.default.compose_html", {{ thunderbird_compose_html | default('true') | lower }});
+
+// Forward messages inline instead of as attachment
+user_pref("mail.forward_message_mode", {{ thunderbird_forward_inline | default('0') }});  // 0=inline, 2=attachment
+
+// =============================================================================
+// INTERFACE & BEHAVIOR
+// =============================================================================
+
+// Show message threads in conversation view
+user_pref("mailnews.default_view_flags", {{ thunderbird_thread_view | default('1') }});  // 0=all, 1=unread, 2=none
+
+// Auto-mark messages as read
+user_pref("mailnews.mark_message_read.auto", {{ thunderbird_auto_mark_read | default('true') | lower }});
+user_pref("mailnews.mark_message_read.delay", {{ thunderbird_mark_read_delay | default('true') | lower }});
+user_pref("mailnews.mark_message_read.delay.interval", {{ thunderbird_mark_read_seconds | default('0') }});  // seconds
+
+// Show condensed email addresses (Name only, hide email)
+user_pref("mail.showCondensedAddresses", {{ thunderbird_condensed_addresses | default('true') | lower }});
+
+// Close message tab when message is deleted
+user_pref("mail.tabs.closeMessageTabOnDelete", {{ thunderbird_close_tab_on_delete | default('true') | lower }});
+
+// =============================================================================
+// CALENDAR
+// =============================================================================
+
+// Start week on Monday (0=Sunday, 1=Monday)
+user_pref("calendar.week.start", {{ thunderbird_calendar_week_start | default('1') }});
+
+// Use system timezone
+user_pref("calendar.timezone.useSystemTimezone", {{ thunderbird_calendar_system_timezone | default('true') | lower }});
+
+// =============================================================================
+// SECURITY & ENCRYPTION
+// =============================================================================
+
+// Disable remote content in emails (anti-tracking)
+user_pref("mailnews.message_display.disable_remote_image", {{ thunderbird_block_remote_content | default('true') | lower }});
+
+// =============================================================================
+// PERFORMANCE
+// =============================================================================
+
+// Enable hardware acceleration
+user_pref("layers.acceleration.force-enabled", {{ thunderbird_hw_acceleration | default('true') | lower }});
+
+// Compact folders automatically
+user_pref("mail.purge_threshhold_mb", {{ thunderbird_compact_threshold | default('20') }});  // MB

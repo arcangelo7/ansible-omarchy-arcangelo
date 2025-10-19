@@ -46,6 +46,47 @@ firefox_extensions:
   - id: "jid1-MnnxcxisBPnSXQ@jetpack"
     slug: "privacy-badger17"
 
+# Thunderbird custom preferences
+# Privacy & telemetry
+thunderbird_telemetry_enabled: false
+thunderbird_healthreport_enabled: false
+thunderbird_crashreporter_enabled: false
+
+# Email composition
+thunderbird_compose_paragraph: false  # Use paragraph format in HTML emails
+thunderbird_compose_autosave: 1  # Autosave interval in minutes
+thunderbird_compose_html: true  # Default to HTML (false for plain text)
+thunderbird_forward_inline: 0  # Forward inline (0) or as attachment (2)
+
+# Interface & behavior
+thunderbird_thread_view: 1  # Show threaded messages: 0=all, 1=unread, 2=none
+thunderbird_auto_mark_read: true  # Auto-mark messages as read
+thunderbird_mark_read_delay: true  # Delay before marking as read
+thunderbird_mark_read_seconds: 0  # Seconds before marking read (0=immediate)
+thunderbird_condensed_addresses: true  # Show only names, hide email addresses
+thunderbird_close_tab_on_delete: true  # Close message tab when deleting
+
+# Calendar
+thunderbird_calendar_week_start: 1  # Start week on Monday (0=Sunday, 1=Monday)
+thunderbird_calendar_system_timezone: true  # Use system timezone
+
+# Security
+thunderbird_block_remote_content: true  # Block remote content (anti-tracking)
+
+# Performance
+thunderbird_hw_acceleration: true  # Enable hardware acceleration
+thunderbird_compact_threshold: 20  # Auto-compact when folder exceeds MB
+
+# Thunderbird extensions
+# List of extensions to install automatically
+# To find extension ID and slug:
+# 1. Go to the extension page on addons.thunderbird.net
+# 2. The slug is in the URL: https://addons.thunderbird.net/thunderbird/addon/SLUG/
+# 3. The ID is in the extension's manifest or install the extension and check about:debugging
+thunderbird_extensions:
+  - id: "it-IT@dictionaries.addons.mozilla.org"
+    slug: "italian-dictionary-spelling"
+
 # Developer tools to hide from application launcher
 # These are utility/developer tools that shouldn't appear in the app menu
 hidden_from_launcher:
