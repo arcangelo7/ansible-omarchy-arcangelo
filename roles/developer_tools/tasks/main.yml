@@ -141,7 +141,8 @@
     recurse: true
   when:
     - aur_packages_to_install is defined
-    - android_sdk_home.stat.exists or (android_sdk_copied is defined and android_sdk_copied.changed)
+    - android_sdk_copied is defined
+    - android_sdk_copied.changed
   become: true
 
 - name: Configure Android environment variables in .bashrc
@@ -162,6 +163,15 @@
     mode: '0755'
   when: aur_packages_to_install is defined
 
+- name: Check if Android licenses are already accepted
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/android-sdk/licenses/android-sdk-license"
+  register: android_licenses_file
+  when:
+    - flutter_install_dir is defined
+    - aur_packages_to_install is defined
+    - android_sdk_home.stat.exists or (android_sdk_copied is defined and android_sdk_copied.changed)
+
 - name: Accept Android licenses
   ansible.builtin.shell: |
     yes | {{ flutter_install_dir }}/flutter/bin/flutter doctor --android-licenses
@@ -172,13 +182,15 @@
     - flutter_install_dir is defined
     - aur_packages_to_install is defined
     - android_sdk_home.stat.exists or (android_sdk_copied is defined and android_sdk_copied.changed)
+    - android_licenses_file is defined
+    - not android_licenses_file.stat.exists
 
 - name: Show Android licenses acceptance status
   debug:
-    msg: "Android licenses - Status: {{ 'Accepted' if android_licenses.changed else 'Already accepted or Flutter not yet installed' }}"
+    msg: "Android licenses - Status: {{ 'Accepted' if android_licenses.changed else 'Already accepted' }}"
   when:
     - aur_packages_to_install is defined
-    - android_licenses is defined
+    - android_licenses_file is defined
 
 - name: Install Android system images for emulators
   ansible.builtin.shell: |
