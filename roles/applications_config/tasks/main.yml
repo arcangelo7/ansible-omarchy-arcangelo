@@ -34,6 +34,19 @@
     cmd: xdg-settings set default-web-browser {{ default_browser }}
   changed_when: true
 
+# Override omarchy-launch-webapp to use Brave for web apps
+- name: Ensure ~/.local/bin directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_env.HOME }}/.local/bin"
+    state: directory
+    mode: '0755'
+
+- name: Deploy wrapper script to use Brave for web apps
+  ansible.builtin.copy:
+    src: omarchy-launch-webapp
+    dest: "{{ ansible_env.HOME }}/.local/bin/omarchy-launch-webapp"
+    mode: '0755'
+
 # Set Visual Studio Code as default text editor
 - name: Set VSCode as default editor for text files
   community.general.ini_file:

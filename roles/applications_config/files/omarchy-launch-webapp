@@ -1,0 +1,8 @@
+#!/bin/bash
+# Wrapper script to force Brave for web apps
+# This script takes precedence over ~/.local/share/omarchy/bin/omarchy-launch-webapp
+# because ~/.local/bin appears first in PATH
+
+browser="brave-browser.desktop"
+
+exec setsid uwsm app -- $(sed -n 's/^Exec=\([^ ]*\).*/\1/p' {~/.local,~/.nix-profile,/usr}/share/applications/$browser 2>/dev/null | head -1) --app="$1" "${@:2}"
