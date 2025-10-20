@@ -293,27 +293,27 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 
 ## Complete keybindings reference
 
-### Applications (SUPER + letter)
-- **A**: Claude AI assistant
-- **B**: Browser (Chromium)
-- **C**: Visual Studio Code
-- **D**: Docker (lazydocker in terminal)
-- **E**: Thunderbird email client
-- **F**: File manager (Nautilus)
-- **G**: WhatsApp
-- **H**: Homelab services dashboard
-- **M**: Music (Spotify)
-- **N**: Editor (Neovim)
-- **O**: Obsidian
-- **R**: Voice recording (Whispering toggle)
-- **T**: Activity monitor (btop in terminal)
-- **X**: X (Twitter)
-- **Y**: YouTube
-- **/**: Passwords (Bitwarden)
+### Applications (SUPER SHIFT + letter)
+- **SHIFT + A**: Claude AI assistant
+- **SHIFT + C**: Visual Studio Code
+- **SHIFT + D**: Docker (lazydocker in terminal)
+- **SHIFT + E**: Thunderbird email client
+- **SHIFT + F**: File manager (Nautilus)
+- **SHIFT + G**: WhatsApp
+- **SHIFT + H**: Homelab services dashboard
+- **SHIFT + M**: Music (Spotify)
+- **SHIFT + N**: Editor (Neovim)
+- **SHIFT + O**: Obsidian
+- **SHIFT + R**: Voice recording (Whispering toggle)
+- **SHIFT + T**: Activity monitor (btop in terminal)
+- **SHIFT + X**: X (Twitter)
+- **SHIFT + Y**: YouTube
+- **SHIFT + /**: Passwords (Bitwarden)
 
-### Application variants (SUPER + SHIFT + letter)
-- **SHIFT + B**: Browser (private mode)
-- **SHIFT + X**: X Post (Twitter compose)
+### Browser shortcuts (SUPER SHIFT + B combinations)
+- **SHIFT + B**: Browser (normal mode)
+- **SHIFT + ALT + B**: Browser (private mode)
+- **SHIFT + ALT + X**: X Post (Twitter compose)
 
 ### Menus and utilities (SUPER + special keys)
 - **Space**: Application launcher (walker)
@@ -325,18 +325,34 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 ### Window management (SUPER + keys)
 - **Return**: Terminal (Alacritty)
 - **W**: Close active window
-- **V**: Toggle floating window
+- **T**: Toggle floating window
+- **F**: Force full screen
+- **ALT + F**: Full width
 - **J**: Toggle split direction
 - **P**: Pseudo window (dwindle)
+- **G**: Toggle window grouping
+- **ALT + G**: Move active window out of group
 - **Arrow keys**: Move focus
 - **SHIFT + Arrow keys**: Swap windows
+- **ALT + Arrow keys**: Move window into group
 - **1-0**: Switch to workspace 1-10
 - **SHIFT + 1-0**: Move window to workspace 1-10
 - **TAB**: Next workspace
 - **SHIFT + TAB**: Previous workspace
 - **CTRL + TAB**: Former workspace
-- **-/=**: Resize window horizontally
-- **SHIFT + -/=**: Resize window vertically
+- **ALT + TAB**: Cycle to next window
+- **ALT + SHIFT + TAB**: Cycle to previous window
+- **ALT + 1-5**: Switch to group window 1-5
+- **CTRL + ALT + DELETE**: Close all windows
+
+### Resize and move floating windows
+**Note:** These commands work only on floating windows (toggle with SUPER + T)
+- **- (minus)**: Reduce window width (100px)
+- **= (equals)**: Increase window width (100px)
+- **SHIFT + -**: Reduce window height (100px)
+- **SHIFT + =**: Increase window height (100px)
+- **Left mouse button**: Move window (while holding SUPER)
+- **Right mouse button**: Resize window (while holding SUPER)
 
 ### Aesthetics (SUPER + modifiers + Space)
 - **SHIFT + Space**: Toggle top bar
@@ -350,21 +366,15 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 - **CTRL + ,**: Toggle do-not-disturb mode
 
 ### Screenshots and recordings
-- **Print**: Screenshot of region
-- **SHIFT + Print**: Screenshot of window
-- **CTRL + Print**: Screenshot of display
-- **ALT + Print**: Screen record region
-- **ALT + SHIFT + Print**: Screen record region with audio
-- **CTRL + ALT + Print**: Screen record display
-- **CTRL + ALT + SHIFT + Print**: Screen record display with audio
+- **Print**: Screenshot
+- **SHIFT + Print**: Screenshot (smart clipboard)
+- **ALT + Print**: Screen recording menu
 - **SUPER + Print**: Color picker
 
 ### System
 - **CTRL + I**: Toggle locking on idle
 - **CTRL + N**: Toggle nightlight
 - **CTRL + SUPER + S**: Share menu
-- **ALT + Tab**: Cycle windows
-- **ALT + SHIFT + Tab**: Cycle windows (reverse)
 
 ## Omarchy compliance
 
