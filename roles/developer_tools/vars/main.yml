@@ -24,6 +24,8 @@ pacman_packages_to_install:
     description: "LaTeX additional packages (multirow, minted, glossaries, etc.)"
   - name: texlive-binextra
     description: "TeX auxiliary programs including latexmk (required by LaTeX Workshop)"
+  - name: texlive-fontsrecommended
+    description: "Recommended fonts for TeX Live distribution"
   # Flutter Linux development dependencies
   - name: cmake
     description: "Build system required for Flutter Linux development"

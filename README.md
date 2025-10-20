@@ -271,6 +271,7 @@ Installs developer tools for Python, Node.js, Flutter, and general development.
 | texlive-latexrecommended | Recommended packages (setspace, caption, booktabs) |
 | texlive-latexextra | Additional packages (multirow, minted, glossaries) |
 | texlive-binextra | Auxiliary programs (latexmk for VS Code) |
+| texlive-fontsrecommended | Recommended fonts for TeX Live distribution |
 | cmake | Build system required for Flutter Linux development |
 | ninja | Build tool required for Flutter Linux development |
 | jdk17-openjdk | Java Development Kit required for Android development |
