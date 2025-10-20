@@ -255,45 +255,42 @@ thunderbird_extensions:
 
 ### 7. developer_tools
 
-Installs developer tools for Python, Node.js, and Flutter development. Automatically installs Node.js LTS via Mise if not already present.
+Installs developer tools for Python, Node.js, Flutter, and general development.
 
-**Python tools:**
+**Packages installed:**
+
 | Package | Description |
 |---------|-------------|
 | python-pipx | Install Python apps in isolated environments |
 | python-poetry | Dependency management and packaging |
 | uv | Fast Python package installer (Rust) |
-
-**Pipx packages:**
-| Package | Description |
-|---------|-------------|
-| mistral-pdf-to-markdown | Convert PDF to Markdown using Mistral AI (command: pdf2md) |
-
-**NPM packages:**
-- @anthropic-ai/claude-code (Official CLI for Claude AI)
-
-**LaTeX distribution:**
-| Package | Description |
-|---------|-------------|
+| plantuml | Component that allows to quickly write UML diagrams |
+| graphviz | Graph visualization software for creating diagrams and flowcharts |
 | texlive-basic | Core TeX Live with pdflatex |
 | texlive-latex | LaTeX format and base packages |
 | texlive-latexrecommended | Recommended packages (setspace, caption, booktabs) |
 | texlive-latexextra | Additional packages (multirow, minted, glossaries) |
 | texlive-binextra | Auxiliary programs (latexmk for VS Code) |
+| cmake | Build system required for Flutter Linux development |
+| ninja | Build tool required for Flutter Linux development |
+| jdk17-openjdk | Java Development Kit required for Android development |
+| android-sdk | Android Software Development Kit (AUR) |
+| android-sdk-build-tools | Android SDK build tools (AUR) |
+| android-sdk-cmdline-tools-latest | Android SDK command-line tools (AUR) |
+| android-platform | Android platform packages (AUR) |
+| android-sdk-platform-tools | Android SDK platform tools (AUR) |
+| mistral-pdf-to-markdown | Convert PDF to Markdown using Mistral AI (pipx) |
+| @anthropic-ai/claude-code | Official CLI for Claude AI (npm) |
 
 **Flutter SDK:**
 - Automatic detection and download of latest stable release via Flutter API
 - Installation directory: `~/development/flutter`
 - Auto-adds to PATH in `.bashrc`
 - Disables analytics by default
-- Linux development dependencies (cmake, ninja)
-- Android development setup:
-  - JDK 17 (OpenJDK) via pacman
-  - Android SDK, build tools, platform tools via AUR
-  - Auto-copies SDK to `~/android-sdk` with proper ownership
-  - Configures ANDROID_HOME, ANDROID_AVD_HOME, JAVA_HOME
-  - Auto-accepts licenses and installs system images (Android 34 with Google Play)
-  - Auto-updates all SDK components via `sdkmanager --update`
+- Android SDK auto-copied to `~/android-sdk` with proper ownership
+- Configures ANDROID_HOME, ANDROID_AVD_HOME, JAVA_HOME
+- Auto-accepts licenses and installs system images (Android 34 with Google Play)
+- Auto-updates all SDK components via `sdkmanager --update`
 - Web development: CHROME_EXECUTABLE set to `/usr/bin/brave`
 - **Note:** Full installation requires ~3-4GB disk space (including Android SDK)
 

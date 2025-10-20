@@ -1,33 +1,63 @@
 ---
-- name: Install Python developer tools via pacman
+# ============================================================================
+# PACMAN PACKAGES
+# ============================================================================
+
+- name: Install packages via pacman
   community.general.pacman:
     name: "{{ item.name }}"
     state: present
     update_cache: true
-  loop: "{{ python_tools_to_install }}"
-  when: python_tools_to_install is defined and python_tools_to_install | length > 0
+  loop: "{{ pacman_packages_to_install }}"
+  when: pacman_packages_to_install is defined and pacman_packages_to_install | length > 0
   become: true
-  register: python_tools_install_result
+  register: pacman_install_result
 
-- name: Show Python tools installation results
+- name: Show pacman packages installation results
   debug:
     msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ python_tools_install_result.results }}"
-  when: python_tools_install_result is defined
+  loop: "{{ pacman_install_result.results }}"
+  when: pacman_install_result is defined
+
+# ============================================================================
+# AUR PACKAGES
+# ============================================================================
+
+- name: Install packages via AUR
+  kewlfft.aur.aur:
+    name: "{{ item.name }}"
+    use: yay
+    state: present
+    extra_args: "--noconfirm"
+  loop: "{{ aur_packages_to_install }}"
+  when: aur_packages_to_install is defined and aur_packages_to_install | length > 0
+  become: true
+  become_user: aur_builder
+  register: aur_install_result
+
+- name: Show AUR packages installation results
+  debug:
+    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
+  loop: "{{ aur_install_result.results }}"
+  when: aur_install_result is defined
+
+# ============================================================================
+# PIPX PACKAGES
+# ============================================================================
 
 - name: Configure pipx PATH for current user
   ansible.builtin.command: pipx ensurepath
   register: pipx_ensurepath
   changed_when: "'already' not in pipx_ensurepath.stdout"
   failed_when: false
-  when: "'python-pipx' in python_tools_to_install | map(attribute='name') | list"
+  when: "'python-pipx' in pacman_packages_to_install | map(attribute='name') | list"
 
 - name: Show pipx ensurepath result
   debug:
     msg: "pipx PATH configuration - Status: {{ 'Configured' if pipx_ensurepath.changed else 'Already configured' }}"
   when:
     - pipx_ensurepath is defined
-    - "'python-pipx' in python_tools_to_install | map(attribute='name') | list"
+    - "'python-pipx' in pacman_packages_to_install | map(attribute='name') | list"
 
 - name: Install packages via pipx
   ansible.builtin.command:
@@ -36,7 +66,7 @@
   when:
     - pipx_packages_to_install is defined
     - pipx_packages_to_install | length > 0
-    - "'python-pipx' in python_tools_to_install | map(attribute='name') | list"
+    - "'python-pipx' in pacman_packages_to_install | map(attribute='name') | list"
   register: pipx_install_result
   changed_when: "'installed package' in pipx_install_result.stdout"
   failed_when: pipx_install_result.rc != 0 and 'already seems to be installed' not in pipx_install_result.stderr
@@ -47,21 +77,9 @@
   loop: "{{ pipx_install_result.results }}"
   when: pipx_install_result is defined
 
-- name: Install LaTeX packages via pacman
-  community.general.pacman:
-    name: "{{ item.name }}"
-    state: present
-    update_cache: true
-  loop: "{{ latex_packages_to_install }}"
-  when: latex_packages_to_install is defined and latex_packages_to_install | length > 0
-  become: true
-  register: latex_install_result
-
-- name: Show LaTeX packages installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ latex_install_result.results }}"
-  when: latex_install_result is defined
+# ============================================================================
+# NODE.JS AND NPM PACKAGES
+# ============================================================================
 
 - name: Install Node.js globally via mise
   ansible.builtin.command:
@@ -89,73 +107,27 @@
   loop: "{{ npm_install_result.results }}"
   when: npm_install_result is defined
 
-- name: Install Flutter Linux development dependencies
-  community.general.pacman:
-    name: "{{ item.name }}"
-    state: present
-    update_cache: true
-  loop: "{{ flutter_linux_dev_packages }}"
-  when: flutter_linux_dev_packages is defined and flutter_linux_dev_packages | length > 0
-  become: true
-  register: flutter_deps_install_result
-
-- name: Show Flutter Linux dependencies installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ flutter_deps_install_result.results }}"
-  when: flutter_deps_install_result is defined
-
-- name: Install Flutter Android dependencies via pacman
-  community.general.pacman:
-    name: "{{ item.name }}"
-    state: present
-    update_cache: true
-  loop: "{{ flutter_android_packages }}"
-  when: flutter_android_packages is defined and flutter_android_packages | length > 0
-  become: true
-  register: flutter_android_install_result
-
-- name: Show Flutter Android dependencies installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ flutter_android_install_result.results }}"
-  when: flutter_android_install_result is defined
-
-- name: Install Flutter Android SDK packages from AUR
-  kewlfft.aur.aur:
-    name: "{{ item.name }}"
-    use: yay
-    state: present
-    extra_args: "--noconfirm"
-  loop: "{{ flutter_android_aur_packages }}"
-  when: flutter_android_aur_packages is defined and flutter_android_aur_packages | length > 0
-  become: true
-  become_user: aur_builder
-  register: flutter_android_aur_result
-
-- name: Show Flutter Android AUR packages installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ flutter_android_aur_result.results }}"
-  when: flutter_android_aur_result is defined
+# ============================================================================
+# ANDROID SDK CONFIGURATION
+# ============================================================================
 
 - name: Check if Android SDK exists in /opt
   ansible.builtin.stat:
     path: /opt/android-sdk
   register: android_sdk_opt
-  when: flutter_android_aur_packages is defined
+  when: aur_packages_to_install is defined
 
 - name: Check if Android SDK already exists in home directory
   ansible.builtin.stat:
     path: "{{ ansible_env.HOME }}/android-sdk"
   register: android_sdk_home
-  when: flutter_android_aur_packages is defined
+  when: aur_packages_to_install is defined
 
 - name: Copy Android SDK to home directory
   ansible.builtin.command:
     cmd: cp -R /opt/android-sdk {{ ansible_env.HOME }}/
   when:
-    - flutter_android_aur_packages is defined
+    - aur_packages_to_install is defined
     - android_sdk_opt.stat.exists
     - not android_sdk_home.stat.exists
   become: true
@@ -168,7 +140,7 @@
     group: "{{ ansible_user_id }}"
     recurse: true
   when:
-    - flutter_android_aur_packages is defined
+    - aur_packages_to_install is defined
     - android_sdk_home.stat.exists or (android_sdk_copied is defined and android_sdk_copied.changed)
   become: true
 
@@ -181,14 +153,14 @@
       export PATH=$PATH:$ANDROID_HOME/platform-tools
       export JAVA_HOME=/usr/lib/jvm/java-17-openjdk
       export ANDROID_AVD_HOME=$HOME/.config/.android/avd
-  when: flutter_android_aur_packages is defined
+  when: aur_packages_to_install is defined
 
 - name: Create .android directory for AVD symlink
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.android"
     state: directory
     mode: '0755'
-  when: flutter_android_aur_packages is defined
+  when: aur_packages_to_install is defined
 
 - name: Accept Android licenses
   ansible.builtin.shell: |
@@ -198,14 +170,14 @@
   failed_when: false
   when:
     - flutter_install_dir is defined
-    - flutter_android_aur_packages is defined
+    - aur_packages_to_install is defined
     - android_sdk_home.stat.exists or (android_sdk_copied is defined and android_sdk_copied.changed)
 
 - name: Show Android licenses acceptance status
   debug:
     msg: "Android licenses - Status: {{ 'Accepted' if android_licenses.changed else 'Already accepted or Flutter not yet installed' }}"
   when:
-    - flutter_android_aur_packages is defined
+    - aur_packages_to_install is defined
     - android_licenses is defined
 
 - name: Install Android system images for emulators
@@ -231,7 +203,7 @@
   ansible.builtin.shell: |
     yes | {{ ansible_env.HOME }}/android-sdk/cmdline-tools/latest/bin/sdkmanager --update
   when:
-    - flutter_android_aur_packages is defined
+    - aur_packages_to_install is defined
     - android_sdk_home.stat.exists
   register: android_sdk_update
   changed_when: "'installed' in android_sdk_update.stdout or 'updated' in android_sdk_update.stdout"
@@ -241,8 +213,12 @@
   debug:
     msg: "Android SDK components - Status: {{ 'Updated' if android_sdk_update.changed else 'Already up-to-date' }}"
   when:
-    - flutter_android_aur_packages is defined
+    - aur_packages_to_install is defined
     - android_sdk_update is defined
+
+# ============================================================================
+# FLUTTER SDK
+# ============================================================================
 
 - name: Create development directory
   ansible.builtin.file:

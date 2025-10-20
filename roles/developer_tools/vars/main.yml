@@ -1,33 +1,40 @@
 ---
-python_tools_to_install:
+# Packages installed via pacman
+pacman_packages_to_install:
+  # Python tools
   - name: python-pipx
     description: "Install and run Python applications in isolated environments"
   - name: python-poetry
     description: "Python dependency management and packaging made easy"
   - name: uv
     description: "Extremely fast Python package installer and resolver written in Rust"
-
-pipx_packages_to_install:
-  - name: mistral-pdf-to-markdown
-    description: "Convert PDF documents to Markdown format using Mistral AI"
-
-npm_packages_to_install:
-  - name: "@anthropic-ai/claude-code"
-    description: "Official CLI for Claude AI by Anthropic"
-
-flutter_install_dir: "/home/{{ ansible_user_id }}/development"
-flutter_releases_url: "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json"
-flutter_linux_dev_packages:
+  # Diagram and visualization tools
+  - name: plantuml
+    description: "Component that allows to quickly write UML diagrams"
+  - name: graphviz
+    description: "Graph visualization software for creating diagrams and flowcharts"
+  # LaTeX distribution
+  - name: texlive-basic
+    description: "Core TeX Live distribution with pdflatex compiler"
+  - name: texlive-latex
+    description: "LaTeX format and base packages (required for \\documentclass)"
+  - name: texlive-latexrecommended
+    description: "LaTeX recommended packages (setspace, caption, booktabs, etc.)"
+  - name: texlive-latexextra
+    description: "LaTeX additional packages (multirow, minted, glossaries, etc.)"
+  - name: texlive-binextra
+    description: "TeX auxiliary programs including latexmk (required by LaTeX Workshop)"
+  # Flutter Linux development dependencies
   - name: cmake
     description: "Build system required for Flutter Linux development"
   - name: ninja
     description: "Build tool required for Flutter Linux development"
-
-flutter_android_packages:
+  # Flutter Android development dependencies
   - name: jdk17-openjdk
     description: "Java Development Kit required for Android development"
 
-flutter_android_aur_packages:
+# Packages installed via AUR
+aur_packages_to_install:
   - name: android-sdk
     description: "Android Software Development Kit"
   - name: android-sdk-build-tools
@@ -39,17 +46,20 @@ flutter_android_aur_packages:
   - name: android-sdk-platform-tools
     description: "Android SDK platform tools (adb, fastboot, etc.)"
 
+# Packages installed via pipx
+pipx_packages_to_install:
+  - name: mistral-pdf-to-markdown
+    description: "Convert PDF documents to Markdown format using Mistral AI"
+
+# Packages installed via npm
+npm_packages_to_install:
+  - name: "@anthropic-ai/claude-code"
+    description: "Official CLI for Claude AI by Anthropic"
+
+# Flutter SDK configuration
+flutter_install_dir: "/home/{{ ansible_user_id }}/development"
+flutter_releases_url: "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json"
+
+# Android SDK configuration
 android_system_images:
   - "system-images;android-34;google_apis_playstore;x86_64"
-
-latex_packages_to_install:
-  - name: texlive-basic
-    description: "Core TeX Live distribution with pdflatex compiler"
-  - name: texlive-latex
-    description: "LaTeX format and base packages (required for \\documentclass)"
-  - name: texlive-latexrecommended
-    description: "LaTeX recommended packages (setspace, caption, booktabs, etc.)"
-  - name: texlive-latexextra
-    description: "LaTeX additional packages (multirow, minted, glossaries, etc.)"
-  - name: texlive-binextra
-    description: "TeX auxiliary programs including latexmk (required by LaTeX Workshop)"
