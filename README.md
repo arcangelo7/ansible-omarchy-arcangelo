@@ -2,6 +2,12 @@
 
 Modular Ansible configuration to manage Omarchy installation and configuration on Arch Linux with my personal preferences.
 
+## Supported version
+
+**This playbook is tested and guaranteed to work with Omarchy 3.1.0**
+
+It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
+
 ## Prerequisites
 
 Install Ansible if not already present:
@@ -134,10 +140,10 @@ Installs essential applications and web apps. Supports both official repository 
 Centralized management of all Hyprland configuration changes. Handles all modifications to Hyprland config files and ensures proper reload.
 
 **Features:**
-- Manages password manager keybinding (Super + / → bitwarden-desktop)
-- Removes bloatware keybindings (ChatGPT, Grok, HEY, Signal, Google Messages)
-- Updates existing keybindings (Super + G: WhatsApp)
-- Adds new keybindings (Claude, VSCode, Homelab, Whispering voice recording)
+- Deploys optimized keybindings configuration via template file
+- Most app shortcuts use simplified form (SUPER + letter) for better UX
+- Only 4 keybindings keep SHIFT (conflicts with window management: C, F, G, T)
+- Removes X/Twitter keybindings (conflict with universal Cut command)
 - Creates `~/.local/bin/whispering-toggle` script for Wayland compatibility
 - Backs up configuration files before modifications
 - Single `hyprctl reload` at the end of all modifications
@@ -293,27 +299,31 @@ Installs developer tools for Python, Node.js, and Flutter development. Automatic
 
 ## Complete keybindings reference
 
-### Applications (SUPER SHIFT + letter)
-- **SHIFT + A**: Claude AI assistant
-- **SHIFT + C**: Visual Studio Code
-- **SHIFT + D**: Docker (lazydocker in terminal)
-- **SHIFT + E**: Thunderbird email client
-- **SHIFT + F**: File manager (Nautilus)
-- **SHIFT + G**: WhatsApp
-- **SHIFT + H**: Homelab services dashboard
-- **SHIFT + M**: Music (Spotify)
-- **SHIFT + N**: Editor (Neovim)
-- **SHIFT + O**: Obsidian
-- **SHIFT + R**: Voice recording (Whispering toggle)
-- **SHIFT + T**: Activity monitor (btop in terminal)
-- **SHIFT + X**: X (Twitter)
-- **SHIFT + Y**: YouTube
-- **SHIFT + /**: Passwords (Bitwarden)
+### Applications (SUPER + letter)
+Most application shortcuts use the simplified form for better user experience:
 
-### Browser shortcuts (SUPER SHIFT + B combinations)
-- **SHIFT + B**: Browser (normal mode)
-- **SHIFT + ALT + B**: Browser (private mode)
-- **SHIFT + ALT + X**: X Post (Twitter compose)
+- **A**: Claude AI assistant
+- **B**: Browser (Chromium)
+- **D**: Docker (lazydocker in terminal)
+- **E**: Thunderbird email client
+- **H**: Homelab services dashboard
+- **M**: Music (Spotify)
+- **N**: Editor (Neovim)
+- **O**: Obsidian
+- **R**: Voice recording (Whispering toggle)
+- **Y**: YouTube
+- **/**: Passwords (Bitwarden)
+
+### Applications that keep SHIFT (conflict with window management)
+Only 4 applications require SHIFT due to conflicts with system commands:
+
+- **SHIFT + C**: Visual Studio Code (conflicts with universal Copy)
+- **SHIFT + F**: File manager (Nautilus) (conflicts with Fullscreen)
+- **SHIFT + G**: WhatsApp (conflicts with Toggle grouping)
+- **SHIFT + T**: Activity monitor (btop in terminal) (conflicts with Toggle floating)
+
+### Browser shortcuts
+- **ALT + B**: Browser (private mode)
 
 ### Menus and utilities (SUPER + special keys)
 - **Space**: Application launcher (walker)

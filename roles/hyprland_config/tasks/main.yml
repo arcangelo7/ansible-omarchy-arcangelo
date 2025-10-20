@@ -1,61 +1,10 @@
 ---
-- name: Update keybinding for password manager
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
-    regexp: '^bindd = SUPER.*slash, Passwords, exec, uwsm app -- .*'
-    line: 'bindd = SUPER SHIFT, slash, Passwords, exec, uwsm app -- {{ password_manager_app }}'
-    backup: yes
-  when: password_manager_app is defined
-
-- name: Remove bloatware keybindings from bindings.conf
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
-    regexp: "{{ item.regexp }}"
-    state: absent
-  loop: "{{ keybindings_to_remove }}"
-  when: keybindings_to_remove is defined and keybindings_to_remove | length > 0
-  ignore_errors: yes
-  register: keybindings_removal_result
-
-- name: Show keybinding removal results
-  debug:
-    msg: "{{ item.item.description }} - Status: {{ 'Removed' if item.changed else 'Not present' }}"
-  loop: "{{ keybindings_removal_result.results }}"
-  when: keybindings_removal_result is defined
-
-- name: Update keybindings in bindings.conf
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
-    regexp: "{{ item.old_regexp }}"
-    line: "{{ item.new_line }}"
-    state: present
-  loop: "{{ keybindings_to_update }}"
-  when: keybindings_to_update is defined and keybindings_to_update | length > 0
-  ignore_errors: yes
-  register: keybindings_update_result
-
-- name: Show keybinding update results
-  debug:
-    msg: "{{ item.item.description }} - Status: {{ 'Updated' if item.changed else 'Already correct or not present' }}"
-  loop: "{{ keybindings_update_result.results }}"
-  when: keybindings_update_result is defined
-
-- name: Add custom keybindings to bindings.conf
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
-    regexp: "^bindd.*{{ item.keybinding }}.*{{ item.name }}.*$"
-    line: "bindd = {{ item.keybinding }}, {{ item.name }}, exec, {{ item.command }}"
-    state: present
-  loop: "{{ keybindings_to_add }}"
-  when: keybindings_to_add is defined and keybindings_to_add | length > 0
-  ignore_errors: yes
-  register: custom_keybindings_result
-
-- name: Show custom keybinding addition results
-  debug:
-    msg: "{{ item.item.description }} ({{ item.item.keybinding }}) - Status: {{ 'Added' if item.changed else 'Already present or error' }}"
-  loop: "{{ custom_keybindings_result.results }}"
-  when: custom_keybindings_result is defined
+- name: Deploy simplified keybindings configuration
+  ansible.builtin.copy:
+    src: bindings.conf
+    dest: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    backup: true
+    mode: '0644'
 
 - name: Create .local/bin directory
   ansible.builtin.file:
@@ -95,25 +44,25 @@
     content: |
       uinput
     mode: '0644'
-  become: yes
+  become: true
 
 - name: Add user to input group
   ansible.builtin.user:
     name: "{{ ansible_user_id }}"
     groups: input
-    append: yes
-  become: yes
+    append: true
+  become: true
 
 - name: Enable ydotool service
   ansible.builtin.systemd:
     name: ydotool.service
-    enabled: yes
+    enabled: true
     scope: user
-  ignore_errors: yes
+  ignore_errors: true
 
 - name: Reload Hyprland configuration
   ansible.builtin.command: hyprctl reload
-  ignore_errors: yes
+  ignore_errors: true
   register: hyprland_reload_result
   changed_when: hyprland_reload_result.rc == 0
 
