@@ -1,9 +1,0 @@
-#!/bin/bash
-
-# Modified by Ansible to use Brave for web apps
-# Original script backed up at: ~/.local/share/omarchy/bin/omarchy-launch-webapp.bak
-# Brave provides better privacy than Chromium while supporting web app mode
-
-browser="brave-browser.desktop"
-
-exec setsid uwsm app -- $(sed -n 's/^Exec=\([^ ]*\).*/\1/p' {~/.local,~/.nix-profile,/usr}/share/applications/$browser 2>/dev/null | head -1) --app="$1" "${@:2}"

@@ -7,7 +7,7 @@
     mode: '0644'
     backup: yes
 
-# Set Firefox as default browser
+# Set default browser
 - name: Ensure .config directory exists
   ansible.builtin.file:
     path: "{{ ansible_env.HOME }}/.config"
@@ -28,6 +28,11 @@
     - "x-scheme-handler/https"
     - "x-scheme-handler/about"
     - "x-scheme-handler/unknown"
+
+- name: Set system default browser using xdg-settings
+  ansible.builtin.command:
+    cmd: xdg-settings set default-web-browser {{ default_browser }}
+  changed_when: true
 
 # Set Visual Studio Code as default text editor
 - name: Set VSCode as default editor for text files
@@ -54,22 +59,6 @@
     - "text/x-log"
     - "application/x-yaml"
     - "application/x-shellscript"
-
-# Configure web apps to use Brave browser
-- name: Backup original omarchy-launch-webapp script
-  ansible.builtin.copy:
-    src: "{{ ansible_env.HOME }}/.local/share/omarchy/bin/omarchy-launch-webapp"
-    dest: "{{ ansible_env.HOME }}/.local/share/omarchy/bin/omarchy-launch-webapp.bak"
-    mode: '0755'
-    remote_src: yes
-    force: no
-
-- name: Configure omarchy-launch-webapp to use Brave for web apps
-  ansible.builtin.template:
-    src: omarchy-launch-webapp.j2
-    dest: "{{ ansible_env.HOME }}/.local/share/omarchy/bin/omarchy-launch-webapp"
-    mode: '0755'
-    backup: no
 
 # Configure Firefox custom preferences
 - name: Find Firefox profile directory

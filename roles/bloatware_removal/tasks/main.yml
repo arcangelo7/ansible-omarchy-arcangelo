@@ -30,19 +30,6 @@
   loop: "{{ onepassword_files_removal_result.results }}"
   when: onepassword_files_removal_result is defined
 
-- name: Remove 1Password reference from Hyprland apps.conf
-  ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.local/share/omarchy/default/hypr/apps.conf"
-    regexp: "^source.*1password\\.conf$"
-    state: absent
-  ignore_errors: yes
-  register: onepassword_apps_conf_removal
-
-- name: Show apps.conf update result
-  debug:
-    msg: "1Password reference in apps.conf - Status: {{ 'Removed' if onepassword_apps_conf_removal.changed else 'Not present' }}"
-  when: onepassword_apps_conf_removal is defined
-
 - name: Remove Basecamp web app files
   ansible.builtin.file:
     path: "{{ item }}"
