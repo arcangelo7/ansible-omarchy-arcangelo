@@ -123,3 +123,38 @@
 - name: Show i2c-dev module configuration result
   debug:
     msg: "i2c-dev module - Status: {{ 'Configured (reboot required)' if i2c_module_config.changed else 'Already configured' }}"
+
+- name: Create resolvconf-update service to fix openresolv signature mismatch
+  ansible.builtin.copy:
+    dest: /etc/systemd/system/resolvconf-update.service
+    content: |
+      [Unit]
+      Description=Update resolvconf signature for openresolv compatibility
+      Before=wg-quick@wg0.service
+      After=systemd-resolved.service
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/resolvconf -u
+      RemainAfterExit=yes
+
+      [Install]
+      WantedBy=multi-user.target
+    mode: '0644'
+  become: true
+
+- name: Enable and start resolvconf-update service
+  ansible.builtin.systemd:
+    name: resolvconf-update.service
+    enabled: true
+    state: started
+    daemon_reload: true
+  become: true
+
+- name: Enable and start WireGuard service
+  ansible.builtin.systemd:
+    name: wg-quick@wg0.service
+    enabled: true
+    state: started
+    daemon_reload: true
+  become: true
