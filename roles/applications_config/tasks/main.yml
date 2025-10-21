@@ -47,6 +47,12 @@
     dest: "{{ ansible_env.HOME }}/.local/bin/omarchy-launch-webapp"
     mode: '0755'
 
+- name: Deploy wrapper script for omarchy-launch-or-focus-webapp
+  ansible.builtin.copy:
+    src: omarchy-launch-or-focus-webapp
+    dest: "{{ ansible_env.HOME }}/.local/bin/omarchy-launch-or-focus-webapp"
+    mode: '0755'
+
 # Set Visual Studio Code as default text editor
 - name: Set VSCode as default editor for text files
   community.general.ini_file:

@@ -1,0 +1,15 @@
+#!/bin/bash
+# Wrapper script to force Brave for web apps via omarchy-launch-or-focus-webapp
+# This script takes precedence over ~/.local/share/omarchy/bin/omarchy-launch-or-focus-webapp
+# because ~/.local/bin appears first in PATH
+
+if (($# == 0)); then
+  echo "Usage: omarchy-launch-or-focus-webapp [window-pattern] [url-and-flags...]"
+  exit 1
+fi
+
+WINDOW_PATTERN="$1"
+shift
+LAUNCH_COMMAND="$HOME/.local/bin/omarchy-launch-webapp $@"
+
+exec omarchy-launch-or-focus "$WINDOW_PATTERN" "$LAUNCH_COMMAND"
