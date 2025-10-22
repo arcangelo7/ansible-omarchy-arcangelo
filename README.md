@@ -115,6 +115,7 @@ Installs essential applications and web apps. Supports both official repository 
 | ddcutil | Monitor control via DDC/CI |
 | firefox | Web browser |
 | thunderbird | Email client |
+| telegram-desktop | Official Telegram Desktop messaging client |
 | btrfs-assistant | BTRFS management GUI |
 
 **AUR packages installed:**
