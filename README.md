@@ -112,7 +112,6 @@ Installs essential applications and web apps. Supports both official repository 
 | gst-plugin-gtk, gst-plugins-base/good/bad, gst-plugin-pipewire | Whispering dependencies |
 | ydotool | Keyboard automation for Wayland |
 | wireguard-tools | VPN userspace tools |
-| openresolv | WireGuard DNS configuration |
 | ddcutil | Monitor control via DDC/CI |
 | firefox | Web browser |
 | thunderbird | Email client |
