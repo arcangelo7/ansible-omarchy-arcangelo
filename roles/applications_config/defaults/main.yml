@@ -45,6 +45,8 @@ firefox_extensions:
     slug: "bitwarden-password-manager"
   - id: "jid1-MnnxcxisBPnSXQ@jetpack"
     slug: "privacy-badger17"
+  - id: "{7be2ba16-0f1e-4d93-9ebc-5164397477a9}"
+    slug: "videospeed"
 
 # Thunderbird custom preferences
 # Privacy & telemetry
@@ -82,6 +84,57 @@ thunderbird_script_timeout: 30  # JavaScript execution timeout in seconds
 thunderbird_chrome_script_timeout: 30  # Chrome JavaScript execution timeout in seconds
 thunderbird_webrender_enabled: true  # Enable WebRender for better rendering
 thunderbird_sandbox_level: 4  # Sandbox level: 0=disabled, 4=maximum security
+
+# Chromium extensions
+# List of extensions to install automatically
+# Extension IDs can be found in Chrome Web Store URLs
+chromium_extensions:
+  - id: "cjpalhdlnbpafiamejdnhcphjbkeiagm"
+    name: "uBlock Origin"
+  - id: "nngceckbapebfimnlniiiahkandclblb"
+    name: "Bitwarden"
+  - id: "pkehgijcmpdhfbdbbnkijodmdjhbjlgp"
+    name: "Privacy Badger"
+  - id: "nffaoalbilbmmfgbnbgppjihopabppdk"
+    name: "Video Speed Controller"
+
+# Chromium custom preferences
+chromium_cookie_controls_mode: 2  # 0=allow all, 1=block third-party in incognito, 2=block third-party
+chromium_search_engine: "DuckDuckGo"
+chromium_bookmark_bar_show_tab_groups: false
+
+# Brave extensions (same as Chromium)
+brave_extensions: "{{ chromium_extensions }}"
+
+# Brave custom preferences
+brave_search_engine: "DuckDuckGo"
+brave_bookmark_bar_show_on_all_tabs: false
+brave_bookmark_bar_show_tab_groups: false
+brave_restore_on_startup: 5  # Restore previous session
+brave_enable_window_closing_confirm: true
+brave_mru_cycling_enabled: true
+
+# Brave feature settings
+brave_ai_chat_enabled: false
+brave_ai_chat_show_toolbar_button: false
+brave_autocomplete_enabled: false
+brave_speedreader_enabled: true
+brave_show_side_panel_button: false
+brave_vertical_tabs_enabled: false
+
+# Brave new tab page
+brave_ntp_show_background_image: true
+brave_ntp_show_branded_background_image: false
+brave_ntp_show_brave_news: false
+brave_ntp_show_clock: false
+brave_ntp_show_rewards: false
+brave_ntp_show_stats: false
+brave_ntp_clock_format: "h24"
+
+# Brave privacy settings
+brave_show_rewards_button: false
+brave_show_wallet_icon: false
+brave_shields_stats_badge_visible: false
 
 # Thunderbird extensions
 # List of extensions to install automatically

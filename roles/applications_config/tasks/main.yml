@@ -186,3 +186,95 @@
     mode: '0644'
   loop: "{{ hidden_from_launcher }}"
   when: hidden_from_launcher is defined and hidden_from_launcher | length > 0
+
+- name: Ensure Chromium policies directory exists
+  ansible.builtin.file:
+    path: /etc/chromium/policies/managed
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: Deploy Chromium enterprise policies (extensions auto-install)
+  ansible.builtin.template:
+    src: chromium-policies.json.j2
+    dest: /etc/chromium/policies/managed/policies.json
+    mode: '0644'
+    backup: yes
+  become: true
+
+- name: Check if Chromium config directory exists
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.config/chromium/Default"
+  register: chromium_default_profile
+
+- name: Deploy Chromium preferences template to temp location
+  ansible.builtin.template:
+    src: chromium-preferences.json.j2
+    dest: /tmp/chromium-prefs-update.json
+    mode: '0644'
+  when: chromium_default_profile.stat.exists
+  changed_when: false
+
+- name: Merge Chromium custom preferences
+  ansible.builtin.shell: |
+    if [ -f "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences" ]; then
+      jq -s '.[0] * .[1]' \
+        "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences" \
+        /tmp/chromium-prefs-update.json \
+        > "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences.new" && \
+      mv "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences.new" \
+        "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences"
+    else
+      cp /tmp/chromium-prefs-update.json \
+        "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences"
+    fi
+  args:
+    executable: /bin/bash
+  when: chromium_default_profile.stat.exists
+  changed_when: true
+
+- name: Ensure Brave policies directory exists
+  ansible.builtin.file:
+    path: /etc/brave/policies/managed
+    state: directory
+    mode: '0755'
+  become: true
+
+- name: Deploy Brave enterprise policies (extensions auto-install)
+  ansible.builtin.template:
+    src: brave-policies.json.j2
+    dest: /etc/brave/policies/managed/policies.json
+    mode: '0644'
+    backup: yes
+  become: true
+
+- name: Check if Brave config directory exists
+  ansible.builtin.stat:
+    path: "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default"
+  register: brave_default_profile
+
+- name: Deploy Brave preferences template to temp location
+  ansible.builtin.template:
+    src: brave-preferences.json.j2
+    dest: /tmp/brave-prefs-update.json
+    mode: '0644'
+  when: brave_default_profile.stat.exists
+  changed_when: false
+
+- name: Merge Brave custom preferences
+  ansible.builtin.shell: |
+    if [ -f "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences" ]; then
+      jq -s '.[0] * .[1]' \
+        "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences" \
+        /tmp/brave-prefs-update.json \
+        > "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences.new" && \
+      mv "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences.new" \
+        "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+    else
+      cp /tmp/brave-prefs-update.json \
+        "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+    fi
+  args:
+    executable: /bin/bash
+  when: brave_default_profile.stat.exists
+  changed_when: true

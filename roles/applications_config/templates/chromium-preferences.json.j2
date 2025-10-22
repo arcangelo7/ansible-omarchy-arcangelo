@@ -1,0 +1,16 @@
+{
+  "profile": {
+    "cookie_controls_mode": {{ chromium_cookie_controls_mode }},
+    "default_content_settings": {
+      "cookies": {{ chromium_cookie_controls_mode }}
+    }
+  },
+  "default_search_provider_data": {
+    "template_url_data": {
+      "short_name": "{{ chromium_search_engine }}"
+    }
+  },
+  "bookmark_bar": {
+    "show_tab_groups": {{ chromium_bookmark_bar_show_tab_groups | lower }}
+  }
+}

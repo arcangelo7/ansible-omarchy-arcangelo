@@ -200,14 +200,12 @@ Manages configuration for various applications.
 - Sets Visual Studio Code as default for text files
 - Configured MIME types: plain text, markdown, Python, YAML, JSON, shell scripts, C/C++, Java, CSS, JavaScript, XML, log files
 
-**Firefox custom preferences:**
-- Automatically deploys `user.js` with your custom preferences to Firefox profile
-- Preserves preferences across Firefox reinstalls and profile migrations
-
-**Firefox extensions:**
-- Automatically installs extensions via Enterprise Policies (force-installed)
-- Extensions persist across Firefox updates and reinstalls
-- Uses official Mozilla addons repository
+**Browser configuration (Firefox, Chromium, Brave):**
+- Force-installs privacy extensions via enterprise policies: uBlock Origin, Bitwarden, Privacy Badger, Video Speed Controller
+- Configures privacy settings: strict content blocking, third-party cookie blocking, telemetry disabled
+- Search engine: DuckDuckGo
+- Brave-specific: AI chat, rewards, and wallet features disabled
+- Preserves browser state (history, bookmarks, sessions) via intelligent merge with jq
 
 **Thunderbird custom preferences:**
 - Automatically deploys `user.js` with your custom preferences to Thunderbird profile
@@ -232,7 +230,7 @@ firefox_content_blocking: "strict"
 firefox_formfill_enable: false
 firefox_ctrl_tab_recently_used: true
 
-# Firefox extensions (auto-installed)
+# Browser extensions (auto-installed on Firefox, Chromium, Brave)
 firefox_extensions:
   - id: "uBlock0@raymondhill.net"
     slug: "ublock-origin"
@@ -240,6 +238,8 @@ firefox_extensions:
     slug: "bitwarden-password-manager"
   - id: "jid1-MnnxcxisBPnSXQ@jetpack"
     slug: "privacy-badger17"
+  - id: "{7be2ba16-0f1e-4d93-9ebc-5164397477a9}"
+    slug: "videospeed"
 
 # Thunderbird preferences (see file for complete list)
 thunderbird_telemetry_enabled: false

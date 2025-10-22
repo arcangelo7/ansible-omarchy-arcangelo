@@ -1,0 +1,56 @@
+{
+  "default_search_provider_data": {
+    "template_url_data": {
+      "short_name": "{{ brave_search_engine }}"
+    }
+  },
+  "bookmark_bar": {
+    "show_on_all_tabs": {{ brave_bookmark_bar_show_on_all_tabs | lower }},
+    "show_tab_groups": {{ brave_bookmark_bar_show_tab_groups | lower }}
+  },
+  "session": {
+    "restore_on_startup": {{ brave_restore_on_startup }}
+  },
+  "brave": {
+    "ai_chat": {
+      "context_menu_enabled": {{ brave_ai_chat_enabled | lower }},
+      "show_toolbar_button": {{ brave_ai_chat_show_toolbar_button | lower }},
+      "storage_enabled": {{ brave_ai_chat_enabled | lower }},
+      "tab_organization_enabled": {{ brave_ai_chat_enabled | lower }}
+    },
+    "autocomplete_enabled": {{ brave_autocomplete_enabled | lower }},
+    "autofill_private_windows": false,
+    "enable_window_closing_confirm": {{ brave_enable_window_closing_confirm | lower }},
+    "mru_cycling_enabled": {{ brave_mru_cycling_enabled | lower }},
+    "new_tab_page": {
+      "background": {
+        "random": true,
+        "selected_value": "",
+        "type": "brave"
+      },
+      "clock_format": "{{ brave_ntp_clock_format }}",
+      "show_background_image": {{ brave_ntp_show_background_image | lower }},
+      "show_branded_background_image": {{ brave_ntp_show_branded_background_image | lower }},
+      "show_brave_news": {{ brave_ntp_show_brave_news | lower }},
+      "show_clock": {{ brave_ntp_show_clock | lower }},
+      "show_rewards": {{ brave_ntp_show_rewards | lower }},
+      "show_stats": {{ brave_ntp_show_stats | lower }}
+    },
+    "rewards": {
+      "show_brave_rewards_button_in_location_bar": {{ brave_show_rewards_button | lower }}
+    },
+    "shields": {
+      "stats_badge_visible": {{ brave_shields_stats_badge_visible | lower }}
+    },
+    "show_side_panel_button": {{ brave_show_side_panel_button | lower }},
+    "speedreader": {
+      "feature_enabled": {{ brave_speedreader_enabled | lower }}
+    },
+    "tabs": {
+      "vertical_tabs_enabled": {{ brave_vertical_tabs_enabled | lower }}
+    },
+    "wallet": {
+      "show_wallet_icon_on_toolbar": {{ brave_show_wallet_icon | lower }}
+    }
+  }
+}
