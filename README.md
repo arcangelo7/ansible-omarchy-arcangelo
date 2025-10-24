@@ -384,6 +384,8 @@ Only 4 applications require SHIFT due to conflicts with system commands:
 - **CTRL + I**: Toggle locking on idle
 - **CTRL + N**: Toggle nightlight
 - **CTRL + SUPER + S**: Share menu
+- **CTRL + T**: Show current time in notification
+- **CTRL + B**: Show battery level in notification
 
 ## Omarchy compliance
 
