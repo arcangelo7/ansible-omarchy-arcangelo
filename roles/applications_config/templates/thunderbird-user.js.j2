@@ -9,87 +9,133 @@
 // PRIVACY & TELEMETRY
 // =============================================================================
 
+{% if thunderbird_healthreport_enabled is defined %}
 // Disable telemetry and crash reports
-user_pref("datareporting.healthreport.uploadEnabled", {{ thunderbird_healthreport_enabled | default('false') | lower }});
-user_pref("datareporting.policy.dataSubmissionEnabled", {{ thunderbird_telemetry_enabled | default('false') | lower }});
-user_pref("toolkit.telemetry.enabled", {{ thunderbird_telemetry_enabled | default('false') | lower }});
-user_pref("toolkit.crashreporter.enabled", {{ thunderbird_crashreporter_enabled | default('false') | lower }});
+user_pref("datareporting.healthreport.uploadEnabled", {{ thunderbird_healthreport_enabled | lower }});
+{% endif %}
+{% if thunderbird_telemetry_enabled is defined %}
+user_pref("datareporting.policy.dataSubmissionEnabled", {{ thunderbird_telemetry_enabled | lower }});
+user_pref("toolkit.telemetry.enabled", {{ thunderbird_telemetry_enabled | lower }});
+{% endif %}
+{% if thunderbird_crashreporter_enabled is defined %}
+user_pref("toolkit.crashreporter.enabled", {{ thunderbird_crashreporter_enabled | lower }});
+{% endif %}
 
 // =============================================================================
 // EMAIL COMPOSITION
 // =============================================================================
 
+{% if thunderbird_compose_paragraph is defined %}
 // Use paragraph format instead of body text
-user_pref("mail.compose.default_to_paragraph", {{ thunderbird_compose_paragraph | default('false') | lower }});
+user_pref("mail.compose.default_to_paragraph", {{ thunderbird_compose_paragraph | lower }});
+{% endif %}
 
+{% if thunderbird_cr_creates_new_p is defined %}
 // Always create new <p> tag when pressing Enter (never use <br>)
 // This ensures consistent paragraph structure in all email clients
-user_pref("editor.CR_creates_new_p", {{ thunderbird_cr_creates_new_p | default('true') | lower }});
+user_pref("editor.CR_creates_new_p", {{ thunderbird_cr_creates_new_p | lower }});
+{% endif %}
 
+{% if thunderbird_compose_autosave is defined %}
 // Autosave interval (minutes)
-user_pref("mail.compose.autosaveinterval", {{ thunderbird_compose_autosave | default('1') }});
+user_pref("mail.compose.autosaveinterval", {{ thunderbird_compose_autosave }});
+{% endif %}
 
+{% if thunderbird_compose_html is defined %}
 // Default to plain text for new messages
-user_pref("mail.identity.default.compose_html", {{ thunderbird_compose_html | default('true') | lower }});
+user_pref("mail.identity.default.compose_html", {{ thunderbird_compose_html | lower }});
+{% endif %}
 
+{% if thunderbird_forward_inline is defined %}
 // Forward messages inline instead of as attachment
-user_pref("mail.forward_message_mode", {{ thunderbird_forward_inline | default('0') }});  // 0=inline, 2=attachment
+user_pref("mail.forward_message_mode", {{ thunderbird_forward_inline }});  // 0=inline, 2=attachment
+{% endif %}
 
 // =============================================================================
 // INTERFACE & BEHAVIOR
 // =============================================================================
 
+{% if thunderbird_thread_view is defined %}
 // Show message threads in conversation view
-user_pref("mailnews.default_view_flags", {{ thunderbird_thread_view | default('1') }});  // 0=all, 1=unread, 2=none
+user_pref("mailnews.default_view_flags", {{ thunderbird_thread_view }});  // 0=all, 1=unread, 2=none
+{% endif %}
 
+{% if thunderbird_auto_mark_read is defined %}
 // Auto-mark messages as read
-user_pref("mailnews.mark_message_read.auto", {{ thunderbird_auto_mark_read | default('true') | lower }});
-user_pref("mailnews.mark_message_read.delay", {{ thunderbird_mark_read_delay | default('true') | lower }});
-user_pref("mailnews.mark_message_read.delay.interval", {{ thunderbird_mark_read_seconds | default('0') }});  // seconds
+user_pref("mailnews.mark_message_read.auto", {{ thunderbird_auto_mark_read | lower }});
+{% endif %}
+{% if thunderbird_mark_read_delay is defined %}
+user_pref("mailnews.mark_message_read.delay", {{ thunderbird_mark_read_delay | lower }});
+{% endif %}
+{% if thunderbird_mark_read_seconds is defined %}
+user_pref("mailnews.mark_message_read.delay.interval", {{ thunderbird_mark_read_seconds }});  // seconds
+{% endif %}
 
+{% if thunderbird_condensed_addresses is defined %}
 // Show condensed email addresses (Name only, hide email)
-user_pref("mail.showCondensedAddresses", {{ thunderbird_condensed_addresses | default('true') | lower }});
+user_pref("mail.showCondensedAddresses", {{ thunderbird_condensed_addresses | lower }});
+{% endif %}
 
+{% if thunderbird_close_tab_on_delete is defined %}
 // Close message tab when message is deleted
-user_pref("mail.tabs.closeMessageTabOnDelete", {{ thunderbird_close_tab_on_delete | default('true') | lower }});
+user_pref("mail.tabs.closeMessageTabOnDelete", {{ thunderbird_close_tab_on_delete | lower }});
+{% endif %}
 
 // =============================================================================
 // CALENDAR
 // =============================================================================
 
+{% if thunderbird_calendar_week_start is defined %}
 // Start week on Monday (0=Sunday, 1=Monday)
-user_pref("calendar.week.start", {{ thunderbird_calendar_week_start | default('1') }});
+user_pref("calendar.week.start", {{ thunderbird_calendar_week_start }});
+{% endif %}
 
+{% if thunderbird_calendar_system_timezone is defined %}
 // Use system timezone
-user_pref("calendar.timezone.useSystemTimezone", {{ thunderbird_calendar_system_timezone | default('true') | lower }});
+user_pref("calendar.timezone.useSystemTimezone", {{ thunderbird_calendar_system_timezone | lower }});
+{% endif %}
 
 // =============================================================================
 // SECURITY & ENCRYPTION
 // =============================================================================
 
+{% if thunderbird_block_remote_content is defined %}
 // Disable remote content in emails (anti-tracking)
-user_pref("mailnews.message_display.disable_remote_image", {{ thunderbird_block_remote_content | default('true') | lower }});
+user_pref("mailnews.message_display.disable_remote_image", {{ thunderbird_block_remote_content | lower }});
+{% endif %}
 
 // =============================================================================
 // PERFORMANCE
 // =============================================================================
 
+{% if thunderbird_hw_acceleration is defined %}
 // Enable hardware acceleration
-user_pref("layers.acceleration.force-enabled", {{ thunderbird_hw_acceleration | default('true') | lower }});
+user_pref("layers.acceleration.force-enabled", {{ thunderbird_hw_acceleration | lower }});
+{% endif %}
 
+{% if thunderbird_compact_threshold is defined %}
 // Compact folders automatically
-user_pref("mail.purge_threshhold_mb", {{ thunderbird_compact_threshold | default('20') }});  // MB
+user_pref("mail.purge_threshhold_mb", {{ thunderbird_compact_threshold }});  // MB
+{% endif %}
 
 // =============================================================================
 // OAUTH & WEB RENDERING
 // =============================================================================
 
+{% if thunderbird_script_timeout is defined %}
 // Increase JavaScript execution timeout for OAuth pages
-user_pref("dom.max_script_run_time", {{ thunderbird_script_timeout | default('30') }});  // seconds
-user_pref("dom.max_chrome_script_run_time", {{ thunderbird_chrome_script_timeout | default('30') }});  // seconds
+user_pref("dom.max_script_run_time", {{ thunderbird_script_timeout }});  // seconds
+{% endif %}
+{% if thunderbird_chrome_script_timeout is defined %}
+user_pref("dom.max_chrome_script_run_time", {{ thunderbird_chrome_script_timeout }});  // seconds
+{% endif %}
 
+{% if thunderbird_webrender_enabled is defined %}
 // Enable WebRender for better rendering
-user_pref("gfx.webrender.all", {{ thunderbird_webrender_enabled | default('true') | lower }});
+user_pref("gfx.webrender.all", {{ thunderbird_webrender_enabled | lower }});
+{% endif %}
 
+{% if thunderbird_sandbox_level is defined %}
 // Sandbox level for OAuth windows
-user_pref("security.sandbox.content.level", {{ thunderbird_sandbox_level | default('4') }});  // 0=disabled, 4=maximum
+user_pref("security.sandbox.content.level", {{ thunderbird_sandbox_level }});  // 0=disabled, 4=maximum
+{% endif %}

@@ -8,7 +8,9 @@
       }{{ "," if not loop.last else "" }}
 {% endfor %}
     },
-    "DisableTelemetry": {{ firefox_telemetry_enabled | default('false') | lower }},
+{% if firefox_telemetry_enabled is defined %}
+    "DisableTelemetry": {{ firefox_telemetry_enabled | lower }},
+{% endif %}
     "DisableFirefoxStudies": true,
     "DisablePocket": true,
     "FirefoxHome": {
