@@ -28,6 +28,8 @@ applications_to_install:
     description: "Official Telegram Desktop messaging client"
   - name: btrfs-assistant
     description: "GUI application for managing BTRFS filesystems and Snapper snapshots"
+  - name: exfatprogs
+    description: "exFAT filesystem userspace utilities for formatting and maintaining exFAT filesystems"
 
 aur_applications_to_install:
   - name: brave-bin

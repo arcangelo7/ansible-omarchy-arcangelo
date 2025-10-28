@@ -117,6 +117,7 @@ Installs essential applications and web apps. Supports both official repository 
 | thunderbird | Email client |
 | telegram-desktop | Official Telegram Desktop messaging client |
 | btrfs-assistant | BTRFS management GUI |
+| exfatprogs | exFAT filesystem utilities |
 
 **AUR packages installed:**
 | Package | Description |
