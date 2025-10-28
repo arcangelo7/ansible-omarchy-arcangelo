@@ -4,7 +4,7 @@ Modular Ansible configuration to manage Omarchy installation and configuration o
 
 ## Supported version
 
-**This playbook is tested and guaranteed to work with Omarchy 3.1.0**
+**This playbook is tested and guaranteed to work with Omarchy 3.1.4**
 
 It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
 
@@ -349,6 +349,8 @@ Only 4 applications require SHIFT due to conflicts with system commands:
 - **TAB**: Next workspace
 - **SHIFT + TAB**: Previous workspace
 - **CTRL + TAB**: Former workspace
+- **S**: Reveal scratchpad workspace overlay
+- **ALT + S**: Move app to scratchpad
 - **ALT + TAB**: Cycle to next window
 - **ALT + SHIFT + TAB**: Cycle to previous window
 - **ALT + 1-5**: Switch to group window 1-5
