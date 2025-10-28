@@ -22,6 +22,10 @@ user_pref("toolkit.crashreporter.enabled", {{ thunderbird_crashreporter_enabled 
 // Use paragraph format instead of body text
 user_pref("mail.compose.default_to_paragraph", {{ thunderbird_compose_paragraph | default('false') | lower }});
 
+// Always create new <p> tag when pressing Enter (never use <br>)
+// This ensures consistent paragraph structure in all email clients
+user_pref("editor.CR_creates_new_p", {{ thunderbird_cr_creates_new_p | default('true') | lower }});
+
 // Autosave interval (minutes)
 user_pref("mail.compose.autosaveinterval", {{ thunderbird_compose_autosave | default('1') }});
 

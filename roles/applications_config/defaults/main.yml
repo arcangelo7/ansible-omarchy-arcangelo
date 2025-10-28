@@ -55,7 +55,8 @@ thunderbird_healthreport_enabled: false
 thunderbird_crashreporter_enabled: false
 
 # Email composition
-thunderbird_compose_paragraph: false  # Use paragraph format in HTML emails
+thunderbird_compose_paragraph: true  # Use paragraph format in HTML emails
+thunderbird_cr_creates_new_p: true  # Always create new <p> on Enter (never use <br>)
 thunderbird_compose_autosave: 1  # Autosave interval in minutes
 thunderbird_compose_html: true  # Default to HTML (false for plain text)
 thunderbird_forward_inline: 0  # Forward inline (0) or as attachment (2)
