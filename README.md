@@ -184,6 +184,12 @@ Edit `group_vars/all/system_settings.yml` to customize monitor scaling, resoluti
 - Keyboard: US International with dead keys
 - Mise: Enabled (auto-activates in bash shell)
 
+## Host-specific configuration
+
+Variables can be overridden per-host using `host_vars/<inventory-hostname>/system_settings.yml` (highest priority) over `group_vars/all/system_settings.yml` (default).
+
+**Note:** `host_vars/` is not versioned (in `.gitignore`) as each system has its own configuration. The directory name must match the inventory hostname (default: `localhost`).
+
 ### 6. applications_config
 
 Manages configuration for various applications.

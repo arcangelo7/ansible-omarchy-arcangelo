@@ -1,17 +1,17 @@
 ---
-# System settings configuration
+# System settings configuration - Default values for all hosts
+#
+# These settings apply to ALL hosts by default.
+# To override for a specific host, create: host_vars/<hostname>/system_settings.yml
+#
+# Note: host_vars/ is not versioned (in .gitignore) - each system has its own config
 
-# Monitor configuration
-# Current setup: Ultrawide (3440x1440@100Hz, ~109 PPI)
-# For this type of display, use 1x scaling
 monitor_gdk_scale: 1
 monitor_scale: 1
 monitor_resolution: "3440x1440"
 monitor_position: "auto"
 monitor_refresh_rate: "@100"
 
-# Keyboard layout
-# US International with dead keys (press accent then letter for accented characters)
 keyboard_layout: "us"
 keyboard_variant: "intl"
 
