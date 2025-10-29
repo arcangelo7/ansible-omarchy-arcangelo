@@ -86,7 +86,7 @@ Removes unwanted software from the system. Only handles package and file removal
 | typora | Config files |
 
 **Web apps removed:**
-Basecamp, Google Contacts, Google Messages, Google Photos, HEY, ChatGPT (includes desktop entries, icons, config and cache files)
+Basecamp, Google Contacts, Google Messages, Google Photos, HEY, ChatGPT, Discord (includes desktop entries, icons, config and cache files)
 
 **Note:** Keybinding cleanup is handled by the `hyprland_config` role
 
@@ -116,6 +116,7 @@ Installs essential applications and web apps. Supports both official repository 
 | firefox | Web browser |
 | thunderbird | Email client |
 | telegram-desktop | Official Telegram Desktop messaging client |
+| discord | All-in-one voice and text chat for gamers |
 | btrfs-assistant | BTRFS management GUI |
 | exfatprogs | exFAT filesystem utilities |
 

@@ -5,8 +5,8 @@
     state: absent
   loop: "{{ bloatware_packages }}"
   when: bloatware_packages is defined and bloatware_packages | length > 0
-  become: yes
-  ignore_errors: yes
+  become: true
+  ignore_errors: true
   register: bloatware_removal_result
 
 - name: Show bloatware removal results
@@ -21,7 +21,7 @@
     state: absent
   loop: "{{ onepassword_config_files }}"
   when: onepassword_config_files is defined and onepassword_config_files | length > 0
-  ignore_errors: yes
+  ignore_errors: true
   register: onepassword_files_removal_result
 
 - name: Show 1Password files removal results
@@ -36,7 +36,7 @@
     state: absent
   loop: "{{ basecamp_webapp_files }}"
   when: basecamp_webapp_files is defined and basecamp_webapp_files | length > 0
-  ignore_errors: yes
+  ignore_errors: true
   register: basecamp_files_removal_result
 
 - name: Show Basecamp files removal results
@@ -51,7 +51,7 @@
     state: absent
   loop: "{{ google_contacts_webapp_files }}"
   when: google_contacts_webapp_files is defined and google_contacts_webapp_files | length > 0
-  ignore_errors: yes
+  ignore_errors: true
   register: google_contacts_files_removal_result
 
 - name: Show Google Contacts files removal results
@@ -66,7 +66,7 @@
     state: absent
   loop: "{{ google_messages_webapp_files }}"
   when: google_messages_webapp_files is defined and google_messages_webapp_files | length > 0
-  ignore_errors: yes
+  ignore_errors: true
   register: google_messages_files_removal_result
 
 - name: Show Google Messages files removal results
@@ -81,7 +81,7 @@
     state: absent
   loop: "{{ google_photos_webapp_files }}"
   when: google_photos_webapp_files is defined and google_photos_webapp_files | length > 0
-  ignore_errors: yes
+  ignore_errors: true
   register: google_photos_files_removal_result
 
 - name: Show Google Photos files removal results
@@ -96,7 +96,7 @@
     state: absent
   loop: "{{ hey_webapp_files }}"
   when: hey_webapp_files is defined and hey_webapp_files | length > 0
-  ignore_errors: yes
+  ignore_errors: true
   register: hey_files_removal_result
 
 - name: Show HEY files removal results
@@ -111,7 +111,7 @@
     state: absent
   loop: "{{ signal_config_files }}"
   when: signal_config_files is defined and signal_config_files | length > 0
-  ignore_errors: yes
+  ignore_errors: true
   register: signal_files_removal_result
 
 - name: Show Signal files removal results
@@ -126,7 +126,7 @@
     state: absent
   loop: "{{ chatgpt_webapp_files }}"
   when: chatgpt_webapp_files is defined and chatgpt_webapp_files | length > 0
-  ignore_errors: yes
+  ignore_errors: true
   register: chatgpt_files_removal_result
 
 - name: Show ChatGPT files removal results
@@ -135,13 +135,28 @@
   loop: "{{ chatgpt_files_removal_result.results }}"
   when: chatgpt_files_removal_result is defined
 
+- name: Remove Discord web app files
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: absent
+  loop: "{{ discord_webapp_files }}"
+  when: discord_webapp_files is defined and discord_webapp_files | length > 0
+  ignore_errors: true
+  register: discord_files_removal_result
+
+- name: Show Discord files removal results
+  debug:
+    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
+  loop: "{{ discord_files_removal_result.results }}"
+  when: discord_files_removal_result is defined
+
 - name: Remove Typora configuration files
   ansible.builtin.file:
     path: "{{ item }}"
     state: absent
   loop: "{{ typora_config_files }}"
   when: typora_config_files is defined and typora_config_files | length > 0
-  ignore_errors: yes
+  ignore_errors: true
   register: typora_files_removal_result
 
 - name: Show Typora files removal results
