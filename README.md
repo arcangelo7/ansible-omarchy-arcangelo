@@ -112,6 +112,7 @@ Installs essential applications and web apps. Supports both official repository 
 | gst-plugin-gtk, gst-plugins-base/good/bad, gst-plugin-pipewire | Whispering dependencies |
 | ydotool | Keyboard automation for Wayland |
 | wireguard-tools | VPN userspace tools |
+| openfortivpn | Fortinet SSL VPN client |
 | ddcutil | Monitor control via DDC/CI |
 | firefox | Web browser |
 | thunderbird | Email client |

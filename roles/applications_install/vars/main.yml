@@ -18,6 +18,8 @@ applications_to_install:
     description: "Generic command-line automation tool for Wayland"
   - name: wireguard-tools
     description: "WireGuard VPN userspace tools for secure network tunneling"
+  - name: openfortivpn
+    description: "Open implementation of Fortinet's proprietary PPP+SSL VPN solution"
   - name: ddcutil
     description: "Monitor control via DDC/CI and USB for brightness adjustment"
   - name: firefox
