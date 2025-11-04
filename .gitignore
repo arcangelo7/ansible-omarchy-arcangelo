@@ -1,5 +1,2 @@
-.claude
-CLAUDE.md
-
 # Host-specific configurations (not versioned, each system has its own)
 host_vars/

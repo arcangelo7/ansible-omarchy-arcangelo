@@ -4,7 +4,7 @@ Modular Ansible configuration to manage Omarchy installation and configuration o
 
 ## Supported version
 
-**This playbook is tested and guaranteed to work with Omarchy 3.1.4**
+**This playbook is tested and guaranteed to work with Omarchy 3.1.5**
 
 It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
 
@@ -317,17 +317,17 @@ Most application shortcuts use the simplified form for better user experience:
 - **H**: Homelab services dashboard
 - **M**: Music (Spotify)
 - **N**: Editor (Neovim)
-- **O**: Obsidian
 - **R**: Voice recording (Whispering toggle)
 - **Y**: YouTube
 - **/**: Passwords (Bitwarden)
 
 ### Applications that keep SHIFT (conflict with window management)
-Only 4 applications require SHIFT due to conflicts with system commands:
+Only 5 applications require SHIFT due to conflicts with system commands:
 
 - **SHIFT + C**: Visual Studio Code (conflicts with universal Copy)
 - **SHIFT + F**: File manager (Nautilus) (conflicts with Fullscreen)
 - **SHIFT + G**: WhatsApp (conflicts with Toggle grouping)
+- **SHIFT + O**: Obsidian (conflicts with overlay feature)
 - **SHIFT + T**: Activity monitor (btop in terminal) (conflicts with Toggle floating)
 
 ### Browser shortcuts
