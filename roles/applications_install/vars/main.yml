@@ -46,6 +46,8 @@ aur_applications_to_install:
     description: "Reference manager to collect, organize, cite, and share research sources"
   - name: ddcui
     description: "Graphical user interface for ddcutil to control monitor settings"
+  - name: geforcenow-electron
+    description: "Unofficial Electron wrapper for NVIDIA GeForce NOW cloud gaming service (max 1080p 60Hz on Linux)"
 
 webapps_to_install:
   - name: "Claude"

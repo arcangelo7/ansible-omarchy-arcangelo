@@ -129,6 +129,7 @@ Installs essential applications and web apps. Supports both official repository 
 | visual-studio-code-bin | Code editor |
 | zotero-bin | Reference manager |
 | ddcui | GUI for ddcutil |
+| geforcenow-electron | NVIDIA GeForce NOW cloud gaming (max 1080p 60Hz on Linux) |
 
 **Web apps installed:**
 | App | URL | Notes |
