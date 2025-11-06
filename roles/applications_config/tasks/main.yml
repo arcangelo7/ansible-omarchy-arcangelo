@@ -177,6 +177,30 @@
     mode: '0644'
   when: thunderbird_profile.stdout != ""
 
+- name: Check if GeForce NOW is installed
+  ansible.builtin.stat:
+    path: /opt/geforcenow-electron/geforcenow-electron
+  register: geforcenow_installed
+
+- name: Override GeForce NOW desktop file to disable microphone access
+  ansible.builtin.copy:
+    content: |
+      [Desktop Entry]
+      Encoding=UTF-8
+      Name=GeForce NOW
+      Comment=Stream games using the Nvidia GeForce NOW service
+      Comment[ro]=Joacă jocuri prin streaming folosind serviciul Nvidia GeForce NOW
+      Type=Application
+      Exec=/opt/geforcenow-electron/geforcenow-electron --disable-features=MediaStreamPermissionsPolicy
+      Icon=nvidia
+      StartupWMClass=geforce now
+      Categories=Network;Game;
+      Keywords=Game;Streaming;Nvidia;GeForce;NOW;GFN;
+      Keywords[ro]=Game;Streaming;Joc;Transmisie;Transmisiune;Nvidia;GeForce;NOW;GFN;
+    dest: "{{ ansible_env.HOME }}/.local/share/applications/com.github.hmlendea.geforcenow-electron.desktop"
+    mode: '0644'
+  when: geforcenow_installed.stat.exists
+
 - name: Hide developer tools from application launcher
   ansible.builtin.copy:
     content: |

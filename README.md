@@ -224,6 +224,10 @@ Manages configuration for various applications.
 - Configurable privacy, composition, interface, calendar, and security settings
 - **XWayland mode for OAuth fix**: Forces Thunderbird to run in XWayland mode (`GDK_BACKEND=x11`) to fix OAuth/Exchange authentication popup crashes on Hyprland
 
+**GeForce NOW privacy configuration:**
+- Disables microphone/webcam access via Chromium flags (`--disable-features=MediaStreamPermissionsPolicy`)
+- Prevents Electron's default media permissions from activating microphone
+
 **Application launcher cleanup:**
 - Hides developer/utility tools from application launcher (Super + Space)
 - Default hidden apps: XDVI, Qt Assistant, Qt Designer, Qt Linguist, Qt DBus Viewer, Electron 36/37, OpenJDK Java Console/Shell
