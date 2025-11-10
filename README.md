@@ -4,7 +4,7 @@ Modular Ansible configuration to manage Omarchy installation and configuration o
 
 ## Supported version
 
-**This playbook is tested and guaranteed to work with Omarchy 3.1.5**
+**This playbook is tested and guaranteed to work with Omarchy 3.1.7**
 
 It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
 
