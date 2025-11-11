@@ -119,13 +119,13 @@
 
 - name: Check if Android SDK already exists in home directory
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/android-sdk"
+    path: "{{ ansible_facts['env']['HOME'] }}/android-sdk"
   register: android_sdk_home
   when: aur_packages_to_install is defined
 
 - name: Copy Android SDK to home directory
   ansible.builtin.command:
-    cmd: cp -R /opt/android-sdk {{ ansible_env.HOME }}/
+    cmd: cp -R /opt/android-sdk {{ ansible_facts['env']['HOME'] }}/
   when:
     - aur_packages_to_install is defined
     - android_sdk_opt.stat.exists
@@ -135,9 +135,9 @@
 
 - name: Set ownership of Android SDK in home directory
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/android-sdk"
-    owner: "{{ ansible_user_id }}"
-    group: "{{ ansible_user_id }}"
+    path: "{{ ansible_facts['env']['HOME'] }}/android-sdk"
+    owner: "{{ ansible_facts['user_id'] }}"
+    group: "{{ ansible_facts['user_id'] }}"
     recurse: true
   when:
     - aur_packages_to_install is defined
@@ -147,7 +147,7 @@
 
 - name: Configure Android environment variables in .bashrc
   ansible.builtin.blockinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
     marker: "# {mark} ANSIBLE MANAGED BLOCK - Flutter Android SDK"
     block: |
       export ANDROID_HOME=$HOME/android-sdk
@@ -158,14 +158,14 @@
 
 - name: Create .android directory for AVD symlink
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.android"
+    path: "{{ ansible_facts['env']['HOME'] }}/.android"
     state: directory
     mode: '0755'
   when: aur_packages_to_install is defined
 
 - name: Check if Android licenses are already accepted
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/android-sdk/licenses/android-sdk-license"
+    path: "{{ ansible_facts['env']['HOME'] }}/android-sdk/licenses/android-sdk-license"
   register: android_licenses_file
   when:
     - flutter_install_dir is defined
@@ -194,7 +194,7 @@
 
 - name: Install Android system images for emulators
   ansible.builtin.shell: |
-    yes | {{ ansible_env.HOME }}/android-sdk/cmdline-tools/latest/bin/sdkmanager "{{ item }}"
+    yes | {{ ansible_facts['env']['HOME'] }}/android-sdk/cmdline-tools/latest/bin/sdkmanager "{{ item }}"
   loop: "{{ android_system_images }}"
   when:
     - android_system_images is defined
@@ -213,7 +213,7 @@
 
 - name: Update Android SDK components
   ansible.builtin.shell: |
-    yes | {{ ansible_env.HOME }}/android-sdk/cmdline-tools/latest/bin/sdkmanager --update
+    yes | {{ ansible_facts['env']['HOME'] }}/android-sdk/cmdline-tools/latest/bin/sdkmanager --update
   when:
     - aur_packages_to_install is defined
     - android_sdk_home.stat.exists
@@ -316,7 +316,7 @@
 
 - name: Add Flutter to PATH in .bashrc
   ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
     line: 'export PATH="$PATH:{{ flutter_install_dir }}/flutter/bin"'
     state: present
     regexp: 'export PATH="\$PATH:.*/flutter/bin"'
@@ -324,7 +324,7 @@
 
 - name: Configure CHROME_EXECUTABLE for Flutter web development
   ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
     line: 'export CHROME_EXECUTABLE=/usr/bin/brave'
     state: present
     regexp: 'export CHROME_EXECUTABLE=.*'

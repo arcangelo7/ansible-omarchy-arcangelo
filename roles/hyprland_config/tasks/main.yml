@@ -2,19 +2,19 @@
 - name: Deploy simplified keybindings configuration
   ansible.builtin.copy:
     src: bindings.conf
-    dest: "{{ ansible_env.HOME }}/.config/hypr/bindings.conf"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/bindings.conf"
     backup: true
     mode: '0644'
 
 - name: Create .local/bin directory
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/bin"
     state: directory
     mode: '0755'
 
 - name: Create whispering-toggle script
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.local/bin/whispering-toggle"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/bin/whispering-toggle"
     content: |
       #!/bin/bash
       # Toggle Whispering recording by focusing the window and sending spacebar
@@ -48,7 +48,7 @@
 
 - name: Add user to input group
   ansible.builtin.user:
-    name: "{{ ansible_user_id }}"
+    name: "{{ ansible_facts['user_id'] }}"
     groups: input
     append: true
   become: true

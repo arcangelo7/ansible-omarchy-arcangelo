@@ -63,7 +63,7 @@
 
 - name: Create icons directory for web apps
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/share/applications/icons"
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons"
     state: directory
     mode: '0755'
   when: webapps_to_install is defined and webapps_to_install | length > 0
@@ -72,7 +72,7 @@
 - name: Download web app icons
   ansible.builtin.get_url:
     url: "{{ item.icon_url }}"
-    dest: "{{ ansible_env.HOME }}/.local/share/applications/icons/{{ item.name }}.png"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons/{{ item.name }}.png"
     mode: '0644'
   loop: "{{ webapps_to_install }}"
   when: webapps_to_install is defined and webapps_to_install | length > 0
@@ -87,7 +87,7 @@
 
 - name: Create web app desktop files
   ansible.builtin.copy:
-    dest: "{{ ansible_env.HOME }}/.local/share/applications/{{ item.name }}.desktop"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/{{ item.name }}.desktop"
     content: |
       [Desktop Entry]
       Version=1.0
@@ -96,7 +96,7 @@
       Exec=omarchy-launch-webapp {{ item.url }}
       Terminal=false
       Type=Application
-      Icon={{ ansible_env.HOME }}/.local/share/applications/icons/{{ item.name }}.png
+      Icon={{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons/{{ item.name }}.png
       StartupNotify=true
     mode: '0644'
   loop: "{{ webapps_to_install }}"

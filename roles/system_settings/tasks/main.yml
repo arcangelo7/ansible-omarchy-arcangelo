@@ -2,14 +2,14 @@
 - name: Configure Hyprland monitor settings
   ansible.builtin.template:
     src: monitors.conf.j2
-    dest: "{{ ansible_env.HOME }}/.config/hypr/monitors.conf"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/monitors.conf"
     mode: '0644'
     backup: yes
   notify: Reload Hyprland
 
 - name: Configure keyboard layout in Hyprland input.conf
   ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/input.conf"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/input.conf"
     regexp: '^\s*kb_layout\s*='
     line: '  kb_layout = {{ keyboard_layout }}'
     backup: yes
@@ -17,7 +17,7 @@
 
 - name: Configure keyboard variant in Hyprland input.conf
   ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/input.conf"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/input.conf"
     regexp: '^\s*kb_variant\s*='
     line: '  kb_variant = {{ keyboard_variant }}'
     insertafter: '^\s*kb_layout\s*='
@@ -26,7 +26,7 @@
 
 - name: Remove compose:caps option to restore Caps Lock functionality
   ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.config/hypr/input.conf"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/input.conf"
     regexp: '^\s*kb_options\s*='
     line: '  kb_options ='
     backup: yes
@@ -34,7 +34,7 @@
 
 - name: Enable Mise shell integration in .bashrc
   ansible.builtin.lineinfile:
-    path: "{{ ansible_env.HOME }}/.bashrc"
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
     line: 'eval "$(mise activate bash)"'
     create: yes
     mode: '0644'

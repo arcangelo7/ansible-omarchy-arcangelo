@@ -3,20 +3,20 @@
 - name: Configure Alacritty terminal
   ansible.builtin.template:
     src: alacritty.toml.j2
-    dest: "{{ ansible_env.HOME }}/.config/alacritty/alacritty.toml"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/alacritty/alacritty.toml"
     mode: '0644'
     backup: yes
 
 # Set default browser
 - name: Ensure .config directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.config"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config"
     state: directory
     mode: '0755'
 
 - name: Set default browser for HTTP/HTTPS
   community.general.ini_file:
-    path: "{{ ansible_env.HOME }}/.config/mimeapps.list"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/mimeapps.list"
     section: "Default Applications"
     option: "{{ item }}"
     value: "{{ default_browser }}"
@@ -37,26 +37,26 @@
 # Override omarchy-launch-webapp to use Brave for web apps
 - name: Ensure ~/.local/bin directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/bin"
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/bin"
     state: directory
     mode: '0755'
 
 - name: Deploy wrapper script to use Brave for web apps
   ansible.builtin.copy:
     src: omarchy-launch-webapp
-    dest: "{{ ansible_env.HOME }}/.local/bin/omarchy-launch-webapp"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/bin/omarchy-launch-webapp"
     mode: '0755'
 
 - name: Deploy wrapper script for omarchy-launch-or-focus-webapp
   ansible.builtin.copy:
     src: omarchy-launch-or-focus-webapp
-    dest: "{{ ansible_env.HOME }}/.local/bin/omarchy-launch-or-focus-webapp"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/bin/omarchy-launch-or-focus-webapp"
     mode: '0755'
 
 # Set Visual Studio Code as default text editor
 - name: Set VSCode as default editor for text files
   community.general.ini_file:
-    path: "{{ ansible_env.HOME }}/.config/mimeapps.list"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/mimeapps.list"
     section: "Default Applications"
     option: "{{ item }}"
     value: "{{ default_text_editor }}"
@@ -82,7 +82,7 @@
 # Configure Firefox custom preferences
 - name: Find Firefox profile directory
   ansible.builtin.shell: |
-    find {{ ansible_env.HOME }}/.mozilla/firefox -maxdepth 1 -name "*.default*" -type d | head -1
+    find {{ ansible_facts['env']['HOME'] }}/.mozilla/firefox -maxdepth 1 -name "*.default*" -type d | head -1
   register: firefox_profile
   changed_when: false
   failed_when: firefox_profile.stdout == ""
@@ -113,7 +113,7 @@
 # Configure Thunderbird custom preferences
 - name: Find Thunderbird profile directory
   ansible.builtin.shell: |
-    find {{ ansible_env.HOME }}/.thunderbird -maxdepth 1 -name "*.default*" -type d | head -1
+    find {{ ansible_facts['env']['HOME'] }}/.thunderbird -maxdepth 1 -name "*.default*" -type d | head -1
   register: thunderbird_profile
   changed_when: false
   failed_when: false
@@ -145,7 +145,7 @@
 
 - name: Ensure local applications directory exists
   ansible.builtin.file:
-    path: "{{ ansible_env.HOME }}/.local/share/applications"
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/share/applications"
     state: directory
     mode: '0755'
 
@@ -173,7 +173,7 @@
       [Desktop Action OpenAddressBook]
       Name=Open address book
       Exec=env GDK_BACKEND=x11 thunderbird -addressbook
-    dest: "{{ ansible_env.HOME }}/.local/share/applications/org.mozilla.Thunderbird.desktop"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/org.mozilla.Thunderbird.desktop"
     mode: '0644'
   when: thunderbird_profile.stdout != ""
 
@@ -197,7 +197,7 @@
       Categories=Network;Game;
       Keywords=Game;Streaming;Nvidia;GeForce;NOW;GFN;
       Keywords[ro]=Game;Streaming;Joc;Transmisie;Transmisiune;Nvidia;GeForce;NOW;GFN;
-    dest: "{{ ansible_env.HOME }}/.local/share/applications/com.github.hmlendea.geforcenow-electron.desktop"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/com.github.hmlendea.geforcenow-electron.desktop"
     mode: '0644'
   when: geforcenow_installed.stat.exists
 
@@ -206,7 +206,7 @@
     content: |
       [Desktop Entry]
       NoDisplay=true
-    dest: "{{ ansible_env.HOME }}/.local/share/applications/{{ item.name }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/{{ item.name }}"
     mode: '0644'
   loop: "{{ hidden_from_launcher }}"
   when: hidden_from_launcher is defined and hidden_from_launcher | length > 0
@@ -228,7 +228,7 @@
 
 - name: Check if Chromium config directory exists
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.config/chromium/Default"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default"
   register: chromium_default_profile
 
 - name: Deploy Chromium preferences template to temp location
@@ -241,16 +241,16 @@
 
 - name: Merge Chromium custom preferences
   ansible.builtin.shell: |
-    if [ -f "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences" ]; then
+    if [ -f "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences" ]; then
       jq -s '.[0] * .[1]' \
-        "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences" \
+        "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences" \
         /tmp/chromium-prefs-update.json \
-        > "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences.new" && \
-      mv "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences.new" \
-        "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences"
+        > "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences.new" && \
+      mv "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences.new" \
+        "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences"
     else
       cp /tmp/chromium-prefs-update.json \
-        "{{ ansible_env.HOME }}/.config/chromium/Default/Preferences"
+        "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences"
     fi
   args:
     executable: /bin/bash
@@ -274,7 +274,7 @@
 
 - name: Check if Brave config directory exists
   ansible.builtin.stat:
-    path: "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default"
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default"
   register: brave_default_profile
 
 - name: Deploy Brave preferences template to temp location
@@ -287,16 +287,16 @@
 
 - name: Merge Brave custom preferences
   ansible.builtin.shell: |
-    if [ -f "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences" ]; then
+    if [ -f "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences" ]; then
       jq -s '.[0] * .[1]' \
-        "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences" \
+        "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences" \
         /tmp/brave-prefs-update.json \
-        > "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences.new" && \
-      mv "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences.new" \
-        "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+        > "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences.new" && \
+      mv "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences.new" \
+        "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences"
     else
       cp /tmp/brave-prefs-update.json \
-        "{{ ansible_env.HOME }}/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+        "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences"
     fi
   args:
     executable: /bin/bash

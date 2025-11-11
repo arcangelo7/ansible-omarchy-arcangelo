@@ -61,7 +61,7 @@ npm_packages_to_install:
     description: "Official CLI for Claude AI by Anthropic"
 
 # Flutter SDK configuration
-flutter_install_dir: "/home/{{ ansible_user_id }}/development"
+flutter_install_dir: "/home/{{ ansible_facts['user_id'] }}/development"
 flutter_releases_url: "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json"
 
 # Android SDK configuration
