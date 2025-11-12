@@ -58,3 +58,7 @@ webapps_to_install:
     url: "http://192.168.2.103:3000"
     icon_url: "https://uxwing.com/wp-content/themes/uxwing/download/banking-finance/dashboard-monitoring-icon.png"
     description: "Homelab services dashboard (VPN required)"
+  - name: "Microsoft Teams"
+    url: "https://teams.microsoft.com"
+    icon_url: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/microsoft-teams-icon.png"
+    description: "Team collaboration and communication platform by Microsoft"

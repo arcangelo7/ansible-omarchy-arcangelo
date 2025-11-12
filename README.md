@@ -136,6 +136,7 @@ Installs essential applications and web apps. Supports both official repository 
 |-----|-----|-------|
 | Claude | https://claude.ai | AI assistant by Anthropic |
 | Homelab | http://192.168.2.103:3000 | Local IP, requires VPN |
+| Microsoft Teams | https://teams.microsoft.com | Team collaboration platform (PWA) |
 
 **Discord update check management:**
 - Automatically disables Discord's internal update checker (`SKIP_HOST_UPDATE: true` in `~/.config/discord/settings.json`)
