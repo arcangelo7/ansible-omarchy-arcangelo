@@ -120,6 +120,7 @@ Installs essential applications and web apps. Supports both official repository 
 | discord | All-in-one voice and text chat for gamers |
 | btrfs-assistant | BTRFS management GUI |
 | exfatprogs | exFAT filesystem utilities |
+| linux-headers | Kernel headers for DKMS modules (required for xpadneo) |
 
 **AUR packages installed:**
 | Package | Description |
@@ -130,6 +131,7 @@ Installs essential applications and web apps. Supports both official repository 
 | zotero-bin | Reference manager |
 | ddcui | GUI for ddcutil |
 | geforcenow-electron | NVIDIA GeForce NOW cloud gaming (max 1080p 60Hz on Linux) |
+| xpadneo-dkms | Driver for Xbox One/Series controllers via Bluetooth |
 
 **Web apps installed:**
 | App | URL | Notes |
