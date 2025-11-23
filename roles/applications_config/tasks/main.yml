@@ -1,9 +1,9 @@
 ---
-# Alacritty terminal configuration
-- name: Configure Alacritty terminal
+# Ghostty terminal configuration
+- name: Configure Ghostty terminal
   ansible.builtin.template:
-    src: alacritty.toml.j2
-    dest: "{{ ansible_facts['env']['HOME'] }}/.config/alacritty/alacritty.toml"
+    src: ghostty-config.j2
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/ghostty/config"
     mode: '0644'
     backup: yes
 

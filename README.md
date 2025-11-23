@@ -4,7 +4,7 @@ Modular Ansible configuration to manage Omarchy installation and configuration o
 
 ## Supported version
 
-**This playbook is tested and guaranteed to work with Omarchy 3.1.7**
+**This playbook is tested and guaranteed to work with Omarchy 3.2.0**
 
 It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
 
@@ -207,10 +207,6 @@ Variables can be overridden per-host using `host_vars/<inventory-hostname>/syste
 
 Manages configuration for various applications.
 
-**Alacritty terminal:**
-- Configurable font size
-- Preserves Omarchy theme integration
-
 **Default browser:**
 - Sets default browser for HTTP/HTTPS links via MIME type associations
 - **Firefox**: Default for links from native apps (Thunderbird, terminal, PDF viewer)
@@ -246,7 +242,6 @@ Manages configuration for various applications.
 Edit `roles/applications_config/defaults/main.yml`:
 ```yaml
 # Basic settings
-alacritty_font_size: 12
 default_browser: "firefox.desktop"
 default_text_editor: "code.desktop"
 
@@ -356,7 +351,7 @@ Only 5 applications require SHIFT due to conflicts with system commands:
 - **CTRL + E**: Emoji picker
 
 ### Window management (SUPER + keys)
-- **Return**: Terminal (Alacritty)
+- **Return**: Terminal (Ghostty)
 - **W**: Close active window
 - **T**: Toggle floating window
 - **F**: Force full screen
@@ -399,6 +394,16 @@ Only 5 applications require SHIFT due to conflicts with system commands:
 - **,**: Dismiss last notification
 - **SHIFT + ,**: Dismiss all notifications
 - **CTRL + ,**: Toggle do-not-disturb mode
+- **ALT + ,**: Invoke/open last notification
+
+### Group window navigation
+- **ALT + Arrow keys**: Move between tiling group tabs
+
+### Multi-monitor workspace management
+- **SHIFT + ALT + Arrow Left/Right**: Move workspaces between monitors
+
+### Ghostty terminal splits
+- **CTRL + SHIFT + ALT + Arrows**: Resize Ghostty splits by 100 lines
 
 ### Screenshots and recordings
 - **Print**: Screenshot
@@ -416,6 +421,6 @@ Only 5 applications require SHIFT due to conflicts with system commands:
 ## Omarchy compliance
 
 This configuration:
-- Does not remove critical packages (Hyprland, Neovim, Alacritty, Chromium)
+- Does not remove critical packages (Hyprland, Neovim, Ghostty, Chromium)
 - Does not modify essential keybindings
 - Does not touch critical Omarchy configurations
