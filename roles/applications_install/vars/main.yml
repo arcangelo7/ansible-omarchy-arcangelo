@@ -32,8 +32,6 @@ applications_to_install:
     description: "GUI application for managing BTRFS filesystems and Snapper snapshots"
   - name: exfatprogs
     description: "exFAT filesystem userspace utilities for formatting and maintaining exFAT filesystems"
-  - name: discord
-    description: "All-in-one voice and text chat for gamers"
   - name: linux-headers
     description: "Kernel headers required for building DKMS modules (e.g., xpadneo)"
 

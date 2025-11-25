@@ -62,13 +62,6 @@ chatgpt_webapp_files:
   - "{{ ansible_facts['env']['HOME'] }}/.config/ChatGPT"
   - "{{ ansible_facts['env']['HOME'] }}/.cache/ChatGPT"
 
-discord_webapp_files:
-  - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/Discord.desktop"
-  - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons/Discord.png"
-  - "{{ ansible_facts['env']['HOME'] }}/.local/share/icons/hicolor/48x48/apps/Discord.png"
-  - "{{ ansible_facts['env']['HOME'] }}/.config/Discord"
-  - "{{ ansible_facts['env']['HOME'] }}/.cache/Discord"
-
 typora_config_files:
   - "{{ ansible_facts['env']['HOME'] }}/.config/Typora"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/typora.desktop"

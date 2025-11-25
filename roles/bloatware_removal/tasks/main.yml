@@ -135,21 +135,6 @@
   loop: "{{ chatgpt_files_removal_result.results }}"
   when: chatgpt_files_removal_result is defined
 
-- name: Remove Discord web app files
-  ansible.builtin.file:
-    path: "{{ item }}"
-    state: absent
-  loop: "{{ discord_webapp_files }}"
-  when: discord_webapp_files is defined and discord_webapp_files | length > 0
-  ignore_errors: true
-  register: discord_files_removal_result
-
-- name: Show Discord files removal results
-  debug:
-    msg: "File {{ item.item }} - Status: {{ 'Removed' if item.changed else 'Not present or error' }}"
-  loop: "{{ discord_files_removal_result.results }}"
-  when: discord_files_removal_result is defined
-
 - name: Remove Typora configuration files
   ansible.builtin.file:
     path: "{{ item }}"
