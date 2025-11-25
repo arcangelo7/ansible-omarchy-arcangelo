@@ -32,6 +32,15 @@
     backup: yes
   notify: Reload Hyprland
 
+- name: Configure touchpad natural scroll in Hyprland input.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/input.conf"
+    regexp: '^\s*#?\s*natural_scroll\s*='
+    line: '    natural_scroll = {{ touchpad_natural_scroll | lower }}'
+    insertafter: 'touchpad {'
+    backup: yes
+  notify: Reload Hyprland
+
 - name: Enable Mise shell integration in .bashrc
   ansible.builtin.lineinfile:
     path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"

@@ -86,7 +86,7 @@ Removes unwanted software from the system. Only handles package and file removal
 | typora | Config files |
 
 **Web apps removed:**
-Basecamp, Google Contacts, Google Messages, Google Photos, HEY, ChatGPT, Discord (includes desktop entries, icons, config and cache files)
+Basecamp, Google Contacts, Google Messages, Google Photos, HEY, ChatGPT (includes desktop entries, icons, config and cache files)
 
 **Note:** Keybinding cleanup is handled by the `hyprland_config` role
 
@@ -117,7 +117,6 @@ Installs essential applications and web apps. Supports both official repository 
 | firefox | Web browser |
 | thunderbird | Email client |
 | telegram-desktop | Official Telegram Desktop messaging client |
-| discord | All-in-one voice and text chat for gamers |
 | btrfs-assistant | BTRFS management GUI |
 | exfatprogs | exFAT filesystem utilities |
 | linux-headers | Kernel headers for DKMS modules (required for xpadneo) |
@@ -139,13 +138,6 @@ Installs essential applications and web apps. Supports both official repository 
 | Claude | https://claude.ai | AI assistant by Anthropic |
 | Homelab | http://192.168.2.103:3000 | Local IP, requires VPN |
 | Microsoft Teams | https://teams.microsoft.com | Team collaboration platform (PWA) |
-
-**Discord update check management:**
-- Automatically disables Discord's internal update checker (`SKIP_HOST_UPDATE: true` in `~/.config/discord/settings.json`)
-- **Why this is needed**: Discord on Arch Linux is managed via pacman, but Discord's client has an aggressive built-in update checker that blocks startup when a newer version is detected on Discord's servers, even if the Arch package isn't yet available
-- **Effect**: Discord will launch normally without update prompts, updates are handled exclusively via pacman
-- **Technical details**: Discord often releases new versions faster than Arch package maintainers can package them, creating a window where Discord refuses to launch with "Must be your lucky day, there's a new update!" message
-- **Relevant Arch discussions**: [BBS #296889](https://bbs.archlinux.org/viewtopic.php?id=296889), [BBS #261415](https://bbs.archlinux.org/viewtopic.php?id=261415)
 
 **Note:** Keybindings are configured by the `hyprland_config` role
 
@@ -195,6 +187,7 @@ Edit `group_vars/all/system_settings.yml` to customize monitor scaling, resoluti
 - Monitor: Ultrawide (3440x1440@100Hz)
 - Scaling: 1x (optimized for ~109 PPI displays)
 - Keyboard: US International with dead keys
+- Touchpad: Natural scroll enabled
 - Mise: Enabled (auto-activates in bash shell)
 
 ## Host-specific configuration

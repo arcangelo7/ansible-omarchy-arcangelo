@@ -14,5 +14,8 @@ monitor_refresh_rate: ""  # Leave empty for default, or specify like "@60"
 keyboard_layout: "us"
 keyboard_variant: "intl"
 
+# Touchpad settings
+touchpad_natural_scroll: true
+
 # Shell configuration
 enable_mise_shell_integration: true
