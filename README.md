@@ -4,7 +4,7 @@ Modular Ansible configuration to manage Omarchy installation and configuration o
 
 ## Supported version
 
-**This playbook is tested and guaranteed to work with Omarchy 3.2.0**
+**This playbook is tested and guaranteed to work with Omarchy 3.2.1**
 
 It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
 
@@ -335,6 +335,7 @@ Only 5 applications require SHIFT due to conflicts with system commands:
 
 ### Browser shortcuts
 - **ALT + B**: Browser (private mode)
+- **ALT + SHIFT + L**: Copy URL to clipboard (Brave only)
 
 ### Menus and utilities (SUPER + special keys)
 - **Space**: Application launcher (walker)
