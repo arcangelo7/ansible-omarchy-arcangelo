@@ -278,6 +278,7 @@ Installs developer tools for Python, Node.js, Flutter, and general development.
 | uv | Fast Python package installer (Rust) |
 | plantuml | Component that allows to quickly write UML diagrams |
 | graphviz | Graph visualization software for creating diagrams and flowcharts |
+| pandoc | Universal document converter between markup formats |
 | texlive-basic | Core TeX Live with pdflatex |
 | texlive-latex | LaTeX format and base packages |
 | texlive-latexrecommended | Recommended packages (setspace, caption, booktabs) |

@@ -13,6 +13,8 @@ pacman_packages_to_install:
     description: "Component that allows to quickly write UML diagrams"
   - name: graphviz
     description: "Graph visualization software for creating diagrams and flowcharts"
+  - name: pandoc
+    description: "Universal document converter between markup formats"
   # LaTeX distribution
   - name: texlive-basic
     description: "Core TeX Live distribution with pdflatex compiler"
