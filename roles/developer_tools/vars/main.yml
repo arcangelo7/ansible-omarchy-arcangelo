@@ -51,6 +51,8 @@ aur_packages_to_install:
     description: "Android platform packages"
   - name: android-sdk-platform-tools
     description: "Android SDK platform tools (adb, fastboot, etc.)"
+  - name: yed
+    description: "Graph editor for creating diagrams, flowcharts, and network graphs"
 
 # Packages installed via pipx
 pipx_packages_to_install:

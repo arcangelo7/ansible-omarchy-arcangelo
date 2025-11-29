@@ -294,6 +294,7 @@ Installs developer tools for Python, Node.js, Flutter, and general development.
 | android-sdk-cmdline-tools-latest | Android SDK command-line tools (AUR) |
 | android-platform | Android platform packages (AUR) |
 | android-sdk-platform-tools | Android SDK platform tools (AUR) |
+| yed | Graph editor for creating diagrams, flowcharts, and network graphs (AUR) |
 | mistral-pdf-to-markdown | Convert PDF to Markdown using Mistral AI (pipx) |
 | @anthropic-ai/claude-code | Official CLI for Claude AI (npm) |
 
