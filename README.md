@@ -4,7 +4,7 @@ Modular Ansible configuration to manage Omarchy installation and configuration o
 
 ## Supported version
 
-**This playbook is tested and guaranteed to work with Omarchy 3.2.1**
+**This playbook is tested and guaranteed to work with Omarchy 3.2.2**
 
 It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
 
@@ -360,6 +360,7 @@ Only 5 applications require SHIFT due to conflicts with system commands:
 - **ALT + Arrow keys**: Move window into group
 - **1-0**: Switch to workspace 1-10
 - **SHIFT + 1-0**: Move window to workspace 1-10
+- **SHIFT + ALT + 1-0**: Move window silently to workspace 1-10 (no focus change)
 - **TAB**: Next workspace
 - **SHIFT + TAB**: Previous workspace
 - **CTRL + TAB**: Former workspace
@@ -390,6 +391,7 @@ Only 5 applications require SHIFT due to conflicts with system commands:
 - **SHIFT + ,**: Dismiss all notifications
 - **CTRL + ,**: Toggle do-not-disturb mode
 - **ALT + ,**: Invoke/open last notification
+- **SHIFT + ALT + ,**: Restore last dismissed notification
 
 ### Group window navigation
 - **ALT + Arrow keys**: Move between tiling group tabs
