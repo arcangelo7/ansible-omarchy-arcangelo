@@ -289,6 +289,7 @@ Installs developer tools for Python, Node.js, Flutter, and general development.
 | cmake | Build system required for Flutter Linux development |
 | ninja | Build tool required for Flutter Linux development |
 | jdk17-openjdk | Java Development Kit required for Android development |
+| rsync | Fast incremental file transfer utility |
 | android-sdk | Android Software Development Kit (AUR) |
 | android-sdk-build-tools | Android SDK build tools (AUR) |
 | android-sdk-cmdline-tools-latest | Android SDK command-line tools (AUR) |

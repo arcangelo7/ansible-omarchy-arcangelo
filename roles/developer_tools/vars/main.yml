@@ -38,6 +38,8 @@ pacman_packages_to_install:
   # Flutter Android development dependencies
   - name: jdk17-openjdk
     description: "Java Development Kit required for Android development"
+  - name: rsync
+    description: "Fast incremental file transfer utility"
 
 # Packages installed via AUR
 aur_packages_to_install:
