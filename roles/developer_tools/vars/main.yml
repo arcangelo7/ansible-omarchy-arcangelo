@@ -1,21 +1,17 @@
 ---
-# Packages installed via pacman
 pacman_packages_to_install:
-  # Python tools
   - name: python-pipx
     description: "Install and run Python applications in isolated environments"
   - name: python-poetry
     description: "Python dependency management and packaging made easy"
   - name: uv
     description: "Extremely fast Python package installer and resolver written in Rust"
-  # Diagram and visualization tools
   - name: plantuml
     description: "Component that allows to quickly write UML diagrams"
   - name: graphviz
     description: "Graph visualization software for creating diagrams and flowcharts"
   - name: pandoc
     description: "Universal document converter between markup formats"
-  # LaTeX distribution
   - name: texlive-basic
     description: "Core TeX Live distribution with pdflatex compiler"
   - name: texlive-latex
@@ -30,18 +26,17 @@ pacman_packages_to_install:
     description: "Recommended fonts for TeX Live distribution"
   - name: texlive-bibtexextra
     description: "Additional BibTeX styles and bibliography database tools"
-  # Flutter Linux development dependencies
   - name: cmake
     description: "Build system required for Flutter Linux development"
   - name: ninja
     description: "Build tool required for Flutter Linux development"
-  # Flutter Android development dependencies
   - name: jdk17-openjdk
     description: "Java Development Kit required for Android development"
   - name: rsync
     description: "Fast incremental file transfer utility"
+  - name: man-pages
+    description: "Linux man pages for C library functions and POSIX APIs"
 
-# Packages installed via AUR
 aur_packages_to_install:
   - name: android-sdk
     description: "Android Software Development Kit"
@@ -56,20 +51,16 @@ aur_packages_to_install:
   - name: yed
     description: "Graph editor for creating diagrams, flowcharts, and network graphs"
 
-# Packages installed via pipx
 pipx_packages_to_install:
   - name: mistral-pdf-to-markdown
     description: "Convert PDF documents to Markdown format using Mistral AI"
 
-# Packages installed via npm
 npm_packages_to_install:
   - name: "@anthropic-ai/claude-code"
     description: "Official CLI for Claude AI by Anthropic"
 
-# Flutter SDK configuration
 flutter_install_dir: "/home/{{ ansible_facts['user_id'] }}/development"
 flutter_releases_url: "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json"
 
-# Android SDK configuration
 android_system_images:
   - "system-images;android-34;google_apis_playstore;x86_64"
