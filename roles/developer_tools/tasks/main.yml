@@ -5,19 +5,10 @@
 
 - name: Install packages via pacman
   community.general.pacman:
-    name: "{{ item.name }}"
+    name: "{{ pacman_packages_to_install | map(attribute='name') | list }}"
     state: present
-    update_cache: true
-  loop: "{{ pacman_packages_to_install }}"
-  when: pacman_packages_to_install is defined and pacman_packages_to_install | length > 0
   become: true
-  register: pacman_install_result
-
-- name: Show pacman packages installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ pacman_install_result.results }}"
-  when: pacman_install_result is defined
+  when: pacman_packages_to_install is defined and pacman_packages_to_install | length > 0
 
 # ============================================================================
 # AUR PACKAGES
@@ -33,13 +24,6 @@
   when: aur_packages_to_install is defined and aur_packages_to_install | length > 0
   become: true
   become_user: aur_builder
-  register: aur_install_result
-
-- name: Show AUR packages installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ aur_install_result.results }}"
-  when: aur_install_result is defined
 
 # ============================================================================
 # PIPX PACKAGES
@@ -47,17 +31,10 @@
 
 - name: Configure pipx PATH for current user
   ansible.builtin.command: pipx ensurepath
-  register: pipx_ensurepath
   changed_when: "'already' not in pipx_ensurepath.stdout"
   failed_when: false
+  register: pipx_ensurepath
   when: "'python-pipx' in pacman_packages_to_install | map(attribute='name') | list"
-
-- name: Show pipx ensurepath result
-  debug:
-    msg: "pipx PATH configuration - Status: {{ 'Configured' if pipx_ensurepath.changed else 'Already configured' }}"
-  when:
-    - pipx_ensurepath is defined
-    - "'python-pipx' in pacman_packages_to_install | map(attribute='name') | list"
 
 - name: Install packages via pipx
   ansible.builtin.command:
@@ -67,15 +44,9 @@
     - pipx_packages_to_install is defined
     - pipx_packages_to_install | length > 0
     - "'python-pipx' in pacman_packages_to_install | map(attribute='name') | list"
-  register: pipx_install_result
   changed_when: "'installed package' in pipx_install_result.stdout"
   failed_when: pipx_install_result.rc != 0 and 'already seems to be installed' not in pipx_install_result.stderr
-
-- name: Show pipx packages installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ pipx_install_result.results }}"
-  when: pipx_install_result is defined
+  register: pipx_install_result
 
 # ============================================================================
 # NODE.JS AND NPM PACKAGES
@@ -84,28 +55,17 @@
 - name: Install Node.js globally via mise
   ansible.builtin.command:
     cmd: "mise use -g node@lts"
-  register: mise_node_install
   changed_when: "'installed' in mise_node_install.stderr or 'installed' in mise_node_install.stdout"
   failed_when: mise_node_install.rc != 0
-
-- name: Show Node.js installation status
-  debug:
-    msg: "Node.js installation status: {{ 'Installed' if mise_node_install.changed else 'Already present' }}"
+  register: mise_node_install
 
 - name: Install npm packages globally via mise
   ansible.builtin.command:
-    cmd: "mise exec -- npm install -g {{ item.name }}"
-  loop: "{{ npm_packages_to_install }}"
+    cmd: "mise exec -- npm install -g {{ npm_packages_to_install | map(attribute='name') | join(' ') }}"
   when: npm_packages_to_install is defined and npm_packages_to_install | length > 0
-  register: npm_install_result
   changed_when: "'added' in npm_install_result.stdout or 'updated' in npm_install_result.stdout"
   failed_when: npm_install_result.rc != 0
-
-- name: Show npm package installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed/Updated' if item.changed else 'Already present' }}"
-  loop: "{{ npm_install_result.results }}"
-  when: npm_install_result is defined
+  register: npm_install_result
 
 # ============================================================================
 # ANDROID SDK CONFIGURATION
@@ -185,13 +145,6 @@
     - android_licenses_file is defined
     - not android_licenses_file.stat.exists
 
-- name: Show Android licenses acceptance status
-  debug:
-    msg: "Android licenses - Status: {{ 'Accepted' if android_licenses.changed else 'Already accepted' }}"
-  when:
-    - aur_packages_to_install is defined
-    - android_licenses_file is defined
-
 - name: Install Android system images for emulators
   ansible.builtin.shell: |
     yes | {{ ansible_facts['env']['HOME'] }}/android-sdk/cmdline-tools/latest/bin/sdkmanager "{{ item }}"
@@ -199,17 +152,9 @@
   when:
     - android_system_images is defined
     - android_sdk_home.stat.exists or (android_sdk_copied is defined and android_sdk_copied.changed)
-  register: android_system_images_install
   changed_when: "'Installing' in android_system_images_install.stdout"
   failed_when: false
-
-- name: Show Android system images installation status
-  debug:
-    msg: "Android system image {{ item.item }} - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ android_system_images_install.results }}"
-  when:
-    - android_system_images is defined
-    - android_system_images_install is defined
+  register: android_system_images_install
 
 - name: Update Android SDK components
   ansible.builtin.shell: |
@@ -217,16 +162,9 @@
   when:
     - aur_packages_to_install is defined
     - android_sdk_home.stat.exists
-  register: android_sdk_update
   changed_when: "'installed' in android_sdk_update.stdout or 'updated' in android_sdk_update.stdout"
   failed_when: false
-
-- name: Show Android SDK update status
-  debug:
-    msg: "Android SDK components - Status: {{ 'Updated' if android_sdk_update.changed else 'Already up-to-date' }}"
-  when:
-    - aur_packages_to_install is defined
-    - android_sdk_update is defined
+  register: android_sdk_update
 
 # ============================================================================
 # FLUTTER SDK
@@ -262,13 +200,6 @@
     - not flutter_installed.stat.exists
     - flutter_releases_data is defined
 
-- name: Show Flutter version to be installed
-  debug:
-    msg: "Installing Flutter {{ flutter_latest_stable.version }} (latest stable)"
-  when:
-    - flutter_install_dir is defined
-    - flutter_latest_stable is defined
-
 - name: Download Flutter SDK tarball
   ansible.builtin.get_url:
     url: "https://storage.googleapis.com/flutter_infra_release/releases/{{ flutter_latest_stable.archive }}"
@@ -280,13 +211,6 @@
     - flutter_latest_stable is defined
   register: flutter_download
 
-- name: Show Flutter download status
-  debug:
-    msg: "Flutter SDK tarball - Status: {{ 'Downloaded' if flutter_download.changed else 'Already present' }}"
-  when:
-    - flutter_install_dir is defined
-    - flutter_download is defined
-
 - name: Extract Flutter SDK
   ansible.builtin.unarchive:
     src: "/tmp/flutter_linux_stable.tar.xz"
@@ -297,13 +221,6 @@
     - not flutter_installed.stat.exists
     - flutter_latest_stable is defined
   register: flutter_extract
-
-- name: Show Flutter extraction status
-  debug:
-    msg: "Flutter SDK - Status: {{ 'Extracted' if flutter_extract.changed else 'Already present' }}"
-  when:
-    - flutter_install_dir is defined
-    - flutter_extract is defined
 
 - name: Clean up Flutter tarball
   ansible.builtin.file:
@@ -348,11 +265,3 @@
     - flutter_config is defined
     - flutter_config.stdout is defined
     - '"Analytics reporting is currently disabled" not in flutter_config.stdout'
-  register: flutter_analytics_disabled
-
-- name: Show Flutter analytics status
-  debug:
-    msg: "Flutter analytics - Status: {{ 'Disabled' if flutter_analytics_disabled.changed else 'Already disabled' }}"
-  when:
-    - flutter_install_dir is defined
-    - flutter_config is defined

@@ -63,10 +63,5 @@
 - name: Reload Hyprland configuration
   ansible.builtin.command: hyprctl reload
   ignore_errors: true
-  register: hyprland_reload_result
   changed_when: hyprland_reload_result.rc == 0
-
-- name: Show Hyprland reload result
-  debug:
-    msg: "Hyprland configuration reload - Status: {{ 'Success' if hyprland_reload_result.rc == 0 else 'Failed' }}"
-  when: hyprland_reload_result is defined
+  register: hyprland_reload_result

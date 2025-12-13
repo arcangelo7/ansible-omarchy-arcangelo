@@ -5,7 +5,8 @@ bloatware_packages:
   - signal-desktop
   - typora
 
-onepassword_config_files:
+bloatware_files:
+  # 1Password config files
   - "{{ ansible_facts['env']['HOME'] }}/.config/1Password"
   - "{{ ansible_facts['env']['HOME'] }}/.config/chromium/NativeMessagingHosts/com.1password.1password.json"
   - "{{ ansible_facts['env']['HOME'] }}/.config/google-chrome/NativeMessagingHosts/com.1password.1password.json"
@@ -16,52 +17,44 @@ onepassword_config_files:
   - "{{ ansible_facts['env']['HOME'] }}/.config/vivaldi/NativeMessagingHosts/com.1password.1password.json"
   - "{{ ansible_facts['env']['HOME'] }}/.config/vivaldi-snapshot/NativeMessagingHosts/com.1password.1password.json"
   - "{{ ansible_facts['env']['HOME'] }}/.mozilla/native-messaging-hosts/com.1password.1password.json"
-
-basecamp_webapp_files:
+  # Basecamp web app
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/Basecamp.desktop"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons/Basecamp.png"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/icons/hicolor/48x48/apps/Basecamp.png"
   - "{{ ansible_facts['env']['HOME'] }}/.config/Basecamp"
   - "{{ ansible_facts['env']['HOME'] }}/.cache/Basecamp"
-
-google_contacts_webapp_files:
+  # Google Contacts web app
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/Google Contacts.desktop"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons/Google Contacts.png"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/icons/hicolor/48x48/apps/Google Contacts.png"
   - "{{ ansible_facts['env']['HOME'] }}/.config/Google Contacts"
   - "{{ ansible_facts['env']['HOME'] }}/.cache/Google Contacts"
-
-google_messages_webapp_files:
+  # Google Messages web app
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/Google Messages.desktop"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons/Google Messages.png"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/icons/hicolor/48x48/apps/Google Messages.png"
   - "{{ ansible_facts['env']['HOME'] }}/.config/Google Messages"
   - "{{ ansible_facts['env']['HOME'] }}/.cache/Google Messages"
-
-google_photos_webapp_files:
+  # Google Photos web app
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/Google Photos.desktop"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons/Google Photos.png"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/icons/hicolor/48x48/apps/Google Photos.png"
   - "{{ ansible_facts['env']['HOME'] }}/.config/Google Photos"
   - "{{ ansible_facts['env']['HOME'] }}/.cache/Google Photos"
-
-hey_webapp_files:
+  # HEY web app
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/HEY.desktop"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons/HEY.png"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/icons/hicolor/48x48/apps/HEY.png"
   - "{{ ansible_facts['env']['HOME'] }}/.config/HEY"
   - "{{ ansible_facts['env']['HOME'] }}/.cache/HEY"
-
-signal_config_files:
+  # Signal config
   - "{{ ansible_facts['env']['HOME'] }}/.config/Signal"
-
-chatgpt_webapp_files:
+  # ChatGPT web app
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/ChatGPT.desktop"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/icons/ChatGPT.png"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/icons/hicolor/48x48/apps/ChatGPT.png"
   - "{{ ansible_facts['env']['HOME'] }}/.config/ChatGPT"
   - "{{ ansible_facts['env']['HOME'] }}/.cache/ChatGPT"
-
-typora_config_files:
+  # Typora config
   - "{{ ansible_facts['env']['HOME'] }}/.config/Typora"
   - "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/typora.desktop"

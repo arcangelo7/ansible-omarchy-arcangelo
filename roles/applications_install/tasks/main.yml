@@ -30,19 +30,10 @@
 
 - name: Install applications via pacman
   community.general.pacman:
-    name: "{{ item.name }}"
+    name: "{{ applications_to_install | map(attribute='name') | list }}"
     state: present
-    update_cache: true
-  loop: "{{ applications_to_install }}"
-  when: applications_to_install is defined and applications_to_install | length > 0
   become: true
-  register: apps_install_result
-
-- name: Show application installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ apps_install_result.results }}"
-  when: apps_install_result is defined
+  when: applications_to_install is defined and applications_to_install | length > 0
 
 - name: Install AUR applications with kewlfft.aur module
   kewlfft.aur.aur:
@@ -53,13 +44,6 @@
   when: aur_applications_to_install is defined and aur_applications_to_install | length > 0
   become: true
   become_user: aur_builder
-  register: aur_install_result
-
-- name: Show AUR application installation results
-  debug:
-    msg: "{{ item.item.name }} ({{ item.item.description }}) - Status: {{ 'Installed' if item.changed else 'Already present' }}"
-  loop: "{{ aur_install_result.results }}"
-  when: aur_install_result is defined
 
 - name: Create icons directory for web apps
   ansible.builtin.file:
@@ -77,13 +61,6 @@
   loop: "{{ webapps_to_install }}"
   when: webapps_to_install is defined and webapps_to_install | length > 0
   ignore_errors: true
-  register: webapp_icons_download
-
-- name: Show web app icon download results
-  debug:
-    msg: "{{ item.item.name }} icon - Status: {{ 'Downloaded' if item.changed else 'Already present or error' }}"
-  loop: "{{ webapp_icons_download.results }}"
-  when: webapp_icons_download is defined
 
 - name: Create web app desktop files
   ansible.builtin.copy:
@@ -102,13 +79,6 @@
   loop: "{{ webapps_to_install }}"
   when: webapps_to_install is defined and webapps_to_install | length > 0
   ignore_errors: true
-  register: webapp_desktop_files
-
-- name: Show web app desktop file creation results
-  debug:
-    msg: "{{ item.item.name }} desktop file - Status: {{ 'Created' if item.changed else 'Already present or error' }}"
-  loop: "{{ webapp_desktop_files.results }}"
-  when: webapp_desktop_files is defined
 
 - name: Configure i2c-dev kernel module for ddcutil
   ansible.builtin.copy:
@@ -118,11 +88,6 @@
       i2c-dev
     mode: '0644'
   become: true
-  register: i2c_module_config
-
-- name: Show i2c-dev module configuration result
-  debug:
-    msg: "i2c-dev module - Status: {{ 'Configured (reboot required)' if i2c_module_config.changed else 'Already configured' }}"
 
 - name: Enable WireGuard service for automatic startup at boot
   ansible.builtin.systemd:
