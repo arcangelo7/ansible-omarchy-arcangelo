@@ -172,3 +172,5 @@ hidden_from_launcher:
     description: "OpenJDK Java 17 Shell"
   - name: "jshell-java-openjdk.desktop"
     description: "OpenJDK Java 25 Shell"
+
+waybar_start_hidden: true

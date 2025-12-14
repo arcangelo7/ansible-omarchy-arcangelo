@@ -231,12 +231,17 @@ Manages configuration for various applications.
 - Hides developer/utility tools from application launcher (Super + Space)
 - Default hidden apps: XDVI, Qt Assistant, Qt Designer, Qt Linguist, Qt DBus Viewer, Electron 36/37, OpenJDK Java Console/Shell
 
+**Waybar configuration:**
+- Configures Waybar to start hidden by default 
+- Toggle visibility with `Super + Shift + Space`
+
 **Configuration:**
 Edit `roles/applications_config/defaults/main.yml`:
 ```yaml
 # Basic settings
 default_browser: "firefox.desktop"
 default_text_editor: "code.desktop"
+waybar_start_hidden: true
 
 # Firefox preferences (see file for complete list)
 firefox_content_blocking: "strict"

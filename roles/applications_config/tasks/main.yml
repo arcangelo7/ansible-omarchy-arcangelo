@@ -302,3 +302,12 @@
     executable: /bin/bash
   when: brave_default_profile.stat.exists
   changed_when: true
+
+- name: Configure Waybar to start hidden
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/waybar/config.jsonc"
+    regexp: '^\s*"start_hidden":'
+    insertafter: '^\s*"height":'
+    line: '  "start_hidden": {{ waybar_start_hidden | lower }},'
+    backup: true
+  when: waybar_start_hidden is defined
