@@ -4,7 +4,7 @@ Modular Ansible configuration to manage Omarchy installation and configuration o
 
 ## Supported version
 
-**This playbook is tested and guaranteed to work with Omarchy 3.2.2**
+**This playbook is tested and guaranteed to work with Omarchy 3.2.3**
 
 It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
 
@@ -402,7 +402,21 @@ Only 5 applications require SHIFT due to conflicts with system commands:
 - **SHIFT + ALT + ,**: Restore last dismissed notification
 
 ### Group window navigation
-- **ALT + Arrow keys**: Move between tiling group tabs
+Group windows allow stacking multiple windows in the same space (like browser tabs but for any window).
+
+**Creating and managing groups:**
+- **SUPER + G**: Toggle group mode on current window (creates or dissolves group)
+- **SUPER + SHIFT + Arrow keys**: Move window into adjacent group
+- **SUPER + ALT + G**: Move active window out of group
+
+**Navigating within a group:**
+- **SUPER + CTRL + Left**: Previous window in group
+- **SUPER + CTRL + Right**: Next window in group
+- **SUPER + CTRL + Up**: First window in group
+- **SUPER + CTRL + Down**: Last window in group
+
+**Quick switch to specific group window:**
+- **SUPER + ALT + 1-5**: Switch to group window 1-5
 
 ### Multi-monitor workspace management
 - **SHIFT + ALT + Arrow Left/Right**: Move workspaces between monitors
