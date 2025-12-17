@@ -232,7 +232,7 @@ Manages configuration for various applications.
 - Default hidden apps: XDVI, Qt Assistant, Qt Designer, Qt Linguist, Qt DBus Viewer, Electron 36/37, OpenJDK Java Console/Shell
 
 **Waybar configuration:**
-- Configures Waybar to start hidden by default 
+- Configures Waybar to start hidden by default
 - Toggle visibility with `Super + Shift + Space`
 
 **Configuration:**
@@ -268,6 +268,11 @@ thunderbird_auto_mark_read: true
 thunderbird_extensions:
   - id: "it-IT@dictionaries.addons.mozilla.org"
     slug: "italian-dictionary-spelling"
+
+# Neovim spell languages
+neovim_spell_languages:
+  - "en"
+  - "it"
 ```
 
 ### 7. developer_tools

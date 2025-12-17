@@ -174,3 +174,7 @@ hidden_from_launcher:
     description: "OpenJDK Java 25 Shell"
 
 waybar_start_hidden: true
+
+neovim_spell_languages:
+  - "en"
+  - "it"

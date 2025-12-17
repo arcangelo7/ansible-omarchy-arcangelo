@@ -311,3 +311,31 @@
     line: '  "start_hidden": {{ waybar_start_hidden | lower }},'
     backup: true
   when: waybar_start_hidden is defined
+
+- name: Ensure Neovim config directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/lua/config"
+    state: directory
+    mode: '0755'
+
+- name: Configure Neovim spell languages
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/lua/config/options.lua"
+    regexp: '^vim\.opt\.spelllang'
+    line: "vim.opt.spelllang = { \"{{ neovim_spell_languages | join('\", \"') }}\" }"
+    create: true
+    mode: '0644'
+    backup: yes
+
+- name: Ensure Neovim spell directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/share/nvim/site/spell"
+    state: directory
+    mode: '0755'
+
+- name: Download Neovim spell files
+  ansible.builtin.get_url:
+    url: "https://ftp.nluug.nl/vim/runtime/spell/{{ item }}.utf-8.spl"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/nvim/site/spell/{{ item }}.utf-8.spl"
+    mode: '0644'
+  loop: "{{ neovim_spell_languages }}"
