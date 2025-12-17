@@ -1,4 +1,25 @@
 ---
+- name: Ensure ~/.local/bin directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/bin"
+    state: directory
+    mode: '0755'
+
+- name: Deploy omarchy-menu wrapper with Suspend option restored
+  ansible.builtin.copy:
+    src: omarchy-menu
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/bin/omarchy-menu"
+    mode: '0755'
+    backup: yes
+
+- name: Prepend ~/.local/bin to PATH in Hyprland envs.conf
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/envs.conf"
+    line: 'env = PATH,$HOME/.local/bin:$PATH'
+    regexp: '^env\s*=\s*PATH,'
+    backup: yes
+  notify: Reload Hyprland
+
 - name: Configure Hyprland monitor settings
   ansible.builtin.template:
     src: monitors.conf.j2
