@@ -235,6 +235,12 @@ Manages configuration for various applications.
 - Configures Waybar to start hidden by default
 - Toggle visibility with `Super + Shift + Space`
 
+**Neovim (LazyVim) configuration:**
+- Disables automatic autocompletion popup and ghost text (blink.cmp)
+- Manual completion still available with `Ctrl + Space`
+- Shows hidden files by default in neo-tree file explorer
+- Configures spell checking languages (English, Italian)
+
 **Configuration:**
 Edit `roles/applications_config/defaults/main.yml`:
 ```yaml

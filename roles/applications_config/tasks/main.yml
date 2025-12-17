@@ -339,3 +339,21 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/nvim/site/spell/{{ item }}.utf-8.spl"
     mode: '0644'
   loop: "{{ neovim_spell_languages }}"
+
+- name: Ensure Neovim plugins directory exists
+  ansible.builtin.file:
+    path: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/lua/plugins"
+    state: directory
+    mode: '0755'
+
+- name: Deploy Neovim disable autocomplete configuration
+  ansible.builtin.copy:
+    src: neovim-disable-autocomplete.lua
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/lua/plugins/disable-autocomplete.lua"
+    mode: '0644'
+
+- name: Deploy Neovim show hidden files configuration
+  ansible.builtin.copy:
+    src: neovim-show-hidden-files.lua
+    dest: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/lua/plugins/show-hidden-files.lua"
+    mode: '0644'
