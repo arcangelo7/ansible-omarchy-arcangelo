@@ -26,6 +26,8 @@ pacman_packages_to_install:
     description: "Recommended fonts for TeX Live distribution"
   - name: texlive-bibtexextra
     description: "Additional BibTeX styles and bibliography database tools"
+  - name: texlive-langitalian
+    description: "Italian language support for LaTeX (babel-italian)"
   - name: cmake
     description: "Build system required for Flutter Linux development"
   - name: ninja
