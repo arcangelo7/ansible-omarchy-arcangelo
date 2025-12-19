@@ -447,6 +447,7 @@ Group windows allow stacking multiple windows in the same space (like browser ta
 - **CTRL + SUPER + S**: Share menu
 - **CTRL + T**: Show current time in notification
 - **CTRL + B**: Show battery level in notification
+- **CTRL + X**: Suspend computer
 
 ## Omarchy compliance
 
