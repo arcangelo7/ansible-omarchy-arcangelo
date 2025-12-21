@@ -137,35 +137,3 @@
     enabled: true
     state: started
   become: true
-
-- name: Create nftables.d directory for custom rules
-  ansible.builtin.file:
-    path: /etc/nftables.d
-    state: directory
-    mode: '0755'
-  become: true
-  when: mullvad_excluded_subnets is defined and mullvad_excluded_subnets | length > 0
-
-- name: Deploy nftables rules to exclude subnets from Mullvad tunnel
-  ansible.builtin.template:
-    src: mullvad-exclude.nft.j2
-    dest: /etc/nftables.d/mullvad-exclude.nft
-    mode: '0644'
-  become: true
-  when: mullvad_excluded_subnets is defined and mullvad_excluded_subnets | length > 0
-
-- name: Include custom nftables rules in main config
-  ansible.builtin.lineinfile:
-    path: /etc/nftables.conf
-    line: 'include "/etc/nftables.d/*.nft"'
-    create: true
-  become: true
-  when: mullvad_excluded_subnets is defined and mullvad_excluded_subnets | length > 0
-
-- name: Enable nftables service for Mullvad split tunneling
-  ansible.builtin.systemd:
-    name: nftables.service
-    enabled: true
-    state: started
-  become: true
-  when: mullvad_excluded_subnets is defined and mullvad_excluded_subnets | length > 0
