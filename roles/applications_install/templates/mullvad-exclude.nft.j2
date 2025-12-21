@@ -1,0 +1,8 @@
+table inet mullvad_exclude {
+  chain excludeOutgoing {
+    type route hook output priority -10; policy accept;
+{% for subnet in mullvad_excluded_subnets %}
+    ip daddr {{ subnet }} ct mark set 0x00000f41 meta mark set 0x6d6f6c65;
+{% endfor %}
+  }
+}

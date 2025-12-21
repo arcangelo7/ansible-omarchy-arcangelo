@@ -50,6 +50,8 @@ aur_applications_to_install:
     description: "Unofficial Electron wrapper for NVIDIA GeForce NOW cloud gaming service (max 1080p 60Hz on Linux)"
   - name: xpadneo-dkms
     description: "Advanced Linux driver for Xbox One wireless controllers via Bluetooth"
+  - name: mullvad-vpn-bin
+    description: "Privacy-focused VPN client with GUI and CLI for secure internet browsing"
 
 webapps_to_install:
   - name: "Claude"

@@ -131,6 +131,7 @@ Installs essential applications and web apps. Supports both official repository 
 | ddcui | GUI for ddcutil |
 | geforcenow-electron | NVIDIA GeForce NOW cloud gaming (max 1080p 60Hz on Linux) |
 | xpadneo-dkms | Driver for Xbox One/Series controllers via Bluetooth |
+| mullvad-vpn-bin | Privacy-focused VPN client with GUI and CLI |
 
 **Web apps installed:**
 | App | URL | Notes |
