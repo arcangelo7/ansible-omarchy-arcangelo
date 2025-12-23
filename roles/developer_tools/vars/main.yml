@@ -38,6 +38,8 @@ pacman_packages_to_install:
     description: "Fast incremental file transfer utility"
   - name: man-pages
     description: "Linux man pages for C library functions and POSIX APIs"
+  - name: lcov
+    description: "Code coverage visualization tool for gcov"
 
 aur_packages_to_install:
   - name: android-sdk
