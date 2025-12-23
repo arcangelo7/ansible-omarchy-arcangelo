@@ -304,6 +304,7 @@ Installs developer tools for Python, Node.js, Flutter, and general development.
 | texlive-fontsrecommended | Recommended fonts for TeX Live distribution |
 | texlive-bibtexextra | Additional BibTeX styles and bibliography database tools |
 | texlive-langitalian | Italian language support for LaTeX (babel-italian) |
+| biber | Bibliography processor for BibLaTeX |
 | cmake | Build system required for Flutter Linux development |
 | ninja | Build tool required for Flutter Linux development |
 | jdk17-openjdk | Java Development Kit required for Android development |

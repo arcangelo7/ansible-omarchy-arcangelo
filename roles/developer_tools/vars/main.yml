@@ -28,6 +28,8 @@ pacman_packages_to_install:
     description: "Additional BibTeX styles and bibliography database tools"
   - name: texlive-langitalian
     description: "Italian language support for LaTeX (babel-italian)"
+  - name: biber
+    description: "Bibliography processor for BibLaTeX"
   - name: cmake
     description: "Build system required for Flutter Linux development"
   - name: ninja
