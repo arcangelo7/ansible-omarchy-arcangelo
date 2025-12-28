@@ -120,6 +120,7 @@ Installs essential applications and web apps. Supports both official repository 
 | btrfs-assistant | BTRFS management GUI |
 | exfatprogs | exFAT filesystem utilities |
 | linux-headers | Kernel headers for DKMS modules (required for xpadneo) |
+| inkscape | Vector graphics editor |
 
 **AUR packages installed:**
 | Package | Description |

@@ -34,6 +34,8 @@ applications_to_install:
     description: "exFAT filesystem userspace utilities for formatting and maintaining exFAT filesystems"
   - name: linux-headers
     description: "Kernel headers required for building DKMS modules (e.g., xpadneo)"
+  - name: inkscape
+    description: "Vector graphics editor"
 
 aur_applications_to_install:
   - name: brave-bin
