@@ -36,6 +36,8 @@ applications_to_install:
     description: "Kernel headers required for building DKMS modules (e.g., xpadneo)"
   - name: inkscape
     description: "Vector graphics editor"
+  - name: celluloid
+    description: "GTK frontend for mpv video player with loop and playback controls"
 
 aur_applications_to_install:
   - name: brave-bin
