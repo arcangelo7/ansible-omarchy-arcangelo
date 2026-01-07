@@ -26,6 +26,63 @@
   become_user: aur_builder
 
 # ============================================================================
+# SNAPD CONFIGURATION
+# ============================================================================
+
+- name: Enable snapd socket
+  ansible.builtin.systemd:
+    name: snapd.socket
+    enabled: true
+    state: started
+  become: true
+  when: "'snapd' in aur_packages_to_install | map(attribute='name') | list"
+
+- name: Enable snapd AppArmor service
+  ansible.builtin.systemd:
+    name: snapd.apparmor.service
+    enabled: true
+    state: started
+  become: true
+  failed_when: false
+  when: "'snapd' in aur_packages_to_install | map(attribute='name') | list"
+
+- name: Create symlink for classic snap support
+  ansible.builtin.file:
+    src: /var/lib/snapd/snap
+    dest: /snap
+    state: link
+  become: true
+  when: "'snapd' in aur_packages_to_install | map(attribute='name') | list"
+
+- name: Install snapcraft via snap
+  community.general.snap:
+    name: snapcraft
+    classic: true
+    state: present
+  become: true
+  when: "'snapd' in aur_packages_to_install | map(attribute='name') | list"
+
+- name: Add snap bin to PATH in .bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
+    line: 'export PATH="$PATH:/snap/bin"'
+    state: present
+    regexp: 'export PATH=.*:/snap/bin'
+  when: "'snapd' in aur_packages_to_install | map(attribute='name') | list"
+
+# ============================================================================
+# FLATPAK PACKAGES
+# ============================================================================
+
+- name: Install packages via Flatpak
+  community.general.flatpak:
+    name: "{{ item.name }}"
+    state: present
+    remote: flathub
+  loop: "{{ flatpak_packages_to_install }}"
+  when: flatpak_packages_to_install is defined and flatpak_packages_to_install | length > 0
+
+# ============================================================================
 # PIPX PACKAGES
 # ============================================================================
 

@@ -42,6 +42,10 @@ pacman_packages_to_install:
     description: "Linux man pages for C library functions and POSIX APIs"
   - name: lcov
     description: "Code coverage visualization tool for gcov"
+  - name: flatpak
+    description: "Linux application sandboxing and distribution framework"
+  - name: flatpak-builder
+    description: "Tool to build Flatpak packages from source"
 
 aur_packages_to_install:
   - name: android-sdk
@@ -56,6 +60,12 @@ aur_packages_to_install:
     description: "Android SDK platform tools (adb, fastboot, etc.)"
   - name: yed
     description: "Graph editor for creating diagrams, flowcharts, and network graphs"
+  - name: snapd
+    description: "Service and tools for management of snap packages"
+
+flatpak_packages_to_install:
+  - name: org.flatpak.Builder
+    description: "Flatpak Builder with flatpak-builder-lint included"
 
 pipx_packages_to_install:
   - name: mistral-pdf-to-markdown

@@ -313,12 +313,17 @@ Installs developer tools for Python, Node.js, Flutter, and general development.
 | rsync | Fast incremental file transfer utility |
 | man-pages | Linux man pages for C library functions and POSIX APIs |
 | lcov | Code coverage visualization tool for gcov |
+| flatpak | Linux application sandboxing and distribution framework |
+| flatpak-builder | Tool to build Flatpak packages from source |
 | android-sdk | Android Software Development Kit (AUR) |
 | android-sdk-build-tools | Android SDK build tools (AUR) |
 | android-sdk-cmdline-tools-latest | Android SDK command-line tools (AUR) |
 | android-platform | Android platform packages (AUR) |
 | android-sdk-platform-tools | Android SDK platform tools (AUR) |
 | yed | Graph editor for creating diagrams, flowcharts, and network graphs (AUR) |
+| snapd | Service and tools for snap packages (AUR) |
+| snapcraft | Tool to create snap packages (snap, classic) |
+| org.flatpak.Builder | Flatpak Builder with flatpak-builder-lint included (Flatpak) |
 | mistral-pdf-to-markdown | Convert PDF to Markdown using Mistral AI (pipx) |
 | @anthropic-ai/claude-code | Official CLI for Claude AI (npm) |
 
