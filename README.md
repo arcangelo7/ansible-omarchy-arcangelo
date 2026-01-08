@@ -322,7 +322,6 @@ Installs developer tools for Python, Node.js, Flutter, and general development.
 | android-sdk-platform-tools | Android SDK platform tools (AUR) |
 | yed | Graph editor for creating diagrams, flowcharts, and network graphs (AUR) |
 | snapd | Service and tools for snap packages (AUR) |
-| snapcraft | Tool to create snap packages (snap, classic) |
 | org.flatpak.Builder | Flatpak Builder with flatpak-builder-lint included (Flatpak) |
 | mistral-pdf-to-markdown | Convert PDF to Markdown using Mistral AI (pipx) |
 | @anthropic-ai/claude-code | Official CLI for Claude AI (npm) |
