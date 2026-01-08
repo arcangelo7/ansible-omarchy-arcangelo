@@ -4,7 +4,7 @@ Modular Ansible configuration to manage Omarchy installation and configuration o
 
 ## Supported version
 
-**This playbook is tested and guaranteed to work with Omarchy 3.2.3**
+**This playbook is tested and guaranteed to work with Omarchy 3.3.1**
 
 It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
 
@@ -453,12 +453,16 @@ Group windows allow stacking multiple windows in the same space (like browser ta
 - **SUPER + Print**: Color picker
 
 ### System
+- **CTRL + A**: Audio controls
+- **CTRL + ALT + T**: Show current time in notification
+- **CTRL + B**: Bluetooth controls
 - **CTRL + I**: Toggle locking on idle
+- **CTRL + L**: Lock system
 - **CTRL + N**: Toggle nightlight
 - **CTRL + SUPER + S**: Share menu
-- **CTRL + T**: Show current time in notification
-- **CTRL + B**: Show battery level in notification
-- **CTRL + X**: Suspend computer
+- **CTRL + T**: Activity
+- **CTRL + W**: WiFi controls
+- **CTRL + X**: Dictation (opt-in)
 
 ## Omarchy compliance
 
