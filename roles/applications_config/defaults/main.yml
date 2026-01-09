@@ -5,7 +5,7 @@
 ghostty_font_size: 12
 
 # Default browser
-default_browser: "firefox.desktop"
+default_browser: "brave-browser.desktop"
 
 # Default text editor
 default_text_editor: "code.desktop"

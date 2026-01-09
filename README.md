@@ -4,7 +4,7 @@ Modular Ansible configuration to manage Omarchy installation and configuration o
 
 ## Supported version
 
-**This playbook is tested and guaranteed to work with Omarchy 3.3.1**
+**This playbook is tested and guaranteed to work with Omarchy 3.3.3**
 
 It may work with other versions but compatibility is not guaranteed. If you're using a different version, configurations (especially keybindings) might need adjustments.
 
@@ -204,10 +204,8 @@ Variables can be overridden per-host using `host_vars/<inventory-hostname>/syste
 Manages configuration for various applications.
 
 **Default browser:**
-- Sets default browser for HTTP/HTTPS links via MIME type associations
-- **Firefox**: Default for links from native apps (Thunderbird, terminal, PDF viewer)
-- **Brave**: Used automatically for web apps (Claude, Homelab, etc.)
-- Modified `omarchy-launch-webapp` script to use Brave instead of Chromium
+- Sets Brave as default browser for HTTP/HTTPS links via MIME type associations
+- Modified `omarchy-launch-webapp` script to use Brave instead of Chromium for web apps
 
 **Default text editor:**
 - Sets Visual Studio Code as default for text files
@@ -248,7 +246,7 @@ Manages configuration for various applications.
 Edit `roles/applications_config/defaults/main.yml`:
 ```yaml
 # Basic settings
-default_browser: "firefox.desktop"
+default_browser: "brave-browser.desktop"
 default_text_editor: "code.desktop"
 waybar_start_hidden: true
 
