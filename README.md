@@ -128,7 +128,7 @@ Installs essential applications and web apps. Supports both official repository 
 |---------|-------------|
 | brave-bin | Privacy-focused browser for web apps |
 | whispering-bin | Speech-to-text with keyboard shortcuts |
-| visual-studio-code-bin | Code editor |
+| vscodium-bin | Free/Libre VS Code fork without Microsoft telemetry (native Wayland) |
 | zotero-bin | Reference manager |
 | ddcui | GUI for ddcutil |
 | geforcenow-electron | NVIDIA GeForce NOW cloud gaming (max 1080p 60Hz on Linux) |
@@ -208,7 +208,7 @@ Manages configuration for various applications.
 - Modified `omarchy-launch-webapp` script to use Brave instead of Chromium for web apps
 
 **Default text editor:**
-- Sets Visual Studio Code as default for text files
+- Sets VSCodium as default for text files
 - Configured MIME types: plain text, markdown, Python, YAML, JSON, shell scripts, C/C++, Java, CSS, JavaScript, XML, log files
 
 **Browser configuration (Firefox, Chromium, Brave):**
@@ -355,7 +355,7 @@ Most application shortcuts use the simplified form for better user experience:
 ### Applications that keep SHIFT (conflict with window management)
 Only 5 applications require SHIFT due to conflicts with system commands:
 
-- **SHIFT + C**: Visual Studio Code (conflicts with universal Copy)
+- **SHIFT + C**: VSCodium (conflicts with universal Copy)
 - **SHIFT + F**: File manager (Nautilus) (conflicts with Fullscreen)
 - **SHIFT + G**: WhatsApp (conflicts with Toggle grouping)
 - **SHIFT + O**: Obsidian (conflicts with overlay feature)

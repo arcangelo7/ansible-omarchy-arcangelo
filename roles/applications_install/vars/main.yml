@@ -44,8 +44,8 @@ aur_applications_to_install:
     description: "Privacy-focused web browser for web apps (Chromium-based with ad blocking)"
   - name: whispering-bin
     description: "Speech-to-text transcription application with keyboard shortcuts"
-  - name: visual-studio-code-bin
-    description: "Code editor for building and debugging modern web and cloud applications"
+  - name: vscodium-bin
+    description: "Free/Libre open-source fork of VS Code without Microsoft telemetry"
   - name: zotero-bin
     description: "Reference manager to collect, organize, cite, and share research sources"
   - name: ddcui
