@@ -57,6 +57,13 @@
 # FLATPAK PACKAGES
 # ============================================================================
 
+- name: Add flathub remote
+  community.general.flatpak_remote:
+    name: flathub
+    flatpakrepo_url: https://dl.flathub.org/repo/flathub.flatpakrepo
+    state: present
+  when: flatpak_packages_to_install is defined and flatpak_packages_to_install | length > 0
+
 - name: Install packages via Flatpak
   community.general.flatpak:
     name: "{{ item.name }}"
