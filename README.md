@@ -322,7 +322,7 @@ Installs developer tools for Python, Node.js, Flutter, and general development.
 | snapd | Service and tools for snap packages (AUR) |
 | org.flatpak.Builder | Flatpak Builder with flatpak-builder-lint included (Flatpak) |
 | mistral-pdf-to-markdown | Convert PDF to Markdown using Mistral AI (pipx) |
-| @anthropic-ai/claude-code | Official CLI for Claude AI (npm) |
+| claude-code | Official CLI for Claude AI (native installer) |
 
 **Flutter SDK:**
 - Automatic detection and download of latest stable release via Flutter API

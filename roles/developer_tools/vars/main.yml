@@ -71,10 +71,6 @@ pipx_packages_to_install:
   - name: mistral-pdf-to-markdown
     description: "Convert PDF documents to Markdown format using Mistral AI"
 
-npm_packages_to_install:
-  - name: "@anthropic-ai/claude-code"
-    description: "Official CLI for Claude AI by Anthropic"
-
 flutter_install_dir: "/home/{{ ansible_facts['user_id'] }}/development"
 flutter_releases_url: "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json"
 

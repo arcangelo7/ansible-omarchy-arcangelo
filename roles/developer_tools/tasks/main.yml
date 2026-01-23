@@ -96,7 +96,7 @@
   register: pipx_install_result
 
 # ============================================================================
-# NODE.JS AND NPM PACKAGES
+# NODE.JS
 # ============================================================================
 
 - name: Install Node.js globally via mise
@@ -106,13 +106,20 @@
   failed_when: mise_node_install.rc != 0
   register: mise_node_install
 
-- name: Install npm packages globally via mise
-  ansible.builtin.command:
-    cmd: "mise exec -- npm install -g {{ npm_packages_to_install | map(attribute='name') | join(' ') }}"
-  when: npm_packages_to_install is defined and npm_packages_to_install | length > 0
-  changed_when: "'added' in npm_install_result.stdout or 'updated' in npm_install_result.stdout"
-  failed_when: npm_install_result.rc != 0
-  register: npm_install_result
+# ============================================================================
+# CLAUDE CODE
+# ============================================================================
+
+- name: Check if Claude Code is already installed
+  ansible.builtin.stat:
+    path: "{{ ansible_facts['env']['HOME'] }}/.claude/local/claude"
+  register: claude_code_installed
+
+- name: Install Claude Code via native installer
+  ansible.builtin.shell: |
+    curl -fsSL https://claude.ai/install.sh | sh
+  when: not claude_code_installed.stat.exists
+  changed_when: true
 
 # ============================================================================
 # ANDROID SDK CONFIGURATION
