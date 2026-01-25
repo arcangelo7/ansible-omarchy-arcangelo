@@ -16,8 +16,8 @@ applications_to_install:
     description: "GStreamer PipeWire plugin"
   - name: ydotool
     description: "Generic command-line automation tool for Wayland"
-  - name: wireguard-tools
-    description: "WireGuard VPN userspace tools for secure network tunneling"
+  - name: tailscale
+    description: "Mesh VPN built on WireGuard for secure networking"
   - name: openfortivpn
     description: "Open implementation of Fortinet's proprietary PPP+SSL VPN solution"
   - name: ddcutil
@@ -67,7 +67,7 @@ webapps_to_install:
     icon_url: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/google-map-icon.png"
     description: "Google Maps navigation and location services"
   - name: "Homelab"
-    url: "http://192.168.2.103:3000"
+    url: "http://100.64.0.2:3000"
     icon_url: "https://uxwing.com/wp-content/themes/uxwing/download/banking-finance/dashboard-monitoring-icon.png"
     description: "Homelab services dashboard (VPN required)"
   - name: "Microsoft Teams"

@@ -111,7 +111,7 @@ Installs essential applications and web apps. Supports both official repository 
 | bitwarden | Password manager |
 | gst-plugin-gtk, gst-plugins-base/good/bad, gst-plugin-pipewire | Whispering dependencies |
 | ydotool | Keyboard automation for Wayland |
-| wireguard-tools | VPN userspace tools |
+| tailscale | Mesh VPN built on WireGuard |
 | openfortivpn | Fortinet SSL VPN client |
 | ddcutil | Monitor control via DDC/CI |
 | firefox | Web browser |

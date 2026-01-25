@@ -125,10 +125,11 @@
     mode: '0644'
   become: true
 
-- name: Enable WireGuard service for automatic startup at boot
+- name: Enable Tailscale service for automatic startup at boot
   ansible.builtin.systemd:
-    name: wg-quick@wg0.service
+    name: tailscaled.service
     enabled: true
+    state: started
   become: true
 
 - name: Enable Mullvad VPN daemon service
