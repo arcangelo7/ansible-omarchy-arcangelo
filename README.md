@@ -139,7 +139,7 @@ Installs essential applications and web apps. Supports both official repository 
 | App | URL | Notes |
 |-----|-----|-------|
 | Claude | https://claude.ai | AI assistant by Anthropic |
-| Homelab | http://192.168.2.103:3000 | Local IP, requires VPN |
+| Homelab | http://100.64.0.2:3000 | Tailscale IP, requires VPN |
 | Microsoft Teams | https://teams.microsoft.com | Team collaboration platform (PWA) |
 
 **Note:** Keybindings are configured by the `hyprland_config` role
