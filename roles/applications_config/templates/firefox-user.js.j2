@@ -1,13 +1,7 @@
 // Firefox user preferences
-// This file contains custom preferences that override Firefox defaults
-// Documentation: https://kb.mozillazine.org/User.js_file
-//
-// To find preference names: about:config in Firefox
-// To add more preferences: edit this file and re-run Ansible
+// Reference: https://kb.mozillazine.org/User.js_file
 
-// =============================================================================
-// PRIVACY & SECURITY
-// =============================================================================
+// Privacy & security
 
 {% if firefox_content_blocking is defined %}
 // Enable strict content blocking (tracking protection)
@@ -37,9 +31,7 @@ user_pref("toolkit.telemetry.enabled", {{ firefox_telemetry_enabled | lower }});
 user_pref("datareporting.healthreport.uploadEnabled", {{ firefox_healthreport_enabled | lower }});
 {% endif %}
 
-// =============================================================================
-// UI & BEHAVIOR
-// =============================================================================
+// UI & behavior
 
 {% if firefox_ctrl_tab_recently_used is defined %}
 // Sort tabs by recently used when using Ctrl+Tab
@@ -61,9 +53,7 @@ user_pref("browser.newtabpage.activity-stream.feeds.section.topstories", {{ fire
 user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", {{ firefox_userchrome_enabled | lower }});
 {% endif %}
 
-// =============================================================================
-// PERFORMANCE
-// =============================================================================
+// Performance
 
 {% if firefox_hw_acceleration is defined %}
 // Enable hardware acceleration (default: true)
@@ -75,9 +65,7 @@ user_pref("layers.acceleration.force-enabled", {{ firefox_hw_acceleration | lowe
 user_pref("dom.ipc.processCount", {{ firefox_process_count }});
 {% endif %}
 
-// =============================================================================
-// DOWNLOADS
-// =============================================================================
+// Downloads
 
 {% if firefox_auto_download_dir is defined %}
 // Always ask where to save files

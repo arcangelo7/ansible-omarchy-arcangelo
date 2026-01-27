@@ -1,61 +1,35 @@
 ---
 applications_to_install:
-  - name: p7zip
-    description: "Command-line file archiver with high compression ratio (7z format)"
-  - name: bitwarden
-    description: "Secure and open-source password manager"
-  - name: gst-plugin-gtk
-    description: "GStreamer GTK plugin"
-  - name: gst-plugins-base
-    description: "GStreamer base plugins"
-  - name: gst-plugins-good
-    description: "GStreamer good plugins (required for Whispering audio support)"
-  - name: gst-plugins-bad
-    description: "GStreamer bad plugins (required for Whispering)"
-  - name: gst-plugin-pipewire
-    description: "GStreamer PipeWire plugin"
-  - name: ydotool
-    description: "Generic command-line automation tool for Wayland"
-  - name: tailscale
-    description: "Mesh VPN built on WireGuard for secure networking"
-  - name: openfortivpn
-    description: "Open implementation of Fortinet's proprietary PPP+SSL VPN solution"
-  - name: ddcutil
-    description: "Monitor control via DDC/CI and USB for brightness adjustment"
-  - name: firefox
-    description: "Free and open-source web browser developed by Mozilla"
-  - name: thunderbird
-    description: "Free and open-source email client developed by Mozilla"
-  - name: telegram-desktop
-    description: "Official Telegram Desktop messaging client"
-  - name: btrfs-assistant
-    description: "GUI application for managing BTRFS filesystems and Snapper snapshots"
-  - name: exfatprogs
-    description: "exFAT filesystem userspace utilities for formatting and maintaining exFAT filesystems"
-  - name: linux-headers
-    description: "Kernel headers required for building DKMS modules (e.g., xpadneo)"
-  - name: inkscape
-    description: "Vector graphics editor"
-  - name: celluloid
-    description: "GTK frontend for mpv video player with loop and playback controls"
+  - p7zip
+  - bitwarden
+  - gst-plugin-gtk
+  - gst-plugins-base
+  - gst-plugins-good
+  - gst-plugins-bad
+  - gst-plugin-pipewire
+  - ydotool
+  - tailscale
+  - openfortivpn
+  - ddcutil
+  - firefox
+  - thunderbird
+  - telegram-desktop
+  - btrfs-assistant
+  - exfatprogs
+  - linux-headers
+  - inkscape
+  - celluloid
 
 aur_applications_to_install:
-  - name: brave-bin
-    description: "Privacy-focused web browser for web apps (Chromium-based with ad blocking)"
-  - name: whispering-bin
-    description: "Speech-to-text transcription application with keyboard shortcuts"
-  - name: vscodium-bin
-    description: "Free/Libre open-source fork of VS Code without Microsoft telemetry"
-  - name: zotero-bin
-    description: "Reference manager to collect, organize, cite, and share research sources"
-  - name: ddcui
-    description: "Graphical user interface for ddcutil to control monitor settings"
-  - name: geforcenow-electron
-    description: "Unofficial Electron wrapper for NVIDIA GeForce NOW cloud gaming service (max 1080p 60Hz on Linux)"
-  - name: xpadneo-dkms
-    description: "Advanced Linux driver for Xbox One wireless controllers via Bluetooth"
-  - name: mullvad-vpn-bin
-    description: "Privacy-focused VPN client with GUI and CLI for secure internet browsing"
+  - brave-bin
+  - whispering-bin
+  - vscodium-bin
+  - zotero-bin
+  - ddcui
+  - geforcenow-electron
+  - xpadneo-dkms
+  - mullvad-vpn-bin
+  - rustdesk-bin
 
 webapps_to_install:
   - name: "Claude"

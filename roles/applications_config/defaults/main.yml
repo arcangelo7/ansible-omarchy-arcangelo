@@ -147,31 +147,18 @@ thunderbird_extensions:
   - id: "it-IT@dictionaries.addons.mozilla.org"
     slug: "italian-dictionary-spelling"
 
-# Developer tools to hide from application launcher
-# These are utility/developer tools that shouldn't appear in the app menu
 hidden_from_launcher:
-  - name: "xdvi.desktop"
-    description: "DVI viewer (TeX/LaTeX utility)"
-  - name: "assistant.desktop"
-    description: "Qt Assistant (Qt documentation viewer)"
-  - name: "designer.desktop"
-    description: "Qt Widget Designer (Qt UI designer)"
-  - name: "linguist.desktop"
-    description: "Qt Linguist (Qt translation tool)"
-  - name: "qdbusviewer.desktop"
-    description: "Qt DBus Viewer (Qt debugging tool)"
-  - name: "electron36.desktop"
-    description: "Electron 36 runtime"
-  - name: "electron37.desktop"
-    description: "Electron 37 runtime"
-  - name: "jconsole-java17-openjdk.desktop"
-    description: "OpenJDK Java 17 Console"
-  - name: "jconsole-java-openjdk.desktop"
-    description: "OpenJDK Java 25 Console"
-  - name: "jshell-java17-openjdk.desktop"
-    description: "OpenJDK Java 17 Shell"
-  - name: "jshell-java-openjdk.desktop"
-    description: "OpenJDK Java 25 Shell"
+  - "xdvi.desktop"
+  - "assistant.desktop"
+  - "designer.desktop"
+  - "linguist.desktop"
+  - "qdbusviewer.desktop"
+  - "electron36.desktop"
+  - "electron37.desktop"
+  - "jconsole-java17-openjdk.desktop"
+  - "jconsole-java-openjdk.desktop"
+  - "jshell-java17-openjdk.desktop"
+  - "jshell-java-openjdk.desktop"
 
 waybar_start_hidden: true
 

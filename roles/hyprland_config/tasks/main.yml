@@ -1,5 +1,5 @@
 ---
-- name: Deploy simplified keybindings configuration
+- name: Deploy keybindings
   ansible.builtin.copy:
     src: bindings.conf
     dest: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/bindings.conf"
@@ -38,7 +38,7 @@
       fi
     mode: '0755'
 
-- name: Configure uinput module to load at boot
+- name: Configure uinput module
   ansible.builtin.copy:
     dest: /etc/modules-load.d/uinput.conf
     content: |

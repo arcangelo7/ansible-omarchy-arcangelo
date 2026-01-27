@@ -14,7 +14,7 @@
     state: directory
     mode: '0755'
 
-- name: Set default browser for HTTP/HTTPS
+- name: Set default browser
   community.general.ini_file:
     path: "{{ ansible_facts['env']['HOME'] }}/.config/mimeapps.list"
     section: "Default Applications"
@@ -29,7 +29,7 @@
     - "x-scheme-handler/about"
     - "x-scheme-handler/unknown"
 
-- name: Set system default browser using xdg-settings
+- name: Set system default browser via xdg-settings
   ansible.builtin.command:
     cmd: xdg-settings set default-web-browser {{ default_browser }}
   changed_when: true
@@ -41,20 +41,20 @@
     state: directory
     mode: '0755'
 
-- name: Deploy wrapper script to use Brave for web apps
+- name: Deploy Brave webapp wrapper
   ansible.builtin.copy:
     src: omarchy-launch-webapp
     dest: "{{ ansible_facts['env']['HOME'] }}/.local/bin/omarchy-launch-webapp"
     mode: '0755'
 
-- name: Deploy wrapper script for omarchy-launch-or-focus-webapp
+- name: Deploy webapp focus wrapper
   ansible.builtin.copy:
     src: omarchy-launch-or-focus-webapp
     dest: "{{ ansible_facts['env']['HOME'] }}/.local/bin/omarchy-launch-or-focus-webapp"
     mode: '0755'
 
 # Set Visual Studio Code as default text editor
-- name: Set VSCode as default editor for text files
+- name: Set default text editor
   community.general.ini_file:
     path: "{{ ansible_facts['env']['HOME'] }}/.config/mimeapps.list"
     section: "Default Applications"
@@ -87,7 +87,7 @@
   changed_when: false
   failed_when: firefox_profile.stdout == ""
 
-- name: Deploy Firefox custom preferences (user.js)
+- name: Deploy Firefox user.js
   ansible.builtin.template:
     src: firefox-user.js.j2
     dest: "{{ firefox_profile.stdout }}/user.js"
@@ -102,7 +102,7 @@
     mode: '0755'
   become: true
 
-- name: Deploy Firefox enterprise policies (extensions auto-install)
+- name: Deploy Firefox policies
   ansible.builtin.template:
     src: firefox-policies.json.j2
     dest: /usr/lib/firefox/distribution/policies.json
@@ -118,7 +118,7 @@
   changed_when: false
   failed_when: false
 
-- name: Deploy Thunderbird custom preferences (user.js)
+- name: Deploy Thunderbird user.js
   ansible.builtin.template:
     src: thunderbird-user.js.j2
     dest: "{{ thunderbird_profile.stdout }}/user.js"
@@ -134,7 +134,7 @@
   become: true
   when: thunderbird_profile.stdout != ""
 
-- name: Deploy Thunderbird enterprise policies (extensions auto-install)
+- name: Deploy Thunderbird policies
   ansible.builtin.template:
     src: thunderbird-policies.json.j2
     dest: /usr/lib/thunderbird/distribution/policies.json
@@ -149,7 +149,7 @@
     state: directory
     mode: '0755'
 
-- name: Override Thunderbird desktop file to use XWayland
+- name: Override Thunderbird desktop for XWayland
   ansible.builtin.copy:
     content: |
       [Desktop Entry]
@@ -182,7 +182,7 @@
     path: /opt/geforcenow-electron/geforcenow-electron
   register: geforcenow_installed
 
-- name: Override GeForce NOW desktop file to disable microphone access
+- name: Override GeForce NOW desktop to disable mic
   ansible.builtin.copy:
     content: |
       [Desktop Entry]
@@ -201,12 +201,12 @@
     mode: '0644'
   when: geforcenow_installed.stat.exists
 
-- name: Hide developer tools from application launcher
+- name: Hide dev tools from launcher
   ansible.builtin.copy:
     content: |
       [Desktop Entry]
       NoDisplay=true
-    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/{{ item.name }}"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/applications/{{ item }}"
     mode: '0644'
   loop: "{{ hidden_from_launcher }}"
   when: hidden_from_launcher is defined and hidden_from_launcher | length > 0
@@ -218,7 +218,7 @@
     mode: '0755'
   become: true
 
-- name: Deploy Chromium enterprise policies (extensions auto-install)
+- name: Deploy Chromium policies
   ansible.builtin.template:
     src: chromium-policies.json.j2
     dest: /etc/chromium/policies/managed/policies.json
@@ -231,7 +231,7 @@
     path: "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default"
   register: chromium_default_profile
 
-- name: Deploy Chromium preferences template to temp location
+- name: Deploy Chromium preferences template
   ansible.builtin.template:
     src: chromium-preferences.json.j2
     dest: /tmp/chromium-prefs-update.json
@@ -264,7 +264,7 @@
     mode: '0755'
   become: true
 
-- name: Deploy Brave enterprise policies (extensions auto-install)
+- name: Deploy Brave policies
   ansible.builtin.template:
     src: brave-policies.json.j2
     dest: /etc/brave/policies/managed/policies.json
@@ -277,7 +277,7 @@
     path: "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default"
   register: brave_default_profile
 
-- name: Deploy Brave preferences template to temp location
+- name: Deploy Brave preferences template
   ansible.builtin.template:
     src: brave-preferences.json.j2
     dest: /tmp/brave-prefs-update.json
@@ -303,7 +303,7 @@
   when: brave_default_profile.stat.exists
   changed_when: true
 
-- name: Configure Waybar to start hidden
+- name: Configure Waybar start hidden
   ansible.builtin.lineinfile:
     path: "{{ ansible_facts['env']['HOME'] }}/.config/waybar/config.jsonc"
     regexp: '^\s*"start_hidden":'
@@ -346,13 +346,13 @@
     state: directory
     mode: '0755'
 
-- name: Deploy Neovim disable autocomplete configuration
+- name: Deploy Neovim autocomplete config
   ansible.builtin.copy:
     src: neovim-disable-autocomplete.lua
     dest: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/lua/plugins/disable-autocomplete.lua"
     mode: '0644'
 
-- name: Deploy Neovim show hidden files configuration
+- name: Deploy Neovim hidden files config
   ansible.builtin.copy:
     src: neovim-show-hidden-files.lua
     dest: "{{ ansible_facts['env']['HOME'] }}/.config/nvim/lua/plugins/show-hidden-files.lua"

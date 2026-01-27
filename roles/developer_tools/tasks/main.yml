@@ -1,22 +1,18 @@
 ---
-# ============================================================================
-# PACMAN PACKAGES
-# ============================================================================
+# Pacman packages
 
 - name: Install packages via pacman
   community.general.pacman:
-    name: "{{ pacman_packages_to_install | map(attribute='name') | list }}"
+    name: "{{ pacman_packages_to_install }}"
     state: present
   become: true
   when: pacman_packages_to_install is defined and pacman_packages_to_install | length > 0
 
-# ============================================================================
-# AUR PACKAGES
-# ============================================================================
+# AUR packages
 
 - name: Install packages via AUR
   kewlfft.aur.aur:
-    name: "{{ item.name }}"
+    name: "{{ item }}"
     use: yay
     state: present
     extra_args: "--noconfirm"
@@ -25,9 +21,7 @@
   become: true
   become_user: aur_builder
 
-# ============================================================================
-# SNAPD CONFIGURATION
-# ============================================================================
+# Snapd configuration
 
 - name: Enable snapd socket
   ansible.builtin.systemd:
@@ -35,7 +29,7 @@
     enabled: true
     state: started
   become: true
-  when: "'snapd' in aur_packages_to_install | map(attribute='name') | list"
+  when: "'snapd' in aur_packages_to_install"
 
 - name: Create symlink for classic snap support
   ansible.builtin.file:
@@ -43,7 +37,7 @@
     dest: /snap
     state: link
   become: true
-  when: "'snapd' in aur_packages_to_install | map(attribute='name') | list"
+  when: "'snapd' in aur_packages_to_install"
 
 - name: Add snap bin to PATH in .bashrc
   ansible.builtin.lineinfile:
@@ -51,11 +45,9 @@
     line: 'export PATH="$PATH:/snap/bin"'
     state: present
     regexp: 'export PATH=.*:/snap/bin'
-  when: "'snapd' in aur_packages_to_install | map(attribute='name') | list"
+  when: "'snapd' in aur_packages_to_install"
 
-# ============================================================================
-# FLATPAK PACKAGES
-# ============================================================================
+# Flatpak packages
 
 - name: Add flathub remote
   community.general.flatpak_remote:
@@ -66,78 +58,70 @@
 
 - name: Install packages via Flatpak
   community.general.flatpak:
-    name: "{{ item.name }}"
+    name: "{{ item }}"
     state: present
     remote: flathub
   loop: "{{ flatpak_packages_to_install }}"
   when: flatpak_packages_to_install is defined and flatpak_packages_to_install | length > 0
 
-# ============================================================================
-# PIPX PACKAGES
-# ============================================================================
+# Pipx packages
 
-- name: Configure pipx PATH for current user
+- name: Configure pipx PATH
   ansible.builtin.command: pipx ensurepath
   changed_when: "'already' not in pipx_ensurepath.stdout"
   failed_when: false
   register: pipx_ensurepath
-  when: "'python-pipx' in pacman_packages_to_install | map(attribute='name') | list"
+  when: "'python-pipx' in pacman_packages_to_install"
 
 - name: Install packages via pipx
   ansible.builtin.command:
-    cmd: "pipx install {{ item.name }}"
+    cmd: "pipx install {{ item }}"
   loop: "{{ pipx_packages_to_install }}"
   when:
     - pipx_packages_to_install is defined
     - pipx_packages_to_install | length > 0
-    - "'python-pipx' in pacman_packages_to_install | map(attribute='name') | list"
+    - "'python-pipx' in pacman_packages_to_install"
   changed_when: "'installed package' in pipx_install_result.stdout"
   failed_when: pipx_install_result.rc != 0 and 'already seems to be installed' not in pipx_install_result.stderr
   register: pipx_install_result
 
-# ============================================================================
-# NODE.JS
-# ============================================================================
+# Node.js
 
-- name: Install Node.js globally via mise
+- name: Install Node.js via mise
   ansible.builtin.command:
     cmd: "mise use -g node@lts"
   changed_when: "'installed' in mise_node_install.stderr or 'installed' in mise_node_install.stdout"
   failed_when: mise_node_install.rc != 0
   register: mise_node_install
 
-# ============================================================================
-# CLAUDE CODE
-# ============================================================================
+# Claude Code
 
-- name: Check if Claude Code is already installed
+- name: Check Claude Code installation
   ansible.builtin.stat:
-    path: "{{ ansible_facts['env']['HOME'] }}/.claude/local/claude"
+    path: "{{ ansible_facts['env']['HOME'] }}/.local/bin/claude"
   register: claude_code_installed
 
-- name: Install Claude Code via native installer
+- name: Install Claude Code
   ansible.builtin.shell: |
     curl -fsSL https://claude.ai/install.sh | sh
   when: not claude_code_installed.stat.exists
   changed_when: true
 
-# ============================================================================
-# ANDROID SDK CONFIGURATION
-# ============================================================================
+# Android SDK
 
-- name: Check if Android SDK exists in /opt
+- name: Check Android SDK in /opt
   ansible.builtin.stat:
     path: /opt/android-sdk
   register: android_sdk_opt
   when: aur_packages_to_install is defined
 
-- name: Check if Android SDK already exists in home directory
+- name: Check Android SDK in home
   ansible.builtin.stat:
     path: "{{ ansible_facts['env']['HOME'] }}/android-sdk"
   register: android_sdk_home
   when: aur_packages_to_install is defined
 
-- name: Copy Android SDK to home directory
+- name: Copy Android SDK to home
   ansible.builtin.command:
     cmd: cp -R /opt/android-sdk {{ ansible_facts['env']['HOME'] }}/
   when:
@@ -147,7 +131,7 @@
   become: true
   register: android_sdk_copied
 
-- name: Set ownership of Android SDK in home directory
+- name: Set Android SDK ownership
   ansible.builtin.file:
     path: "{{ ansible_facts['env']['HOME'] }}/android-sdk"
     owner: "{{ ansible_facts['user_id'] }}"
@@ -159,7 +143,7 @@
     - android_sdk_copied.changed
   become: true
 
-- name: Configure Android environment variables in .bashrc
+- name: Configure Android environment
   ansible.builtin.blockinfile:
     path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
     marker: "# {mark} ANSIBLE MANAGED BLOCK - Flutter Android SDK"
@@ -177,7 +161,7 @@
     mode: '0755'
   when: aur_packages_to_install is defined
 
-- name: Check if Android licenses are already accepted
+- name: Check Android licenses
   ansible.builtin.stat:
     path: "{{ ansible_facts['env']['HOME'] }}/android-sdk/licenses/android-sdk-license"
   register: android_licenses_file
@@ -199,7 +183,7 @@
     - android_licenses_file is defined
     - not android_licenses_file.stat.exists
 
-- name: Install Android system images for emulators
+- name: Install Android system images
   ansible.builtin.shell: |
     yes | {{ ansible_facts['env']['HOME'] }}/android-sdk/cmdline-tools/latest/bin/sdkmanager "{{ item }}"
   loop: "{{ android_system_images }}"
@@ -220,9 +204,7 @@
   failed_when: false
   register: android_sdk_update
 
-# ============================================================================
-# FLUTTER SDK
-# ============================================================================
+# Flutter SDK
 
 - name: Create development directory
   ansible.builtin.file:
@@ -231,7 +213,7 @@
     mode: '0755'
   when: flutter_install_dir is defined
 
-- name: Check if Flutter is already installed
+- name: Check Flutter installation
   ansible.builtin.stat:
     path: "{{ flutter_install_dir }}/flutter"
   register: flutter_installed
@@ -246,7 +228,7 @@
     - flutter_install_dir is defined
     - not flutter_installed.stat.exists
 
-- name: Extract latest stable release info
+- name: Extract latest stable release
   ansible.builtin.set_fact:
     flutter_latest_stable: "{{ flutter_releases_data.json.releases | selectattr('channel', 'equalto', 'stable') | first }}"
   when:
@@ -293,7 +275,7 @@
     regexp: 'export PATH="\$PATH:.*/flutter/bin"'
   when: flutter_install_dir is defined
 
-- name: Configure CHROME_EXECUTABLE for Flutter web development
+- name: Configure Chrome executable for Flutter
   ansible.builtin.lineinfile:
     path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
     line: 'export CHROME_EXECUTABLE=/usr/bin/brave'

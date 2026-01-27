@@ -1,5 +1,5 @@
 ---
-- name: Create aur_builder user for AUR package management
+- name: Create aur_builder user
   ansible.builtin.user:
     name: aur_builder
     create_home: true
@@ -21,7 +21,7 @@
     upgrade: true
   become: true
 
-- name: Check if yay is functional
+- name: Check yay status
   ansible.builtin.command:
     cmd: yay --version
   register: yay_check
@@ -30,7 +30,7 @@
   become: true
   become_user: aur_builder
 
-- name: Rebuild yay from AUR if broken or missing
+- name: Rebuild yay if broken
   when: yay_check.rc != 0
   become: true
   become_user: aur_builder
@@ -66,14 +66,14 @@
 
 - name: Install applications via pacman
   community.general.pacman:
-    name: "{{ applications_to_install | map(attribute='name') | list }}"
+    name: "{{ applications_to_install }}"
     state: present
   become: true
   when: applications_to_install is defined and applications_to_install | length > 0
 
-- name: Install AUR applications with kewlfft.aur module
+- name: Install AUR packages
   kewlfft.aur.aur:
-    name: "{{ item.name }}"
+    name: "{{ item }}"
     use: yay
     state: present
   loop: "{{ aur_applications_to_install }}"
@@ -125,14 +125,14 @@
     mode: '0644'
   become: true
 
-- name: Enable Tailscale service for automatic startup at boot
+- name: Enable Tailscale service
   ansible.builtin.systemd:
     name: tailscaled.service
     enabled: true
     state: started
   become: true
 
-- name: Enable Mullvad VPN daemon service
+- name: Enable Mullvad VPN service
   ansible.builtin.systemd:
     name: mullvad-daemon.service
     enabled: true

@@ -1,75 +1,43 @@
 ---
 pacman_packages_to_install:
-  - name: python-pipx
-    description: "Install and run Python applications in isolated environments"
-  - name: python-poetry
-    description: "Python dependency management and packaging made easy"
-  - name: uv
-    description: "Extremely fast Python package installer and resolver written in Rust"
-  - name: plantuml
-    description: "Component that allows to quickly write UML diagrams"
-  - name: graphviz
-    description: "Graph visualization software for creating diagrams and flowcharts"
-  - name: pandoc
-    description: "Universal document converter between markup formats"
-  - name: texlive-basic
-    description: "Core TeX Live distribution with pdflatex compiler"
-  - name: texlive-latex
-    description: "LaTeX format and base packages (required for \\documentclass)"
-  - name: texlive-latexrecommended
-    description: "LaTeX recommended packages (setspace, caption, booktabs, etc.)"
-  - name: texlive-latexextra
-    description: "LaTeX additional packages (multirow, minted, glossaries, etc.)"
-  - name: texlive-binextra
-    description: "TeX auxiliary programs including latexmk (required by LaTeX Workshop)"
-  - name: texlive-fontsrecommended
-    description: "Recommended fonts for TeX Live distribution"
-  - name: texlive-bibtexextra
-    description: "Additional BibTeX styles and bibliography database tools"
-  - name: texlive-langitalian
-    description: "Italian language support for LaTeX (babel-italian)"
-  - name: biber
-    description: "Bibliography processor for BibLaTeX"
-  - name: cmake
-    description: "Build system required for Flutter Linux development"
-  - name: ninja
-    description: "Build tool required for Flutter Linux development"
-  - name: jdk17-openjdk
-    description: "Java Development Kit required for Android development"
-  - name: rsync
-    description: "Fast incremental file transfer utility"
-  - name: man-pages
-    description: "Linux man pages for C library functions and POSIX APIs"
-  - name: lcov
-    description: "Code coverage visualization tool for gcov"
-  - name: flatpak
-    description: "Linux application sandboxing and distribution framework"
-  - name: flatpak-builder
-    description: "Tool to build Flatpak packages from source"
+  - python-pipx
+  - python-poetry
+  - uv
+  - plantuml
+  - graphviz
+  - pandoc
+  - texlive-basic
+  - texlive-latex
+  - texlive-latexrecommended
+  - texlive-latexextra
+  - texlive-binextra
+  - texlive-fontsrecommended
+  - texlive-bibtexextra
+  - texlive-langitalian
+  - biber
+  - cmake
+  - ninja
+  - jdk17-openjdk
+  - rsync
+  - man-pages
+  - lcov
+  - flatpak
+  - flatpak-builder
 
 aur_packages_to_install:
-  - name: android-sdk
-    description: "Android Software Development Kit"
-  - name: android-sdk-build-tools
-    description: "Android SDK build tools"
-  - name: android-sdk-cmdline-tools-latest
-    description: "Android SDK command-line tools"
-  - name: android-platform
-    description: "Android platform packages"
-  - name: android-sdk-platform-tools
-    description: "Android SDK platform tools (adb, fastboot, etc.)"
-  - name: yed
-    description: "Graph editor for creating diagrams, flowcharts, and network graphs"
-  - name: snapd
-    description: "Service and tools for management of snap packages"
+  - android-sdk
+  - android-sdk-build-tools
+  - android-sdk-cmdline-tools-latest
+  - android-platform
+  - android-sdk-platform-tools
+  - yed
+  - snapd
 
 flatpak_packages_to_install:
-  - name: org.flatpak.Builder
-    description: "Flatpak Builder with flatpak-builder-lint included"
+  - org.flatpak.Builder
 
 pipx_packages_to_install:
-  - name: mistral-pdf-to-markdown
-    description: "Convert PDF documents to Markdown format using Mistral AI"
+  - mistral-pdf-to-markdown
 
 flutter_install_dir: "/home/{{ ansible_facts['user_id'] }}/development"
 flutter_releases_url: "https://storage.googleapis.com/flutter_infra_release/releases/releases_linux.json"

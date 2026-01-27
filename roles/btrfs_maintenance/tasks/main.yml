@@ -1,5 +1,5 @@
 ---
-- name: Enable monthly BTRFS scrubbing for root filesystem
+- name: Enable BTRFS scrub timer
   ansible.builtin.systemd:
     name: "btrfs-scrub@-.timer"
     enabled: true
@@ -50,7 +50,7 @@
   become: true
   when: balance_service_result.changed or balance_timer_file_result.changed
 
-- name: Enable monthly BTRFS balancing for root filesystem
+- name: Enable BTRFS balance timer
   ansible.builtin.systemd:
     name: "btrfs-balance@-.timer"
     enabled: true
