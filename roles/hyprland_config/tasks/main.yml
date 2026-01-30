@@ -5,6 +5,7 @@
     dest: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/bindings.conf"
     backup: true
     mode: '0644'
+  notify: reload hyprland
 
 - name: Create .local/bin directory
   ansible.builtin.file:
@@ -60,8 +61,3 @@
     scope: user
   ignore_errors: true
 
-- name: Reload Hyprland configuration
-  ansible.builtin.command: hyprctl reload
-  ignore_errors: true
-  changed_when: hyprland_reload_result.rc == 0
-  register: hyprland_reload_result

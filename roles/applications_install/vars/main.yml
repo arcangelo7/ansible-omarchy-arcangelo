@@ -48,3 +48,7 @@ webapps_to_install:
     url: "https://teams.microsoft.com"
     icon_url: "https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/microsoft-teams-icon.png"
     description: "Team collaboration and communication platform by Microsoft"
+  - name: "AFFiNE"
+    url: "https://affine.arcangelomassari.com:41824"
+    icon_url: "https://cdn.jsdelivr.net/gh/homarr-labs/dashboard-icons/png/affine.png"
+    description: "Knowledge base and note-taking app"

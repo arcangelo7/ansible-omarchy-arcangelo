@@ -29,9 +29,17 @@
     - "x-scheme-handler/about"
     - "x-scheme-handler/unknown"
 
+- name: Check current default browser
+  ansible.builtin.command:
+    cmd: xdg-settings get default-web-browser
+  register: current_browser
+  changed_when: false
+  failed_when: false
+
 - name: Set system default browser via xdg-settings
   ansible.builtin.command:
     cmd: xdg-settings set default-web-browser {{ default_browser }}
+  when: current_browser.stdout != default_browser
   changed_when: true
 
 # Override omarchy-launch-webapp to use Brave for web apps
@@ -241,21 +249,25 @@
 
 - name: Merge Chromium custom preferences
   ansible.builtin.shell: |
-    if [ -f "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences" ]; then
-      jq -s '.[0] * .[1]' \
-        "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences" \
-        /tmp/chromium-prefs-update.json \
-        > "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences.new" && \
-      mv "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences.new" \
-        "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences"
+    PREFS="{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences"
+    if [ -f "$PREFS" ]; then
+      jq -s '.[0] * .[1]' "$PREFS" /tmp/chromium-prefs-update.json > "$PREFS.new"
+      # Compare semantically (sorted keys) to handle formatting differences
+      if ! diff -q <(jq -S '.' "$PREFS") <(jq -S '.' "$PREFS.new") >/dev/null 2>&1; then
+        mv "$PREFS.new" "$PREFS"
+        echo "changed"
+      else
+        rm "$PREFS.new"
+      fi
     else
-      cp /tmp/chromium-prefs-update.json \
-        "{{ ansible_facts['env']['HOME'] }}/.config/chromium/Default/Preferences"
+      cp /tmp/chromium-prefs-update.json "$PREFS"
+      echo "changed"
     fi
   args:
     executable: /bin/bash
+  register: chromium_merge_result
   when: chromium_default_profile.stat.exists
-  changed_when: true
+  changed_when: "'changed' in chromium_merge_result.stdout"
 
 - name: Ensure Brave policies directory exists
   ansible.builtin.file:
@@ -287,21 +299,25 @@
 
 - name: Merge Brave custom preferences
   ansible.builtin.shell: |
-    if [ -f "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences" ]; then
-      jq -s '.[0] * .[1]' \
-        "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences" \
-        /tmp/brave-prefs-update.json \
-        > "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences.new" && \
-      mv "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences.new" \
-        "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+    PREFS="{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+    if [ -f "$PREFS" ]; then
+      jq -s '.[0] * .[1]' "$PREFS" /tmp/brave-prefs-update.json > "$PREFS.new"
+      # Compare semantically (sorted keys) to handle formatting differences
+      if ! diff -q <(jq -S '.' "$PREFS") <(jq -S '.' "$PREFS.new") >/dev/null 2>&1; then
+        mv "$PREFS.new" "$PREFS"
+        echo "changed"
+      else
+        rm "$PREFS.new"
+      fi
     else
-      cp /tmp/brave-prefs-update.json \
-        "{{ ansible_facts['env']['HOME'] }}/.config/BraveSoftware/Brave-Browser/Default/Preferences"
+      cp /tmp/brave-prefs-update.json "$PREFS"
+      echo "changed"
     fi
   args:
     executable: /bin/bash
+  register: brave_merge_result
   when: brave_default_profile.stat.exists
-  changed_when: true
+  changed_when: "'changed' in brave_merge_result.stdout"
 
 - name: Configure Waybar start hidden
   ansible.builtin.lineinfile:
