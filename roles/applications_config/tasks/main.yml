@@ -349,12 +349,19 @@
     state: directory
     mode: '0755'
 
-- name: Download Neovim spell files
+- name: Download Neovim English spell file
   ansible.builtin.get_url:
-    url: "https://ftp.nluug.nl/vim/runtime/spell/{{ item }}.utf-8.spl"
-    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/nvim/site/spell/{{ item }}.utf-8.spl"
+    url: "https://raw.githubusercontent.com/vim/vim/master/runtime/spell/en.utf-8.spl"
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/nvim/site/spell/en.utf-8.spl"
     mode: '0644'
-  loop: "{{ neovim_spell_languages }}"
+  when: "'en' in neovim_spell_languages"
+
+- name: Deploy Neovim Italian spell file
+  ansible.builtin.copy:
+    src: it.utf-8.spl
+    dest: "{{ ansible_facts['env']['HOME'] }}/.local/share/nvim/site/spell/it.utf-8.spl"
+    mode: '0644'
+  when: "'it' in neovim_spell_languages"
 
 - name: Ensure Neovim plugins directory exists
   ansible.builtin.file:
