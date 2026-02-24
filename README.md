@@ -11,6 +11,7 @@ Omarchy 3.3.3
 ```bash
 sudo pacman -S ansible
 ansible-galaxy collection install kewlfft.aur
+ansible-galaxy collection install community.general --upgrade
 ```
 
 ## Usage
