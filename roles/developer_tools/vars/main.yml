@@ -12,6 +12,7 @@ pacman_packages_to_install:
   - texlive-latexextra
   - texlive-binextra
   - texlive-fontsrecommended
+  - texlive-fontsextra
   - texlive-bibtexextra
   - texlive-langitalian
   - biber
