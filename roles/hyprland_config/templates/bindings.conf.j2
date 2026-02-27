@@ -1,0 +1,15 @@
+# Source Omarchy default app bindings
+source = ~/.local/share/omarchy/config/hypr/bindings.conf
+
+# Unbind Omarchy defaults that conflict with custom bindings
+{% for key in keybindings_unbind %}
+unbind = {{ key }}
+{% endfor %}
+
+# Custom application bindings
+$terminal = uwsm app -- $TERMINAL
+$browser = omarchy-launch-browser
+
+{% for binding in keybindings_custom %}
+bindd = {{ binding.bind }}, {{ binding.description }}, exec, {{ binding.command }}
+{% endfor %}

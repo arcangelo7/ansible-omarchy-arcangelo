@@ -1,7 +1,7 @@
 ---
 - name: Deploy keybindings
-  ansible.builtin.copy:
-    src: bindings.conf
+  ansible.builtin.template:
+    src: bindings.conf.j2
     dest: "{{ ansible_facts['env']['HOME'] }}/.config/hypr/bindings.conf"
     backup: true
     mode: '0644'
