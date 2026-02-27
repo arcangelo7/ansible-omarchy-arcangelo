@@ -26,8 +26,6 @@ aur_applications_to_install:
   - vscodium-bin
   - zotero-bin
   - ddcui
-  - geforcenow-electron
-  - xpadneo-dkms
   - mullvad-vpn-bin
   - rustdesk-bin
   - affine-bin

@@ -41,6 +41,15 @@
     backup: yes
   notify: Reload Hyprland
 
+- name: Add code alias for codium in .bashrc
+  ansible.builtin.lineinfile:
+    path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
+    line: 'alias code="codium"'
+    state: present
+    regexp: '^alias code='
+    create: yes
+    mode: '0644'
+
 - name: Enable Mise shell integration in .bashrc
   ansible.builtin.lineinfile:
     path: "{{ ansible_facts['env']['HOME'] }}/.bashrc"
