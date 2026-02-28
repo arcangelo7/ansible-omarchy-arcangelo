@@ -4,7 +4,7 @@ Ansible playbook for managing my Omarchy (Arch Linux + Hyprland) setup.
 
 ## Supported version
 
-Omarchy 3.4.0
+Omarchy 3.4.1
 
 ## Prerequisites
 

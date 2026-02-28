@@ -4,6 +4,7 @@ keybindings_unbind:
   - "SUPER SHIFT, C"
   - "SUPER SHIFT, G"
   - "SUPER SHIFT, O"
+  - "SUPER, slash"
 
 # Custom application keybindings (added on top of Omarchy defaults)
 keybindings_custom:
