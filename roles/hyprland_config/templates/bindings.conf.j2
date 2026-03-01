@@ -11,5 +11,5 @@ $terminal = uwsm app -- $TERMINAL
 $browser = omarchy-launch-browser
 
 {% for binding in keybindings_custom %}
-bindd = {{ binding.bind }}, {{ binding.description }}, exec, {{ binding.command }}
+bindd = {{ binding.bind }}, {{ binding.description }}, {{ binding.dispatcher | default('exec') }}, {{ binding.command }}
 {% endfor %}

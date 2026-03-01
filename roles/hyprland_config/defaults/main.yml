@@ -53,3 +53,7 @@ keybindings_custom:
   - bind: "SUPER SHIFT, T"
     description: "Activity"
     command: "$terminal -e btop"
+  - bind: "SUPER CTRL SHIFT, F"
+    description: "Fit visible columns"
+    dispatcher: "layoutmsg"
+    command: "fit visible"
