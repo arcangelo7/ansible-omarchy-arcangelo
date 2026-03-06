@@ -19,6 +19,7 @@ applications_to_install:
   - linux-headers
   - inkscape
   - celluloid
+  - mattermost-desktop
 
 aur_applications_to_install:
   - brave-bin
